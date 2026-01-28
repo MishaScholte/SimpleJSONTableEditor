@@ -133,21 +133,18 @@ function App() {
           </div>
 
           <div className="flex items-center gap-2">
-            <Button variant="ghost" size="sm" onClick={() => fileInputRef.current?.click()} className="h-8 text-xs text-muted-foreground hover:text-foreground">
-              Import
-            </Button>
-            <div className="h-4 w-[1px] bg-border mx-1" />
-            <Button variant="outline" size="sm" onClick={handleExport} className="h-8 text-xs bg-transparent border-border/50 hover:bg-muted/50">
-              <Download className="w-3.5 h-3.5 mr-2" /> Download
+            <Button variant="outline" size="sm" onClick={handleExport} className="h-8 text-xs bg-transparent border-border/50 hover:bg-muted/50 px-2 lg:px-3">
+              <Download className="w-3.5 h-3.5 mr-1.5" /> Download JSON
             </Button>
             <Button variant="outline" size="sm" onClick={() => {
               navigator.clipboard.writeText(JSON.stringify(data, null, 2));
               toast.success("Copied to clipboard");
-            }} className="h-8 text-xs bg-transparent border-border/50 hover:bg-muted/50">
-              <Copy className="w-3.5 h-3.5 mr-2" /> Copy
+            }} className="h-8 text-xs bg-transparent border-border/50 hover:bg-muted/50 px-2 lg:px-3">
+              <Copy className="w-3.5 h-3.5 mr-1.5" /> Copy JSON
             </Button>
-            <Button variant="ghost" size="icon" onClick={handleClear} className="h-8 w-8 ml-2 text-muted-foreground hover:text-destructive hover:bg-destructive/10">
-              <Trash2 className="w-4 h-4" />
+            <div className="h-4 w-[1px] bg-border mx-1" />
+            <Button variant="outline" size="sm" onClick={handleClear} className="h-8 text-xs bg-transparent border-border/50 text-destructive hover:bg-destructive/10 hover:text-destructive hover:border-destructive/20 px-2 lg:px-3">
+              <Trash2 className="w-3.5 h-3.5 mr-1.5" /> Erase table
             </Button>
           </div>
         </header>
