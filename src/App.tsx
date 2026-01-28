@@ -3,7 +3,7 @@ import { toast, Toaster } from "sonner";
 import { DataTable, type SortConfig } from "@/components/Editor/DataTable";
 import { inferColumns, safeParseJSON, type TableRow } from "@/lib/data-utils";
 import { Button } from "@/components/ui/button";
-import { FileUp, Download, Trash2, FileJson, Copy } from "lucide-react";
+import { FileUp, Download, Trash2, FileJson, Copy, ClipboardPaste } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 
 function App() {
@@ -58,6 +58,24 @@ function App() {
       setColumns([]);
       setSortConfig(null);
       toast.info("Workspace cleared.");
+    }
+  };
+
+  const handlePaste = async () => {
+    try {
+      const text = await navigator.clipboard.readText();
+      const parsed = safeParseJSON(text);
+
+      if (parsed) {
+        setData(parsed);
+        setColumns(inferColumns(parsed));
+        setSortConfig(null);
+        toast.success(`Imported ${parsed.length} rows from clipboard.`);
+      } else {
+        toast.error("Invalid JSON in clipboard. Expected an array of objects.");
+      }
+    } catch (err) {
+      toast.error("Could not read clipboard. Please grant permission.");
     }
   };
 
@@ -155,18 +173,21 @@ function App() {
         {data.length === 0 ? (
           <div className="flex-1 flex flex-col items-center justify-center p-6 bg-muted/5 gap-8"> {/* Slight tint for empty state bg */}
             <Card className="max-w-md w-full border-border/40 bg-card/50 backdrop-blur-sm shadow-xl shadow-black/5">
-              <CardHeader className="text-center pb-2">
-                <div className="mx-auto w-12 h-12 bg-primary/5 rounded-xl flex items-center justify-center mb-4">
+              <CardHeader className="pb-2">
+                <div className="w-12 h-12 bg-primary/5 rounded-xl flex items-center justify-center mb-4">
                   <FileUp className="w-6 h-6 text-primary" />
                 </div>
-                <CardTitle className="text-lg">The <span className="line-through decoration-muted-foreground/50 text-muted-foreground">simple</span> overengineered JSON table editor</CardTitle>
+                <CardTitle className="text-2xl">The <span className="line-through decoration-white decoration-2 text-muted-foreground">simple</span> overengineered<br />JSON table editor</CardTitle>
                 <CardDescription>
                   Import an existing JSON file to start editing your data.
                 </CardDescription>
               </CardHeader>
-              <CardContent className="flex justify-center pt-4">
-                <Button onClick={() => fileInputRef.current?.click()}>
-                  Import JSON File
+              <CardContent className="pt-4 flex flex-row gap-2">
+                <Button onClick={handlePaste} className="flex-1 border border-white/10">
+                  <ClipboardPaste className="w-4 h-4 mr-1.5" /> Paste JSON
+                </Button>
+                <Button variant="outline" onClick={() => fileInputRef.current?.click()} className="flex-1 bg-transparent border-border/50 hover:bg-muted/50">
+                  <FileUp className="w-4 h-4 mr-1.5" /> Import JSON File
                 </Button>
               </CardContent>
             </Card>
