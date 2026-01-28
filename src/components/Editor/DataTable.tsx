@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback, memo } from "react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, TableFooter } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -20,44 +20,142 @@ interface DataTableProps {
     onAdd: (row: RowData) => void;
 }
 
-export const DataTable: React.FC<DataTableProps> = ({ data, columns, sortConfig, onSort, onUpdateCell, onDeleteRow, onAdd }) => {
-    const [editingCell, setEditingCell] = useState<{ row: number; col: string } | null>(null);
-    const [editValue, setEditValue] = useState("");
-    const [lastAddedIndex, setLastAddedIndex] = useState<number | null>(null);
+// --- Sub-components for Performance ---
 
-    // Refs for interaction logic
-    const tableBodyRef = useRef<HTMLTableSectionElement>(null);
-    const firstInputRef = useRef<HTMLInputElement>(null);
-    const shouldScrollRef = useRef(false);
+// 1. Editable Cell: Manages its own input state to prevent table-wide re-renders
+interface EditableCellProps {
+    initialValue: any;
+    onSave: (val: any) => void;
+    onCancel: () => void;
+}
 
-    // Quick Add State
-    const [newRowValues, setNewRowValues] = useState<Record<string, string>>({});
+const EditableCell: React.FC<EditableCellProps> = ({ initialValue, onSave, onCancel }) => {
+    const [value, setValue] = useState<string>("");
 
-    // Scroll to bottom and focus first input when a new row is added (triggered by shouldScrollRef)
     useEffect(() => {
-        if (shouldScrollRef.current && tableBodyRef.current) {
-            // Scroll to bottom
-            tableBodyRef.current.scrollTop = tableBodyRef.current.scrollHeight;
-            shouldScrollRef.current = false;
-
-            // Refocus first input
-            if (firstInputRef.current) {
-                firstInputRef.current.focus();
-            }
-
-            // Trigger animation for the new last row
-            setLastAddedIndex(data.length - 1);
-            const timer = setTimeout(() => setLastAddedIndex(null), 2000); // Animation duration + buffer
-            return () => clearTimeout(timer);
+        if (Array.isArray(initialValue)) {
+            setValue(formatArrayOutput(initialValue));
+        } else {
+            setValue(String(initialValue ?? ""));
         }
-    }, [data.length]);
+    }, [initialValue]);
 
-    const handleQuickAdd = () => {
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+        if (e.key === 'Enter') {
+            handleSave();
+        } else if (e.key === 'Escape') {
+            onCancel();
+        }
+    };
+
+    const handleSave = () => {
+        let finalValue: any = value;
+        if (Array.isArray(initialValue)) {
+            finalValue = parseArrayInput(value);
+        } else if (typeof initialValue === 'number') {
+            finalValue = Number(value);
+            if (isNaN(finalValue)) finalValue = value;
+        } else if (typeof initialValue === 'boolean') {
+            finalValue = value.toLowerCase() === 'true';
+        }
+        onSave(finalValue);
+    };
+
+    return (
+        <Input
+            autoFocus
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+            onBlur={handleSave}
+            onKeyDown={handleKeyDown}
+            className="h-8 w-full"
+        />
+    );
+};
+
+// 2. Memoized Row: Only re-renders if its data or editing state changes
+interface DataTableRowProps {
+    row: RowData;
+    rowIdx: number;
+    columns: string[];
+    isEditingCell: { col: string } | null; // Only pass the col if this row is being edited
+    lastAddedIndex: number | null;
+    onStartEdit: (rowIdx: number, col: string, val: any) => void;
+    onUpdateCell: (rowIdx: number, col: string, val: any) => void;
+    onCancelEdit: () => void;
+    onDeleteRow: (rowIdx: number) => void;
+}
+
+const DataTableRow = memo(({
+    row, rowIdx, columns, isEditingCell, lastAddedIndex,
+    onStartEdit, onUpdateCell, onCancelEdit, onDeleteRow
+}: DataTableRowProps) => {
+    return (
+        <TableRow
+            className={`grid w-full items-center border-b last:border-0 hover:bg-muted/5 ${rowIdx === lastAddedIndex ? "animate-new-row" : ""}`}
+            style={{ gridTemplateColumns: `repeat(${columns.length}, minmax(100px, 1fr)) 50px` }}
+        >
+            {columns.map((col) => {
+                const val = row[col];
+                const isEditing = isEditingCell?.col === col;
+
+                return (
+                    <TableCell
+                        key={col}
+                        className="cursor-pointer transition-colors p-2 overflow-hidden h-full flex items-center"
+                        onClick={() => !isEditing && onStartEdit(rowIdx, col, val)}
+                    >
+                        {isEditing ? (
+                            <EditableCell
+                                initialValue={val}
+                                onSave={(newVal) => onUpdateCell(rowIdx, col, newVal)}
+                                onCancel={onCancelEdit}
+                            />
+                        ) : (
+                            <span className="block w-full truncate text-sm">
+                                {Array.isArray(val) ? (
+                                    <span className="bg-secondary px-2 py-0.5 rounded text-xs font-medium inline-block truncate max-w-full">
+                                        {formatArrayOutput(val)}
+                                    </span>
+                                ) : (
+                                    String(val ?? "")
+                                )}
+                            </span>
+                        )}
+                    </TableCell>
+                );
+            })}
+            <TableCell className="w-[50px] flex items-center justify-center p-0">
+                <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10"
+                    onClick={(e) => { e.stopPropagation(); onDeleteRow(rowIdx); }}
+                >
+                    <Trash2 className="h-4 w-4" />
+                </Button>
+            </TableCell>
+        </TableRow>
+    );
+});
+DataTableRow.displayName = "DataTableRow";
+
+// 3. Quick Add Footer: Manages its own state
+interface QuickAddFooterProps {
+    columns: string[];
+    onAdd: (row: RowData) => void;
+    firstInputRef: React.RefObject<HTMLInputElement>;
+}
+
+const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstInputRef }) => {
+    const [values, setValues] = useState<Record<string, string>>({});
+
+    const handleAdd = () => {
         const newRow: RowData = {};
         let hasData = false;
 
         columns.forEach(col => {
-            const rawVal = newRowValues[col] || "";
+            const rawVal = values[col] || "";
             if (rawVal) hasData = true;
 
             if (rawVal.includes(',')) {
@@ -70,53 +168,94 @@ export const DataTable: React.FC<DataTableProps> = ({ data, columns, sortConfig,
         });
 
         if (hasData) {
-            shouldScrollRef.current = true;
             onAdd(newRow);
-            setNewRowValues({});
+            setValues({});
         }
-    };
-
-    const handleQuickAddKeyDown = (e: React.KeyboardEvent) => {
-        if (e.key === 'Enter') {
-            handleQuickAdd();
-        }
-    };
-
-    const startEditing = (rowIdx: number, col: string, initialValue: any) => {
-        setEditingCell({ row: rowIdx, col });
-
-        if (Array.isArray(initialValue)) {
-            setEditValue(formatArrayOutput(initialValue));
-        } else {
-            setEditValue(String(initialValue ?? ""));
-        }
-    };
-
-    const saveEdit = () => {
-        if (!editingCell) return;
-        const originalValue = data[editingCell.row][editingCell.col];
-        let newValue: any = editValue;
-
-        if (Array.isArray(originalValue)) {
-            newValue = parseArrayInput(editValue);
-        } else if (typeof originalValue === 'number') {
-            newValue = Number(editValue);
-            if (isNaN(newValue)) newValue = editValue;
-        } else if (typeof originalValue === 'boolean') {
-            newValue = editValue.toLowerCase() === 'true';
-        }
-
-        onUpdateCell(editingCell.row, editingCell.col, newValue);
-        setEditingCell(null);
     };
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
         if (e.key === 'Enter') {
-            saveEdit();
-        } else if (e.key === 'Escape') {
-            setEditingCell(null);
+            handleAdd();
         }
     };
+
+    return (
+        <TableFooter className="bg-muted z-10 shadow-sm border-t flex-none w-full block">
+            <TableRow
+                className="grid w-full items-center hover:bg-transparent"
+                style={{ gridTemplateColumns: `repeat(${columns.length}, minmax(100px, 1fr)) 50px` }}
+            >
+                {columns.map((col, idx) => (
+                    <TableCell key={`input-${col}`} className="p-2 py-4 flex items-center justify-center">
+                        <Input
+                            ref={idx === 0 ? firstInputRef : null}
+                            placeholder={col}
+                            value={values[col] || ""}
+                            onChange={(e) => setValues(prev => ({ ...prev, [col]: e.target.value }))}
+                            onKeyDown={handleKeyDown}
+                            className="h-8 text-xs font-normal bg-card border-transparent focus:border-primary focus:ring-0 placeholder:text-muted-foreground/50 transition-colors w-full"
+                        />
+                    </TableCell>
+                ))}
+                <TableCell className="w-[50px] p-2 py-4 flex items-center justify-center">
+                    <Button
+                        size="icon"
+                        variant="ghost"
+                        className="h-8 w-8 text-primary hover:text-primary hover:bg-primary/10"
+                        onClick={handleAdd}
+                    >
+                        <Plus className="h-4 w-4" />
+                    </Button>
+                </TableCell>
+            </TableRow>
+        </TableFooter>
+    );
+};
+
+// --- Main Component ---
+
+export const DataTable: React.FC<DataTableProps> = ({ data, columns, sortConfig, onSort, onUpdateCell, onDeleteRow, onAdd }) => {
+    const [editingCell, setEditingCell] = useState<{ row: number; col: string } | null>(null);
+    const [lastAddedIndex, setLastAddedIndex] = useState<number | null>(null);
+
+    const tableBodyRef = useRef<HTMLTableSectionElement>(null);
+    const firstInputRef = useRef<HTMLInputElement>(null);
+    const shouldScrollRef = useRef(false);
+
+    useEffect(() => {
+        if (shouldScrollRef.current && tableBodyRef.current) {
+            tableBodyRef.current.scrollTop = tableBodyRef.current.scrollHeight;
+            shouldScrollRef.current = false;
+
+            if (firstInputRef.current) {
+                firstInputRef.current.focus();
+            }
+
+            setLastAddedIndex(data.length - 1);
+            const timer = setTimeout(() => setLastAddedIndex(null), 2000);
+            return () => clearTimeout(timer);
+        }
+    }, [data.length]);
+
+    // Use callbacks to maintain referential identity for Memoized rows
+    const handleStartEdit = useCallback((rowIdx: number, col: string) => {
+        setEditingCell({ row: rowIdx, col });
+    }, []);
+
+    const handleCancelEdit = useCallback(() => {
+        setEditingCell(null);
+    }, []);
+
+    const handleUpdateCell = useCallback((rowIdx: number, col: string, val: any) => {
+        onUpdateCell(rowIdx, col, val);
+        setEditingCell(null);
+    }, [onUpdateCell]);
+
+    const handleAddRow = useCallback((row: RowData) => {
+        shouldScrollRef.current = true;
+        onAdd(row);
+    }, [onAdd]);
+
 
     if (data.length === 0) {
         return (
@@ -130,7 +269,6 @@ export const DataTable: React.FC<DataTableProps> = ({ data, columns, sortConfig,
         <div className="rounded-md border bg-card h-full flex flex-col overflow-hidden">
             <Table className="flex flex-col h-full w-full">
                 <TableHeader className="bg-muted z-10 shadow-sm flex-none w-full block">
-                    {/* Header Row */}
                     <TableRow
                         className="grid w-full items-center border-b hover:bg-transparent"
                         style={{ gridTemplateColumns: `repeat(${columns.length}, minmax(100px, 1fr)) 50px` }}
@@ -164,87 +302,26 @@ export const DataTable: React.FC<DataTableProps> = ({ data, columns, sortConfig,
 
                 <TableBody ref={tableBodyRef} className="flex-1 overflow-y-auto w-full block min-h-0">
                     {data.map((row, rowIdx) => (
-                        <TableRow
+                        <DataTableRow
                             key={rowIdx}
-                            className={`grid w-full items-center border-b last:border-0 hover:bg-muted/5 ${rowIdx === lastAddedIndex ? "animate-new-row" : ""}`}
-                            style={{ gridTemplateColumns: `repeat(${columns.length}, minmax(100px, 1fr)) 50px` }}
-                        >
-                            {columns.map((col) => {
-                                const val = row[col];
-                                const isEditing = editingCell?.row === rowIdx && editingCell?.col === col;
-
-                                return (
-                                    <TableCell
-                                        key={col}
-                                        className="cursor-pointer transition-colors p-2 overflow-hidden h-full flex items-center"
-                                        onClick={() => !isEditing && startEditing(rowIdx, col, val)}
-                                    >
-                                        {isEditing ? (
-                                            <Input
-                                                autoFocus
-                                                value={editValue}
-                                                onChange={(e) => setEditValue(e.target.value)}
-                                                onBlur={saveEdit}
-                                                onKeyDown={handleKeyDown}
-                                                className="h-8 w-full"
-                                            />
-                                        ) : (
-                                            <span className="block w-full truncate text-sm">
-                                                {Array.isArray(val) ? (
-                                                    <span className="bg-secondary px-2 py-0.5 rounded text-xs font-medium inline-block truncate max-w-full">
-                                                        {formatArrayOutput(val)}
-                                                    </span>
-                                                ) : (
-                                                    String(val ?? "")
-                                                )}
-                                            </span>
-                                        )}
-                                    </TableCell>
-                                );
-                            })}
-                            <TableCell className="w-[50px] flex items-center justify-center p-0">
-                                <Button
-                                    variant="ghost"
-                                    size="icon"
-                                    className="h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10"
-                                    onClick={(e) => { e.stopPropagation(); onDeleteRow(rowIdx); }}
-                                >
-                                    <Trash2 className="h-4 w-4" />
-                                </Button>
-                            </TableCell>
-                        </TableRow>
+                            row={row}
+                            rowIdx={rowIdx}
+                            columns={columns}
+                            isEditingCell={editingCell?.row === rowIdx ? editingCell : null}
+                            lastAddedIndex={lastAddedIndex}
+                            onStartEdit={handleStartEdit}
+                            onUpdateCell={handleUpdateCell}
+                            onCancelEdit={handleCancelEdit}
+                            onDeleteRow={onDeleteRow}
+                        />
                     ))}
                 </TableBody>
 
-                <TableFooter className="bg-muted z-10 shadow-sm border-t flex-none w-full block">
-                    <TableRow
-                        className="grid w-full items-center hover:bg-transparent"
-                        style={{ gridTemplateColumns: `repeat(${columns.length}, minmax(100px, 1fr)) 50px` }}
-                    >
-                        {columns.map((col, idx) => (
-                            <TableCell key={`input-${col}`} className="p-2 py-4 flex items-center justify-center">
-                                <Input
-                                    ref={idx === 0 ? firstInputRef : null}
-                                    placeholder={col}
-                                    value={newRowValues[col] || ""}
-                                    onChange={(e) => setNewRowValues(prev => ({ ...prev, [col]: e.target.value }))}
-                                    onKeyDown={handleQuickAddKeyDown}
-                                    className="h-8 text-xs font-normal bg-card border-transparent focus:border-primary focus:ring-0 placeholder:text-muted-foreground/50 transition-colors w-full"
-                                />
-                            </TableCell>
-                        ))}
-                        <TableCell className="w-[50px] p-2 py-4 flex items-center justify-center">
-                            <Button
-                                size="icon"
-                                variant="ghost"
-                                className="h-8 w-8 text-primary hover:text-primary hover:bg-primary/10"
-                                onClick={handleQuickAdd}
-                            >
-                                <Plus className="h-4 w-4" />
-                            </Button>
-                        </TableCell>
-                    </TableRow>
-                </TableFooter>
+                <QuickAddFooter
+                    columns={columns}
+                    onAdd={handleAddRow}
+                    firstInputRef={firstInputRef}
+                />
             </Table>
         </div>
     );
