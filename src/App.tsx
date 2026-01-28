@@ -237,7 +237,7 @@ function App() {
             </SecondaryButton>
             <div className="h-4 w-[1px] bg-border mx-1" />
             <SecondaryButton variant="destructive" size="sm" onClick={handleClear} className="h-8 text-xs px-3">
-              <Trash2 className="w-3.5 h-3.5" /> Erase table
+              <Trash2 className="w-3.5 h-3.5" /> Clear workspace
             </SecondaryButton>
           </div>
         </header>

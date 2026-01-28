@@ -3,7 +3,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, TableFoo
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { formatArrayOutput, parseArrayInput, type TableRow as RowData } from "@/lib/data-utils";
-import { Trash2, ArrowUp, ArrowDown, ArrowUpDown, CornerDownLeft } from "lucide-react";
+import { Trash2, ArrowUp, ArrowDown, ArrowUpDown } from "lucide-react";
 
 export interface SortConfig {
     column: string;
@@ -62,15 +62,22 @@ const EditableCell: React.FC<EditableCellProps> = ({ initialValue, onSave, onCan
     };
 
     return (
-        <div className="input-gradient-wrapper w-full">
+        <div className="input-gradient-wrapper w-full relative group">
             <Input
                 autoFocus
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
                 onBlur={handleSave}
                 onKeyDown={handleKeyDown}
-                className="h-8 w-full focus-visible:ring-0 focus-visible:border-transparent bg-background"
+                className="h-8 w-full focus-visible:ring-0 focus-visible:border-transparent bg-background pr-8"
             />
+            <div className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none opacity-100 transition-opacity duration-200">
+                <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
+                    <span className="text-xs text-green-500">
+                        ⏎
+                    </span>
+                </kbd>
+            </div>
         </div>
     );
 };
@@ -104,7 +111,7 @@ const DataTableRow = memo(({
                 return (
                     <TableCell
                         key={col}
-                        className="cursor-pointer transition-colors px-2 py-3 overflow-hidden h-full flex items-center"
+                        className="cursor-pointer transition-colors px-4 py-5 overflow-hidden h-full flex items-center"
                         onClick={() => !isEditing && onStartEdit(rowIdx, col, val)}
                     >
                         {isEditing ? (
@@ -188,28 +195,30 @@ const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstIn
                 style={{ gridTemplateColumns: `repeat(${columns.length}, minmax(100px, 1fr)) 50px` }}
             >
                 {columns.map((col, idx) => (
-                    <TableCell key={`input-${col}`} className="p-2 py-4 flex items-center justify-center">
-                        <div className="input-gradient-wrapper w-full">
+                    <TableCell key={`input-${col}`} className="p-4 py-5 flex items-center justify-center">
+                        <div className="input-gradient-wrapper w-full relative group">
                             <Input
                                 ref={idx === 0 ? firstInputRef : null}
                                 placeholder={col}
                                 value={values[col] || ""}
                                 onChange={(e) => setValues(prev => ({ ...prev, [col]: e.target.value }))}
                                 onKeyDown={handleKeyDown}
-                                className="h-8 text-xs font-normal bg-card border-transparent focus-visible:ring-0 focus-visible:border-transparent placeholder:text-muted-foreground/50 transition-colors w-full"
+                                className="h-8 text-xs font-normal bg-card border-transparent focus-visible:ring-0 focus-visible:border-transparent placeholder:text-muted-foreground/50 transition-colors w-full pr-8"
                             />
+                            {values[col]?.length > 0 && (
+                                <div className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none opacity-0 group-focus-within:opacity-100 transition-opacity duration-200">
+                                    <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
+                                        <span className="text-xs text-green-500">
+                                            ⏎
+                                        </span>
+                                    </kbd>
+                                </div>
+                            )}
                         </div>
                     </TableCell>
                 ))}
-                <TableCell className="w-[50px] p-2 py-4 flex items-center justify-center">
-                    <Button
-                        size="icon"
-                        variant="ghost"
-                        className="h-8 w-8 text-primary hover:text-primary hover:bg-primary/10"
-                        onClick={handleAdd}
-                    >
-                        <CornerDownLeft className="h-4 w-4" />
-                    </Button>
+                <TableCell className="w-[50px] p-4 py-5 flex items-center justify-center">
+
                 </TableCell>
             </TableRow>
         </TableFooter>
@@ -299,7 +308,7 @@ export const DataTable: React.FC<DataTableProps> = ({ data, columns, sortConfig,
                             return (
                                 <TableHead
                                     key={col}
-                                    className={`flex items-center h-10 px-2 font-semibold cursor-pointer hover:bg-muted/50 transition-colors select-none overflow-hidden ${isSorted ? "text-foreground font-bold" : ""}`}
+                                    className={`flex items-center px-4 py-5 font-semibold cursor-pointer hover:bg-muted/50 transition-colors select-none overflow-hidden ${isSorted ? "text-foreground font-bold" : ""}`}
                                     onClick={() => onSort(col)}
                                 >
                                     <div className="flex items-center gap-2 truncate w-full">

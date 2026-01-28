@@ -184,7 +184,7 @@
 .jte-card-table {
   position: relative;
   background: hsl(270 25% 7%);
-  border-radius: 1rem;
+  border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   overflow: hidden;
 }
