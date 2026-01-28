@@ -62,7 +62,7 @@ const EditableCell: React.FC<EditableCellProps> = ({ initialValue, onSave, onCan
     };
 
     return (
-        <div className="input-gradient-wrapper w-full relative group">
+        <div className="input-gradient-wrapper w-full relative group rounded-[8px]">
             <Input
                 autoFocus
                 value={value}
@@ -72,7 +72,7 @@ const EditableCell: React.FC<EditableCellProps> = ({ initialValue, onSave, onCan
                 className="h-8 w-full focus-visible:ring-0 focus-visible:border-transparent bg-background pr-8"
             />
             <div className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none opacity-100 transition-opacity duration-200">
-                <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
+                <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border-[1px] border-solid border-green-500/20 bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
                     <span className="text-xs text-green-500">
                         ⏎
                     </span>
@@ -196,7 +196,7 @@ const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstIn
             >
                 {columns.map((col, idx) => (
                     <TableCell key={`input-${col}`} className="p-4 py-5 flex items-center justify-center">
-                        <div className="input-gradient-wrapper w-full relative group">
+                        <div className={`input-gradient-wrapper w-full relative group rounded-[8px] ${values[col]?.length > 0 ? "has-value" : ""}`}>
                             <Input
                                 ref={idx === 0 ? firstInputRef : null}
                                 placeholder={col}
@@ -207,7 +207,7 @@ const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstIn
                             />
                             {values[col]?.length > 0 && (
                                 <div className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none opacity-0 group-focus-within:opacity-100 transition-opacity duration-200">
-                                    <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
+                                    <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border-[1px] border-solid border-green-500/20 bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
                                         <span className="text-xs text-green-500">
                                             ⏎
                                         </span>
@@ -318,9 +318,9 @@ export const DataTable: React.FC<DataTableProps> = ({ data, columns, sortConfig,
                                         </div>
                                         {isSorted ? (
                                             sortConfig.direction === "asc" ? (
-                                                <ArrowUp className="w-3 h-3 text-primary shrink-0" />
+                                                <ArrowUp className="w-3 h-3 text-green-500 shrink-0" />
                                             ) : (
-                                                <ArrowDown className="w-3 h-3 text-primary shrink-0" />
+                                                <ArrowDown className="w-3 h-3 text-green-500 shrink-0" />
                                             )
                                         ) : (
                                             <ArrowUpDown className="w-3 h-3 opacity-30 group-hover:opacity-50 shrink-0" />
