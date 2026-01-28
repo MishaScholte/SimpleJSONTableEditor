@@ -3,7 +3,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, TableFoo
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { formatArrayOutput, parseArrayInput, type TableRow as RowData } from "@/lib/data-utils";
-import { Trash2, ArrowUp, ArrowDown, ArrowUpDown, Plus } from "lucide-react";
+import { Trash2, ArrowUp, ArrowDown, ArrowUpDown, CornerDownLeft } from "lucide-react";
 
 export interface SortConfig {
     column: string;
@@ -62,14 +62,16 @@ const EditableCell: React.FC<EditableCellProps> = ({ initialValue, onSave, onCan
     };
 
     return (
-        <Input
-            autoFocus
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-            onBlur={handleSave}
-            onKeyDown={handleKeyDown}
-            className="h-8 w-full"
-        />
+        <div className="input-gradient-wrapper w-full">
+            <Input
+                autoFocus
+                value={value}
+                onChange={(e) => setValue(e.target.value)}
+                onBlur={handleSave}
+                onKeyDown={handleKeyDown}
+                className="h-8 w-full focus-visible:ring-0 focus-visible:border-transparent bg-background"
+            />
+        </div>
     );
 };
 
@@ -102,7 +104,7 @@ const DataTableRow = memo(({
                 return (
                     <TableCell
                         key={col}
-                        className="cursor-pointer transition-colors p-2 overflow-hidden h-full flex items-center"
+                        className="cursor-pointer transition-colors px-2 py-3 overflow-hidden h-full flex items-center"
                         onClick={() => !isEditing && onStartEdit(rowIdx, col, val)}
                     >
                         {isEditing ? (
@@ -112,15 +114,15 @@ const DataTableRow = memo(({
                                 onCancel={onCancelEdit}
                             />
                         ) : (
-                            <span className="block w-full truncate text-sm">
+                            <div className="flex items-center w-full overflow-hidden">
                                 {Array.isArray(val) ? (
-                                    <span className="bg-secondary px-2 py-0.5 rounded text-xs font-medium inline-block truncate max-w-full">
+                                    <span className="bg-secondary px-2 py-0.5 rounded text-xs font-medium truncate max-w-full">
                                         {formatArrayOutput(val)}
                                     </span>
                                 ) : (
-                                    String(val ?? "")
+                                    <span className="truncate text-sm w-full">{String(val ?? "")}</span>
                                 )}
-                            </span>
+                            </div>
                         )}
                     </TableCell>
                 );
@@ -144,7 +146,7 @@ DataTableRow.displayName = "DataTableRow";
 interface QuickAddFooterProps {
     columns: string[];
     onAdd: (row: RowData) => void;
-    firstInputRef: React.RefObject<HTMLInputElement>;
+    firstInputRef: React.RefObject<HTMLInputElement | null>;
 }
 
 const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstInputRef }) => {
@@ -180,21 +182,23 @@ const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstIn
     };
 
     return (
-        <TableFooter className="bg-muted z-10 shadow-sm border-t flex-none w-full block">
+        <TableFooter className="glass z-10 border-t flex-none w-full block">
             <TableRow
                 className="grid w-full items-center hover:bg-transparent"
                 style={{ gridTemplateColumns: `repeat(${columns.length}, minmax(100px, 1fr)) 50px` }}
             >
                 {columns.map((col, idx) => (
                     <TableCell key={`input-${col}`} className="p-2 py-4 flex items-center justify-center">
-                        <Input
-                            ref={idx === 0 ? firstInputRef : null}
-                            placeholder={col}
-                            value={values[col] || ""}
-                            onChange={(e) => setValues(prev => ({ ...prev, [col]: e.target.value }))}
-                            onKeyDown={handleKeyDown}
-                            className="h-8 text-xs font-normal bg-card border-transparent focus:border-primary focus:ring-0 placeholder:text-muted-foreground/50 transition-colors w-full"
-                        />
+                        <div className="input-gradient-wrapper w-full">
+                            <Input
+                                ref={idx === 0 ? firstInputRef : null}
+                                placeholder={col}
+                                value={values[col] || ""}
+                                onChange={(e) => setValues(prev => ({ ...prev, [col]: e.target.value }))}
+                                onKeyDown={handleKeyDown}
+                                className="h-8 text-xs font-normal bg-card border-transparent focus-visible:ring-0 focus-visible:border-transparent placeholder:text-muted-foreground/50 transition-colors w-full"
+                            />
+                        </div>
                     </TableCell>
                 ))}
                 <TableCell className="w-[50px] p-2 py-4 flex items-center justify-center">
@@ -204,7 +208,7 @@ const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstIn
                         className="h-8 w-8 text-primary hover:text-primary hover:bg-primary/10"
                         onClick={handleAdd}
                     >
-                        <Plus className="h-4 w-4" />
+                        <CornerDownLeft className="h-4 w-4" />
                     </Button>
                 </TableCell>
             </TableRow>
@@ -257,6 +261,23 @@ export const DataTable: React.FC<DataTableProps> = ({ data, columns, sortConfig,
     }, [onAdd]);
 
 
+    const columnTypes = React.useMemo(() => {
+        const types: Record<string, string> = {};
+        columns.forEach(col => {
+            const rowWithData = data.find(row => row[col] !== null && row[col] !== undefined);
+            if (rowWithData) {
+                const val = rowWithData[col];
+                if (Array.isArray(val)) types[col] = "array";
+                else if (val === null) types[col] = "string";
+                else types[col] = typeof val;
+            } else {
+                types[col] = "string";
+            }
+        });
+        return types;
+    }, [data, columns]);
+
+
     if (data.length === 0) {
         return (
             <div className="text-center py-20 text-muted-foreground bg-muted/10 rounded-lg border border-dashed">
@@ -266,9 +287,9 @@ export const DataTable: React.FC<DataTableProps> = ({ data, columns, sortConfig,
     }
 
     return (
-        <div className="rounded-md border bg-card h-full flex flex-col overflow-hidden">
+        <div className="jte-card-table h-full flex flex-col overflow-hidden">
             <Table className="flex flex-col h-full w-full">
-                <TableHeader className="bg-muted z-10 shadow-sm flex-none w-full block">
+                <TableHeader className="glass z-10 flex-none w-full block">
                     <TableRow
                         className="grid w-full items-center border-b hover:bg-transparent"
                         style={{ gridTemplateColumns: `repeat(${columns.length}, minmax(100px, 1fr)) 50px` }}
@@ -282,7 +303,10 @@ export const DataTable: React.FC<DataTableProps> = ({ data, columns, sortConfig,
                                     onClick={() => onSort(col)}
                                 >
                                     <div className="flex items-center gap-2 truncate w-full">
-                                        <span className="truncate">{col}</span>
+                                        <div className="flex items-baseline gap-1.5 truncate">
+                                            <span className="truncate text-white">{col}</span>
+                                            <span className="text-white/80 text-[10px] font-normal">({columnTypes[col]})</span>
+                                        </div>
                                         {isSorted ? (
                                             sortConfig.direction === "asc" ? (
                                                 <ArrowUp className="w-3 h-3 text-primary shrink-0" />

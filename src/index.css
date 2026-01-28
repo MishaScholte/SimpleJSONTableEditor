@@ -36,33 +36,35 @@
   }
 
   .dark {
-    --background: 220 20% 5%;
-    --foreground: 210 40% 98%;
+    --background: 270 30% 4%;
+    --foreground: 260 20% 85%;
 
-    --card: 222.2 60% 8%;
-    --card-foreground: 210 40% 98%;
+    --card: 270 25% 12%;
+    --card-foreground: 260 20% 90%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 270 26% 8%;
+    --popover-foreground: 260 20% 90%;
 
     --primary: 155 100% 19%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 143 10% 15%;
-    --secondary-foreground: 142 70% 50%;
+    --secondary: 270 20% 15%;
+    --secondary-foreground: 260 20% 80%;
 
-    --muted: 217.2 32.6% 12.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 270 22% 16%;
+    --muted-foreground: 260 15% 60%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 270 20% 15%;
+    --accent-foreground: 260 20% 90%;
 
     --destructive: 0 62.8% 50%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
+    --border: 0 0% 100% / 0.12;
+    --input: 270 25% 12%;
     --ring: 155 100% 19%;
+
+    --radius: 1.5rem;
   }
 }
 
@@ -73,6 +75,30 @@
 
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/* Mesh gradient background for empty state only */
+.mesh-background {
+  background-image:
+    radial-gradient(circle at 20% 80%, rgba(180, 100, 60, 0.07) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(140, 70, 70, 0.05) 0%, transparent 45%),
+    radial-gradient(circle at 60% 90%, rgba(4, 0, 180, 0.04) 0%, transparent 40%);
+  background-size: 120% 120%;
+  animation: mesh-wave 15s ease-in-out infinite;
+}
+
+@keyframes mesh-wave {
+
+  0%,
+  100% {
+    background-position: 0% 0%;
+    background-size: 120% 120%;
+  }
+
+  50% {
+    background-position: 10% -8%;
+    background-size: 130% 130%;
   }
 }
 
@@ -108,4 +134,101 @@
 
 .animate-new-row {
   animation: highlight-fade 500ms ease-in-out forwards;
+}
+
+/* jte glassmorphism */
+.glass {
+  backdrop-filter: blur(50px);
+  -webkit-backdrop-filter: blur(50px);
+  background: hsl(270 25% 9%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* jte card styling */
+.jte-card {
+  position: relative;
+  background:
+    radial-gradient(circle at 30% 140%, rgba(217, 126, 75, 0.15), transparent 37%),
+    radial-gradient(circle at 50% 310%, rgba(4, 0, 255, 0.08), transparent 78%),
+    linear-gradient(transparent, rgba(13, 10, 25, 0.2)),
+    radial-gradient(circle at 50% -30%, rgba(168, 92, 92, 0.1), transparent),
+    radial-gradient(90% 10% at 50% 0, rgba(168, 92, 92, 0.03), transparent 90%),
+    rgba(20, 15, 35, 0.4);
+  border-radius: 3.5rem;
+  overflow: hidden;
+}
+
+/* Gradient border using pseudo-element */
+.jte-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 3.5rem;
+  padding: 2px;
+  background: linear-gradient(135deg,
+      rgba(245, 190, 85, 0.4) 0%,
+      rgba(217, 126, 75, 0.3) 50%,
+      rgba(190, 70, 70, 0.4) 100%);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* jte card styling for table (smaller radius) */
+.jte-card-table {
+  position: relative;
+  background: hsl(270 25% 7%);
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+
+/* Primary button gradient border */
+.btn-gradient-border {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.btn-gradient-border::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0.1) 50%,
+      rgba(255, 255, 255, 0.05) 100%);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Input gradient focus wrapper */
+.input-gradient-wrapper {
+  position: relative;
+  border-radius: var(--radius);
+}
+
+.input-gradient-wrapper:focus-within::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  border: 1px solid rgb(255, 204, 0);
+  pointer-events: none;
+  z-index: 2;
 }
