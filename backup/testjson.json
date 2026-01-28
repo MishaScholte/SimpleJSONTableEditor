@@ -1,0 +1,20 @@
+[
+  {
+    "colorHex" : "#0032A0",
+    "keywords" : [
+      "obbelink",
+      "obbellink",
+      "obelink"
+    ],
+    "logoAsset" : "Albert_Heijn",
+    "name" : "Albert Heijn"
+  },
+  {
+    "colorHex" : "#E00076",
+    "keywords" : [
+      "paagman"
+    ],
+    "logoAsset" : "paagman",
+    "name" : "Paagman"
+  }
+]

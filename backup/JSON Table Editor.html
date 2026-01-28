@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Table Editor</title>
+    <style>
+        :root {
+            --color-primary: #2180A0;
+            --color-primary-hover: #1A6B7F;
+            --color-background: #F5F5F3;
+            --color-surface: #FFFFFF;
+            --color-border: rgba(94, 82, 64, 0.2);
+            --color-text: #134252;
+            --color-text-secondary: #626C70;
+            --color-error: #C01530;
+            --color-success: #208085;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: var(--color-background);
+            color: var(--color-text);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            margin: 0 0 10px 0;
+            font-size: 28px;
+            font-weight: 600;
+        }
+
+        .subtitle {
+            color: var(--color-text-secondary);
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .toolbar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 150ms cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .btn-primary {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--color-primary-hover);
+        }
+
+        .btn-secondary {
+            background: rgba(94, 82, 64, 0.12);
+            color: var(--color-text);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(94, 82, 64, 0.2);
+        }
+
+        .btn-danger {
+            background: rgba(192, 21, 47, 0.12);
+            color: var(--color-error);
+        }
+
+        .btn-danger:hover {
+            background: rgba(192, 21, 47, 0.2);
+        }
+
+        .btn-small {
+            padding: 6px 10px;
+            font-size: 12px;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .table-wrapper {
+            background: var(--color-surface);
+            border-radius: 12px;
+            border: 1px solid var(--color-border);
+            overflow: auto;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        thead {
+            background: rgba(94, 82, 64, 0.05);
+            border-bottom: 1px solid var(--color-border);
+            position: sticky;
+            top: 0;
+        }
+
+        th {
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--color-text);
+            user-select: none;
+            cursor: pointer;
+            position: relative;
+        }
+
+        th:hover {
+            background: rgba(94, 82, 64, 0.1);
+        }
+
+        .sort-indicator {
+            display: inline-block;
+            margin-left: 8px;
+            font-size: 12px;
+            opacity: 0.5;
+        }
+
+        th.sorted .sort-indicator {
+            opacity: 1;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        tbody tr:hover {
+            background: rgba(94, 82, 64, 0.03);
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid var(--color-border);
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: inherit;
+            color: var(--color-text);
+            background: var(--color-surface);
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(33, 128, 141, 0.1);
+        }
+
+        input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .type-select {
+            padding: 6px;
+            font-size: 12px;
+        }
+
+        .actions-cell {
+            text-align: center;
+        }
+
+        .btn-delete {
+            background: rgba(192, 21, 47, 0.12);
+            color: var(--color-error);
+            padding: 6px 8px;
+            font-size: 12px;
+        }
+
+        .btn-delete:hover {
+            background: rgba(192, 21, 47, 0.2);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: var(--color-text-secondary);
+        }
+
+        .empty-state svg {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 20px;
+            opacity: 0.3;
+        }
+
+        .preview-panel {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .preview-title {
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--color-text);
+        }
+
+        .preview-code {
+            background: rgba(94, 82, 64, 0.05);
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            padding: 12px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 12px;
+            max-height: 200px;
+            overflow-y: auto;
+            color: var(--color-text);
+            word-break: break-all;
+            white-space: pre-wrap;
+        }
+
+        .status-message {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .status-message.show {
+            display: block;
+        }
+
+        .status-message.success {
+            background: rgba(32, 128, 133, 0.1);
+            color: var(--color-success);
+            border: 1px solid rgba(32, 128, 133, 0.2);
+        }
+
+        .status-message.error {
+            background: rgba(192, 21, 47, 0.1);
+            color: var(--color-error);
+            border: 1px solid rgba(192, 21, 47, 0.2);
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--color-text);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 12px;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+
+            table {
+                font-size: 12px;
+            }
+
+            th, td {
+                padding: 8px 6px;
+            }
+
+            .toolbar {
+                flex-direction: column;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📊 JSON Table Editor</h1>
+            <p class="subtitle">Bewerk JSON data in een tabulaire interface</p>
+        </header>
+
+        <div id="statusMessage" class="status-message"></div>
+
+        <div class="toolbar">
+            <button class="btn-primary" onclick="addRow()">+ Rij toevoegen</button>
+            <button class="btn-secondary" onclick="document.getElementById('fileInput').click()">📁 JSON laden</button>
+            <button class="btn-secondary" onclick="exportJSON()">💾 Exporteren</button>
+            <button class="btn-secondary" onclick="copyJSON()">📋 Kopiëren</button>
+            <button class="btn-secondary" onclick="clearData()">🗑️ Alles wissen</button>
+        </div>
+
+        <input type="file" id="fileInput" accept=".json,.txt" onchange="importJSON(event)">
+
+        <div class="preview-panel">
+            <div class="preview-title">JSON Uitvoer</div>
+            <div id="preview" class="preview-code">[]</div>
+        </div>
+
+        <div class="preview-panel">
+            <div class="preview-title">Nieuwe Entry</div>
+            <form id="entryForm" onsubmit="submitEntry(event)">
+                <div id="formFields"></div>
+                <button type="submit" class="btn-primary" style="width: 100%; margin-top: 12px;">✅ Toevoegen</button>
+            </form>
+        </div>
+
+        <div class="table-wrapper">
+            <table id="dataTable">
+                <thead>
+                    <tr id="headerRow"></tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+        </div>
+
+        <div id="emptyState" class="empty-state">
+            <p>👆 Voeg je eerste rij toe of laad een JSON bestand</p>
+        </div>
+    </div>
+
+    <script>
+        let data = [];
+        let columns = [];
+        let sortColumn = null;
+        let sortDirection = 'asc';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadFromLocalStorage();
+            renderFormFields();
+            renderTable();
+        });
+
+        function loadFromLocalStorage() {
+            try {
+                const saved = localStorage.getItem('jsonTableData');
+                if (saved) {
+                    data = JSON.parse(saved);
+                    if (data.length > 0) {
+                        const allColumns = new Set();
+                        data.forEach(row => {
+                            Object.keys(row).forEach(col => allColumns.add(col));
+                        });
+                        columns = Array.from(allColumns);
+                    }
+                }
+            } catch (e) {
+                try {
+                    const saved = sessionStorage.getItem('jsonTableData');
+                    if (saved) {
+                        data = JSON.parse(saved);
+                        if (data.length > 0) {
+                            const allColumns = new Set();
+                            data.forEach(row => {
+                                Object.keys(row).forEach(col => allColumns.add(col));
+                            });
+                            columns = Array.from(allColumns);
+                        }
+                    }
+                } catch (e2) {
+                    console.error('Storage not available', e2);
+                }
+            }
+        }
+
+        function saveToLocalStorage() {
+            try {
+                localStorage.setItem('jsonTableData', JSON.stringify(data));
+            } catch (e) {
+                try {
+                    sessionStorage.setItem('jsonTableData', JSON.stringify(data));
+                } catch (e2) {
+                    console.error('Could not save data', e2);
+                }
+            }
+            updatePreview();
+        }
+
+        function sortData(column) {
+            if (sortColumn === column) {
+                sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+            } else {
+                sortColumn = column;
+                sortDirection = 'asc';
+            }
+
+            const sorted = [...data];
+            sorted.sort((a, b) => {
+                let valA = a[column];
+                let valB = b[column];
+
+                if (valA === null || valA === undefined) valA = '';
+                if (valB === null || valB === undefined) valB = '';
+
+                if (typeof valA === 'string') {
+                    valA = valA.toLowerCase();
+                    valB = valB.toLowerCase();
+                }
+
+                if (valA < valB) return sortDirection === 'asc' ? -1 : 1;
+                if (valA > valB) return sortDirection === 'asc' ? 1 : -1;
+                return 0;
+            });
+
+            data = sorted;
+            saveToLocalStorage();
+            renderTable();
+            renderFormFields();
+        }
+
+        function renderTable() {
+            const headerRow = document.getElementById('headerRow');
+            const tableBody = document.getElementById('tableBody');
+            const emptyState = document.getElementById('emptyState');
+
+            headerRow.innerHTML = '';
+            tableBody.innerHTML = '';
+
+            if (data.length === 0) {
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            emptyState.style.display = 'none';
+
+            columns.forEach((col) => {
+                const th = document.createElement('th');
+                const isSorted = sortColumn === col;
+                const indicator = isSorted ? (sortDirection === 'asc' ? ' ↑' : ' ↓') : ' ↕';
+                
+                th.innerHTML = `${escapeHtml(col)}<span class="sort-indicator">${indicator}</span>`;
+                th.onclick = () => sortData(col);
+                if (isSorted) {
+                    th.classList.add('sorted');
+                }
+                headerRow.appendChild(th);
+            });
+
+            const actionTh = document.createElement('th');
+            actionTh.style.width = '60px';
+            actionTh.textContent = 'Acties';
+            headerRow.appendChild(actionTh);
+
+            data.forEach((row, rowIdx) => {
+                const tr = document.createElement('tr');
+                
+                columns.forEach((col) => {
+                    const td = document.createElement('td');
+                    const value = row[col];
+                    const type = getType(value);
+
+                    if (type === 'boolean') {
+                        td.innerHTML = `
+                            <input type="checkbox" ${value ? 'checked' : ''} 
+                                onchange="updateCell(${rowIdx}, '${escapeAttr(col)}', this.checked)">
+                        `;
+                    } else if (type === 'number') {
+                        td.innerHTML = `
+                            <input type="number" value="${value}" 
+                                onchange="updateCell(${rowIdx}, '${escapeAttr(col)}', parseFloat(this.value))">
+                        `;
+                    } else if (type === 'array') {
+                        const arrayDisplay = value.join(', ');
+                        td.innerHTML = `
+                            <input type="text" value="${escapeAttr(arrayDisplay)}" 
+                                onchange="updateCell(${rowIdx}, '${escapeAttr(col)}', parseArray(this.value))">
+                        `;
+                    } else if (type === 'object') {
+                        td.innerHTML = `
+                            <input type="text" value="${escapeAttr(JSON.stringify(value))}" 
+                                onchange="updateCell(${rowIdx}, '${escapeAttr(col)}', parseJSON(this.value))">
+                        `;
+                    } else {
+                        td.innerHTML = `
+                            <input type="text" value="${escapeAttr(value)}" 
+                                onchange="updateCell(${rowIdx}, '${escapeAttr(col)}', this.value)">
+                        `;
+                    }
+
+                    tr.appendChild(td);
+                });
+
+                const actionTd = document.createElement('td');
+                actionTd.className = 'actions-cell';
+                actionTd.innerHTML = `
+                    <button class="btn-delete btn-small" onclick="deleteRow(${rowIdx})">Verwijder</button>
+                `;
+                tr.appendChild(actionTd);
+
+                tableBody.appendChild(tr);
+            });
+
+            updatePreview();
+        }
+
+        function renderFormFields() {
+            const formFields = document.getElementById('formFields');
+            formFields.innerHTML = '';
+
+            if (columns.length === 0) return;
+
+            columns.forEach(col => {
+                const firstValue = data.length > 0 ? data[0][col] : '';
+                const type = getType(firstValue);
+
+                const formGroup = document.createElement('div');
+                formGroup.style.marginBottom = '12px';
+
+                const label = document.createElement('label');
+                label.className = 'form-label';
+                label.htmlFor = `field-${col}`;
+                label.textContent = escapeHtml(col);
+                formGroup.appendChild(label);
+
+                let input;
+
+                if (type === 'boolean') {
+                    input = document.createElement('input');
+                    input.type = 'checkbox';
+                    input.id = `field-${col}`;
+                    input.dataset.type = 'boolean';
+                } else if (type === 'number') {
+                    input = document.createElement('input');
+                    input.type = 'number';
+                    input.id = `field-${col}`;
+                    input.placeholder = 'Getal invoeren';
+                    input.dataset.type = 'number';
+                } else if (type === 'array') {
+                    input = document.createElement('input');
+                    input.type = 'text';
+                    input.id = `field-${col}`;
+                    input.placeholder = 'Komma-gescheiden waarden';
+                    input.dataset.type = 'array';
+                } else if (type === 'object') {
+                    input = document.createElement('input');
+                    input.type = 'text';
+                    input.id = `field-${col}`;
+                    input.placeholder = 'JSON object';
+                    input.dataset.type = 'object';
+                } else {
+                    input = document.createElement('input');
+                    input.type = 'text';
+                    input.id = `field-${col}`;
+                    input.placeholder = 'Tekst invoeren';
+                    input.dataset.type = 'string';
+                }
+
+                formGroup.appendChild(input);
+                formFields.appendChild(formGroup);
+            });
+        }
+
+        function submitEntry(event) {
+            event.preventDefault();
+
+            if (columns.length === 0) {
+                showStatus('Voeg eerst een rij toe via de tabel', 'error');
+                return;
+            }
+
+            const newRow = {};
+            let isValid = true;
+
+            columns.forEach(col => {
+                const input = document.getElementById(`field-${col}`);
+                const type = input.dataset.type;
+
+                let value;
+
+                if (type === 'boolean') {
+                    value = input.checked;
+                } else if (type === 'number') {
+                    value = input.value ? parseFloat(input.value) : 0;
+                } else if (type === 'array') {
+                    value = parseArray(input.value);
+                } else if (type === 'object') {
+                    value = parseJSON(input.value);
+                    if (typeof value === 'string') {
+                        isValid = false;
+                    }
+                } else {
+                    value = input.value;
+                }
+
+                newRow[col] = value;
+            });
+
+            if (!isValid) {
+                showStatus('Fout in invoer', 'error');
+                return;
+            }
+
+            data.push(newRow);
+            saveToLocalStorage();
+            renderTable();
+            event.target.reset();
+            showStatus('Entry toegevoegd!', 'success');
+        }
+
+        function addRow() {
+            if (columns.length === 0) {
+                columns = ['naam', 'waarde'];
+                data.push({ naam: '', waarde: '' });
+                renderFormFields();
+            } else {
+                const newRow = {};
+                columns.forEach(col => {
+                    const firstValue = data[0][col];
+                    newRow[col] = getDefaultValue(getType(firstValue));
+                });
+                data.push(newRow);
+            }
+
+            saveToLocalStorage();
+            renderTable();
+        }
+
+        function deleteRow(idx) {
+            if (confirm('Weet je zeker dat je deze rij wilt verwijderen?')) {
+                data.splice(idx, 1);
+                saveToLocalStorage();
+                renderTable();
+            }
+        }
+
+        function updateCell(rowIdx, col, value) {
+            data[rowIdx][col] = value;
+            saveToLocalStorage();
+        }
+
+        function getType(value) {
+            if (typeof value === 'boolean') return 'boolean';
+            if (typeof value === 'number') return 'number';
+            if (Array.isArray(value)) return 'array';
+            if (typeof value === 'object' && value !== null) return 'object';
+            return 'string';
+        }
+
+        function getDefaultValue(type) {
+            switch (type) {
+                case 'boolean': return false;
+                case 'number': return 0;
+                case 'array': return [];
+                case 'object': return {};
+                default: return '';
+            }
+        }
+
+        function parseJSON(str) {
+            try {
+                return JSON.parse(str);
+            } catch (e) {
+                showStatus('Ongeldig JSON formaat', 'error');
+                return str;
+            }
+        }
+
+        function parseArray(str) {
+            if (!str) return [];
+            const items = str.split(',').map(item => item.trim());
+            return items.filter(item => item.length > 0);
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function escapeAttr(text) {
+            return text.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+        }
+
+        function updatePreview() {
+            const preview = document.getElementById('preview');
+            preview.textContent = JSON.stringify(data, null, 2);
+        }
+
+        function exportJSON() {
+            const json = JSON.stringify(data, null, 2);
+            const blob = new Blob([json], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `data_${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showStatus('JSON geëxporteerd!', 'success');
+        }
+
+        function copyJSON() {
+            const json = JSON.stringify(data, null, 2);
+            navigator.clipboard.writeText(json).then(() => {
+                showStatus('JSON gekopieerd naar klembord!', 'success');
+            }).catch(() => {
+                showStatus('Kon niet kopiëren', 'error');
+            });
+        }
+
+        function importJSON(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const imported = JSON.parse(e.target.result);
+                    
+                    if (!Array.isArray(imported)) {
+                        showStatus('Het JSON bestand moet een array zijn', 'error');
+                        return;
+                    }
+
+                    data = imported;
+                    
+                    const allColumns = new Set();
+                    data.forEach(row => {
+                        Object.keys(row).forEach(col => allColumns.add(col));
+                    });
+                    columns = Array.from(allColumns);
+                    
+                    sortColumn = null;
+                    sortDirection = 'asc';
+                    saveToLocalStorage();
+                    renderFormFields();
+                    renderTable();
+                    showStatus('JSON geïmporteerd!', 'success');
+                } catch (error) {
+                    showStatus('Fout bij importeren: ' + error.message, 'error');
+                }
+            };
+            reader.readAsText(file);
+            event.target.value = '';
+        }
+
+        function clearData() {
+            if (confirm('Weet je zeker dat je alles wilt wissen? Dit kan niet ongedaan gemaakt worden.')) {
+                data = [];
+                columns = [];
+                sortColumn = null;
+                sortDirection = 'asc';
+                saveToLocalStorage();
+                renderFormFields();
+                renderTable();
+                showStatus('Data gewist', 'success');
+            }
+        }
+
+        function showStatus(message, type) {
+            const statusEl = document.getElementById('statusMessage');
+            statusEl.textContent = message;
+            statusEl.className = `status-message show ${type}`;
+            setTimeout(() => {
+                statusEl.classList.remove('show');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
