@@ -98,16 +98,14 @@
 
 @keyframes highlight-fade {
   0% {
-    background-color: hsla(var(--primary), 0.15);
-    color: hsl(var(--primary));
+    background-color: hsl(var(--primary) / 0.3);
   }
 
   100% {
     background-color: transparent;
-    color: inherit;
   }
 }
 
 .animate-new-row {
-  animation: highlight-fade 2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: highlight-fade 500ms ease-in-out forwards;
 }
