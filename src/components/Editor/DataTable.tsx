@@ -3,8 +3,9 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, TableFoo
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { formatArrayOutput, parseArrayInput, type TableRow as RowData } from "@/lib/data-utils";
-import { Trash2, ArrowUp, ArrowDown, ArrowUpDown } from "lucide-react";
+import { Trash2, ArrowUp, ArrowDown, ArrowUpDown, X } from "lucide-react";
 import { NestedTableModal } from "./NestedTableModal";
+import { SlashMenu } from "./SlashMenu";
 
 export interface SortConfig {
     column: string;
@@ -212,32 +213,59 @@ interface QuickAddFooterProps {
     columns: string[];
     onAdd: (row: RowData) => void;
     firstInputRef: React.RefObject<HTMLInputElement | null>;
+    onOpenNested: (col: string, initialData: any, onSave: (data: any) => void) => void;
 }
 
-const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstInputRef }) => {
-    const [values, setValues] = useState<Record<string, string>>({});
+const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstInputRef, onOpenNested }) => {
+    const [values, setValues] = useState<Record<string, any>>({});
+    const [types, setTypes] = useState<Record<string, 'auto' | 'text' | 'number' | 'boolean'>>({});
+    const inputRefs = useRef<Record<string, HTMLInputElement | null>>({});
+
+    // Slash Menu State
+    const [menuState, setMenuState] = useState<{ col: string; query: string; anchorEl: HTMLElement | null } | null>(null);
 
     const handleAdd = () => {
         const newRow: RowData = {};
         let hasData = false;
 
         columns.forEach(col => {
-            const rawVal = values[col] || "";
-            if (rawVal) hasData = true;
+            const rawVal = values[col];
+            if (rawVal !== undefined && rawVal !== "") hasData = true;
 
-            if (rawVal.includes(',')) {
-                newRow[col] = parseArrayInput(rawVal);
-            } else if (!isNaN(Number(rawVal)) && rawVal !== "") {
-                newRow[col] = Number(rawVal);
-            } else {
+            // If complex type (Object/Array), use as is
+            if (rawVal !== null && typeof rawVal === 'object') {
                 newRow[col] = rawVal;
+                return;
+            }
+
+            // Primitive Handling with Type Enforcement
+            const type = types[col] || 'auto';
+            const valStr = String(rawVal || "");
+
+            if (type === 'text') {
+                newRow[col] = valStr;
+            } else if (type === 'number') {
+                const num = Number(valStr);
+                newRow[col] = isNaN(num) ? valStr : num;
+            } else if (type === 'boolean') {
+                newRow[col] = valStr.toLowerCase() === 'true';
+            } else {
+                // Auto (Default)
+                if (valStr.includes(',')) {
+                    newRow[col] = parseArrayInput(valStr);
+                } else if (!isNaN(Number(valStr)) && valStr !== "") {
+                    newRow[col] = Number(valStr);
+                } else {
+                    newRow[col] = valStr;
+                }
             }
         });
 
         if (hasData) {
             onAdd(newRow);
             setValues({});
-            // Focus back to first input for rapid entry
+            setTypes({});
+            // Focus back to first input
             setTimeout(() => {
                 firstInputRef.current?.focus();
             }, 0);
@@ -245,17 +273,72 @@ const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstIn
     };
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
+        // If menu is open, let it handle arrows/enter (except Esc)
+        if (menuState) {
+            if (['ArrowUp', 'ArrowDown', 'Enter'].includes(e.key)) {
+                // SlashMenu attaches its own listener, but we must stop propagation here
+                // to prevent table actions.
+                // However, SlashMenu uses document listener.
+                // We just need to ensure we don't trigger OUR Insert/Nav logic.
+                // Wait, if Insert triggers on Enter, we must stop it if menu is selecting.
+                // Since SlashMenu handles Enter on 'keydown' globally, strict timing matters.
+                // Ideally input onKeyDown fires first.
+                return;
+            }
+            if (e.key === 'Escape') {
+                e.preventDefault();
+                setMenuState(null);
+                return;
+            }
+        }
+
         if (e.key === 'Enter') {
             e.stopPropagation();
             handleAdd();
             return;
         }
 
-        // Stop propagation for keys that would interfere with parent table navigation/actions
-        // But allow Escape to bubble (to close modal)
         if (['Backspace', 'Delete', ' ', 'Spacebar', 'Tab', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(e.key)) {
             e.stopPropagation();
         }
+    };
+
+    const handleInputChange = (col: string, val: string, anchor?: HTMLElement) => {
+        // Check for Slash Command
+        if (val.startsWith('/')) {
+            setMenuState({ col, query: val.slice(1), anchorEl: anchor || null });
+        } else {
+            if (menuState?.col === col) setMenuState(null);
+        }
+        setValues(prev => ({ ...prev, [col]: val }));
+    };
+
+    const handleCommandSelect = (command: string) => {
+        if (!menuState) return;
+        const col = menuState.col;
+
+        switch (command) {
+            case 'text':
+            case 'number':
+            case 'bool':
+                setTypes(prev => ({ ...prev, [col]: command as any }));
+                setValues(prev => ({ ...prev, [col]: "" })); // Clear slash
+                // Restore focus to input
+                setTimeout(() => {
+                    inputRefs.current[col]?.focus();
+                }, 0);
+                break;
+            case 'obj':
+            case 'list':
+                // Open Nested Modal immediately
+                const initialData = command === 'obj' ? {} : [];
+                onOpenNested(col, initialData, (savedData) => {
+                    setValues(prev => ({ ...prev, [col]: savedData }));
+                });
+                setValues(prev => ({ ...prev, [col]: "" })); // Clear input while modal opens
+                break;
+        }
+        setMenuState(null);
     };
 
     return (
@@ -264,29 +347,75 @@ const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstIn
                 className="grid w-full items-center hover:bg-transparent"
                 style={{ gridTemplateColumns: `repeat(${columns.length}, minmax(100px, 1fr)) 50px` }}
             >
-                {columns.map((col, idx) => (
-                    <TableCell key={`input-${col}`} className="p-4 py-5 flex items-center justify-center">
-                        <div className={`input-gradient-wrapper w-full relative group rounded-[8px] ${values[col]?.length > 0 ? "has-value" : ""}`}>
-                            <Input
-                                ref={idx === 0 ? firstInputRef : null}
-                                placeholder={col}
-                                value={values[col] || ""}
-                                onChange={(e) => setValues(prev => ({ ...prev, [col]: e.target.value }))}
-                                onKeyDown={handleKeyDown}
-                                className="h-8 text-xs font-normal bg-card border-transparent focus-visible:ring-0 focus-visible:border-transparent placeholder:text-muted-foreground/50 transition-colors w-full pr-8"
-                            />
-                            {values[col]?.length > 0 && (
-                                <div className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none opacity-0 group-focus-within:opacity-100 transition-opacity duration-200">
-                                    <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border-[1px] border-solid border-green-500/20 bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
-                                        <span className="text-xs text-green-500">
-                                            ⏎
-                                        </span>
-                                    </kbd>
-                                </div>
+                {columns.map((col, idx) => {
+                    const value = values[col];
+                    const isComplex = value !== null && typeof value === 'object';
+                    const currentType = types[col];
+
+                    return (
+                        <TableCell key={`input-${col}`} className="p-4 py-5 flex items-center justify-center relative">
+                            {/* Slash Menu */}
+                            {menuState?.col === col && (
+                                <SlashMenu
+                                    query={menuState.query}
+                                    onSelect={handleCommandSelect}
+                                    onClose={() => setMenuState(null)}
+                                    anchorEl={menuState.anchorEl}
+                                />
                             )}
-                        </div>
-                    </TableCell>
-                ))}
+
+                            <div className={`input-gradient-wrapper w-full relative group rounded-[8px] ${value ? "has-value" : ""}`}>
+                                {isComplex ? (
+                                    <div className="flex items-center gap-1 pl-2 pr-1 py-1 h-8 w-full bg-secondary/50 rounded-[8px] border border-white/10">
+                                        {Array.isArray(value) ? (
+                                            <span className="text-xs text-blue-400 font-mono flex-1 truncate">Array [{value.length}]</span>
+                                        ) : (
+                                            <span className="text-xs text-amber-400 font-mono flex-1 truncate">Object &#123;...&#125;</span>
+                                        )}
+                                        <button
+                                            onClick={() => setValues(prev => {
+                                                const next = { ...prev };
+                                                delete next[col];
+                                                return next;
+                                            })}
+                                            className="hover:bg-destructive/20 text-muted-foreground hover:text-destructive p-1 rounded"
+                                        >
+                                            <X className="w-3 h-3" />
+                                        </button>
+                                        <button
+                                            onClick={() => onOpenNested(col, value, (saved) => setValues(prev => ({ ...prev, [col]: saved })))}
+                                            className="hover:bg-primary/20 text-muted-foreground hover:text-primary p-1 rounded font-bold text-xs"
+                                        >
+                                            ✎
+                                        </button>
+                                    </div>
+                                ) : (
+                                    <Input
+                                        ref={(el) => {
+                                            if (idx === 0) firstInputRef.current = el; // Keep existing firstRef logic
+                                            inputRefs.current[col] = el;
+                                        }}
+                                        placeholder={currentType && currentType !== 'auto' ? `${currentType}:` : col}
+                                        value={typeof value === 'string' ? value : ""}
+                                        onChange={(e) => handleInputChange(col, e.target.value, e.target as HTMLElement)}
+                                        onKeyDown={handleKeyDown}
+                                        className={`h-8 text-xs font-normal bg-card border-transparent focus-visible:ring-0 focus-visible:border-transparent placeholder:text-muted-foreground/50 transition-colors w-full pr-8 ${currentType && currentType !== 'auto' ? "text-primary font-medium" : ""}`}
+                                    />
+                                )}
+
+                                {!isComplex && value?.length > 0 && !menuState && (
+                                    <div className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none opacity-0 group-focus-within:opacity-100 transition-opacity duration-200">
+                                        <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border-[1px] border-solid border-green-500/20 bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
+                                            <span className="text-xs text-green-500">
+                                                ⏎
+                                            </span>
+                                        </kbd>
+                                    </div>
+                                )}
+                            </div>
+                        </TableCell>
+                    );
+                })}
                 <TableCell className="w-[50px] p-4 py-5 flex items-center justify-center">
 
                 </TableCell>
@@ -301,7 +430,8 @@ export const DataTable: React.FC<DataTableProps> = ({ data, columns, sortConfig,
     const [editingCell, setEditingCell] = useState<{ row: number; col: string } | null>(null);
     const [focusedCell, setFocusedCell] = useState<{ row: number; col: number } | null>(null);
     const [lastAddedIndex, setLastAddedIndex] = useState<number | null>(null);
-    const [nestedModal, setNestedModal] = useState<{ open: boolean; title: string; type?: string; data: any; rowIdx: number; col: string } | null>(null);
+    // nestedModal state updated to support onSave callback
+    const [nestedModal, setNestedModal] = useState<{ open: boolean; title: string; type?: string; data: any; rowIdx: number; col: string; onSave?: (data: any) => void } | null>(null);
 
     const tableBodyRef = useRef<HTMLTableSectionElement>(null);
     const tableContainerRef = useRef<HTMLDivElement>(null); // For capturing key events
@@ -651,6 +781,15 @@ export const DataTable: React.FC<DataTableProps> = ({ data, columns, sortConfig,
                         columns={columns}
                         onAdd={handleAddRow}
                         firstInputRef={firstInputRef}
+                        onOpenNested={(col, data, onSave) => setNestedModal({
+                            open: true,
+                            title: col,
+                            type: columnTypes[col],
+                            data: data,
+                            rowIdx: -1, // New row
+                            col: col,
+                            onSave: onSave
+                        })}
                     />
                 )}
             </Table>
@@ -666,6 +805,19 @@ export const DataTable: React.FC<DataTableProps> = ({ data, columns, sortConfig,
                     type={nestedModal.type}
                     data={nestedModal.data}
                     onUpdateData={(newData) => {
+                        // Support saving to temporary state (Footer)
+                        if (nestedModal.onSave) {
+                            nestedModal.onSave(newData);
+                            // Do not close modal automatically? Or closer handles it?
+                            // NestedTableModal doesn't close itself. We just update data.
+                            // But for Footer, we might want to update and propagate?
+                            // Actually NestedTableModal updates internal state.
+                            // Wait, NestedTableModal calls onUpdateData when data changes.
+                            // It's up to us to persist or not.
+                            // For a new row, we update the Footer state.
+                            return;
+                        }
+
                         // Propagate nested changes back to parent
                         if (onUpdateCell && nestedModal) {
                             onUpdateCell(nestedModal.rowIdx, nestedModal.col, newData);

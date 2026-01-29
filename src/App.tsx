@@ -8,6 +8,7 @@ import { Import, Download, Trash2, FileJson, Copy, ClipboardPaste, Shield, WifiO
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { useKeyboardShortcuts } from "@/hooks/use-keyboard-shortcuts";
 import { useUndoRedo } from "@/hooks/use-undo-redo";
+import { DebugPanel } from "@/components/Debug/DebugPanel"; // Debug
 
 
 // Helper to load initial data
@@ -284,6 +285,13 @@ function App() {
     }
   };
 
+  const handleLoadDebugData = (debugData: TableRow[]) => {
+    reset(debugData);
+    setColumns(inferColumns(debugData));
+    setSortConfig(null);
+    toast.success(`Loaded debug dataset: ${debugData.length} rows.`);
+  };
+
   return (
     <div className={`flex flex-col h-screen overflow-hidden bg-background text-foreground font-sans ${data.length === 0 ? 'mesh-background' : ''}`}>
       <input
@@ -416,6 +424,10 @@ function App() {
               </div>
             </div>
 
+            {/* Debug Panel (Dev Only) */}
+            {import.meta.env.DEV && (
+              <DebugPanel onLoad={handleLoadDebugData} />
+            )}
 
           </div>
         ) : (
