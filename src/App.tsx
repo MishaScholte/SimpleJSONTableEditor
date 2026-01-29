@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { toast, Toaster } from "sonner";
 import { DataTable, type SortConfig } from "@/components/Editor/DataTable";
-import { inferColumns, safeParseJSON, type TableRow } from "@/lib/data-utils";
+import { inferColumns, safeParseJSON, unflattenObject, type TableRow } from "@/lib/data-utils";
 import { SecondaryButton } from "@/components/ui/secondary-button";
 import { PrimaryButton } from "@/components/ui/primary-button";
 import { Import, Download, Trash2, FileJson, Copy, ClipboardPaste, Shield, WifiOff, Undo, Redo, Command } from "lucide-react";
@@ -74,7 +74,9 @@ function App() {
       toast.warning("Nothing to export.");
       return;
     }
-    const jsonString = JSON.stringify(data, null, 2);
+    // Unflatten data to restore nested structure
+    const exportData = data.map(row => unflattenObject(row));
+    const jsonString = JSON.stringify(exportData, null, 2);
     const blob = new Blob([jsonString], { type: "application/json" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");

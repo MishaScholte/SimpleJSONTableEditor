@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { formatArrayOutput, parseArrayInput, type TableRow as RowData } from "@/lib/data-utils";
 import { Trash2, ArrowUp, ArrowDown, ArrowUpDown } from "lucide-react";
+import { NestedTableModal } from "./NestedTableModal";
 
 export interface SortConfig {
     column: string;
@@ -13,11 +14,12 @@ export interface SortConfig {
 interface DataTableProps {
     data: RowData[];
     columns: string[];
-    sortConfig: SortConfig | null;
-    onSort: (col: string) => void;
-    onUpdateCell: (rowIdx: number, col: string, value: any) => void;
-    onDeleteRow: (rowIdx: number) => void;
-    onAdd: (row: RowData) => void;
+    sortConfig?: SortConfig | null;
+    onSort?: (col: string) => void;
+    onUpdateCell?: (rowIdx: number, col: string, value: any) => void;
+    onDeleteRow?: (rowIdx: number) => void;
+    onAdd?: (row: RowData) => void;
+    readOnly?: boolean;
 }
 
 // --- Sub-components for Performance ---
@@ -100,17 +102,19 @@ interface DataTableRowProps {
     focusedCol: string | null; // Only pass the col if this row is focused
     isDeleteFocused: boolean; // Is the delete button focused?
     lastAddedIndex: number | null;
+    readOnly?: boolean;
     onStartEdit: (rowIdx: number, col: string) => void;
     onUpdateCell: (rowIdx: number, col: string, val: any) => void;
     onCancelEdit: () => void;
     onDeleteRow: (rowIdx: number) => void;
     onFocusCell: (rowIdx: number, col: string) => void;
     onFocusDelete: (rowIdx: number) => void;
+    onOpenNested: (title: string, data: any) => void;
 }
 
 const DataTableRow = memo(({
-    row, rowIdx, columns, isEditingCell, focusedCol, isDeleteFocused, lastAddedIndex,
-    onStartEdit, onUpdateCell, onCancelEdit, onDeleteRow, onFocusCell, onFocusDelete
+    row, rowIdx, columns, isEditingCell, focusedCol, isDeleteFocused, lastAddedIndex, readOnly,
+    onStartEdit, onUpdateCell, onCancelEdit, onDeleteRow, onFocusCell, onFocusDelete, onOpenNested
 }: DataTableRowProps) => {
     return (
         <TableRow
@@ -141,10 +145,29 @@ const DataTableRow = memo(({
                             />
                         ) : (
                             <div className="flex items-center w-full overflow-hidden">
-                                {Array.isArray(val) ? (
-                                    <span className="bg-secondary px-2 py-0.5 rounded text-xs font-medium truncate max-w-full">
-                                        {formatArrayOutput(val)}
-                                    </span>
+                                {val !== null && typeof val === 'object' && !Array.isArray(val) ? (
+                                    // Object Chip - clickable to open modal, shows key names
+                                    <button
+                                        onClick={(e) => { e.stopPropagation(); onOpenNested(col, val); }}
+                                        className="bg-amber-500/20 text-amber-400 border border-amber-500/30 px-2 py-0.5 rounded text-xs font-mono cursor-pointer hover:bg-amber-500/30 transition-colors truncate max-w-full"
+                                        title={Object.keys(val).join(", ")}
+                                    >
+                                        {Object.keys(val).join(", ")}
+                                    </button>
+                                ) : Array.isArray(val) ? (
+                                    // Check if array contains objects
+                                    val.some(item => typeof item === 'object' && item !== null && !Array.isArray(item)) ? (
+                                        <button
+                                            onClick={(e) => { e.stopPropagation(); onOpenNested(col, val); }}
+                                            className="bg-blue-500/20 text-blue-400 border border-blue-500/30 px-2 py-0.5 rounded text-xs font-mono cursor-pointer hover:bg-blue-500/30 transition-colors"
+                                        >
+                                            {"[ "}{val.length} items{" ]"}
+                                        </button>
+                                    ) : (
+                                        <span className="bg-secondary px-2 py-0.5 rounded text-xs font-medium truncate max-w-full">
+                                            {formatArrayOutput(val)}
+                                        </span>
+                                    )
                                 ) : (
                                     <span className="truncate text-sm w-full">{String(val ?? "")}</span>
                                 )}
@@ -153,18 +176,20 @@ const DataTableRow = memo(({
                     </TableCell>
                 );
             })}
-            <TableCell className="w-[50px] flex items-center justify-center p-0">
-                <Button
-                    variant="ghost"
-                    size="icon"
-                    className={`h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10 ${isDeleteFocused ? "ring-2 ring-white ring-offset-2 ring-offset-background" : ""}`}
-                    onClick={(e) => { e.stopPropagation(); onDeleteRow(rowIdx); }}
-                    onFocus={() => onFocusDelete(rowIdx)}
-                    tabIndex={-1} // Handled by manual focus state
-                >
-                    <Trash2 className="h-4 w-4" />
-                </Button>
-            </TableCell>
+            {!readOnly && (
+                <TableCell className="w-[50px] flex items-center justify-center p-0">
+                    <Button
+                        variant="ghost"
+                        size="icon"
+                        className={`h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10 ${isDeleteFocused ? "ring-2 ring-white ring-offset-2 ring-offset-background" : ""}`}
+                        onClick={(e) => { e.stopPropagation(); onDeleteRow(rowIdx); }}
+                        onFocus={() => onFocusDelete(rowIdx)}
+                        tabIndex={-1} // Handled by manual focus state
+                    >
+                        <Trash2 className="h-4 w-4" />
+                    </Button>
+                </TableCell>
+            )}
         </TableRow>
     );
 });
@@ -249,10 +274,11 @@ const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstIn
 
 // --- Main Component ---
 
-export const DataTable: React.FC<DataTableProps> = ({ data, columns, sortConfig, onSort, onUpdateCell, onDeleteRow, onAdd }) => {
+export const DataTable: React.FC<DataTableProps> = ({ data, columns, sortConfig, onSort, onUpdateCell, onDeleteRow, onAdd, readOnly = false }) => {
     const [editingCell, setEditingCell] = useState<{ row: number; col: string } | null>(null);
     const [focusedCell, setFocusedCell] = useState<{ row: number; col: number } | null>(null);
     const [lastAddedIndex, setLastAddedIndex] = useState<number | null>(null);
+    const [nestedModal, setNestedModal] = useState<{ open: boolean; title: string; data: any } | null>(null);
 
     const tableBodyRef = useRef<HTMLTableSectionElement>(null);
     const tableContainerRef = useRef<HTMLDivElement>(null); // For capturing key events
@@ -297,15 +323,17 @@ export const DataTable: React.FC<DataTableProps> = ({ data, columns, sortConfig,
     }, []);
 
     const handleUpdateCell = useCallback((rowIdx: number, col: string, val: any) => {
+        if (readOnly || !onUpdateCell) return;
         onUpdateCell(rowIdx, col, val);
         setEditingCell(null);
         tableContainerRef.current?.focus();
-    }, [onUpdateCell]);
+    }, [onUpdateCell, readOnly]);
 
     const handleAddRow = useCallback((row: RowData) => {
+        if (readOnly || !onAdd) return;
         shouldScrollRef.current = true;
         onAdd(row);
-    }, [onAdd]);
+    }, [onAdd, readOnly]);
 
 
     const columnTypes = React.useMemo(() => {
@@ -421,22 +449,24 @@ export const DataTable: React.FC<DataTableProps> = ({ data, columns, sortConfig,
                 e.preventDefault();
                 if (col === colCount) {
                     // Delete Button
-                    onDeleteRow(row);
+                    if (!readOnly && onDeleteRow) onDeleteRow(row);
                 } else {
                     // Start editing the focused cell
-                    const colName = columns[col];
-                    if (colName) {
-                        handleStartEdit(row, colName);
+                    if (!readOnly) {
+                        const colName = columns[col];
+                        if (colName) {
+                            handleStartEdit(row, colName);
+                        }
                     }
                 }
                 break;
             case "Delete":
             case "Backspace":
-                if (!editingCell && !e.metaKey && !e.ctrlKey) {
+                if (!readOnly && !editingCell && !e.metaKey && !e.ctrlKey) {
                     if (e.shiftKey || col === colCount) {
                         // Shift + Delete/Backspace OR on Delete Button = Delete Row
                         e.preventDefault();
-                        onDeleteRow(row);
+                        if (onDeleteRow) onDeleteRow(row);
                     } else {
                         // Regular Delete/Backspace = Clear Value
                         e.preventDefault();
@@ -489,8 +519,8 @@ export const DataTable: React.FC<DataTableProps> = ({ data, columns, sortConfig,
                             return (
                                 <TableHead
                                     key={col}
-                                    className={`flex items-center px-4 py-5 font-semibold cursor-pointer hover:bg-muted/50 transition-colors select-none overflow-hidden ${isSorted ? "text-foreground font-bold" : ""}`}
-                                    onClick={() => onSort(col)}
+                                    className={`flex items-center px-4 py-5 font-semibold ${!readOnly && onSort ? 'cursor-pointer hover:bg-muted/50' : ''} transition-colors select-none overflow-hidden ${isSorted ? "text-foreground font-bold" : ""}`}
+                                    onClick={() => !readOnly && onSort?.(col)}
                                 >
                                     <div className="flex items-center gap-2 truncate w-full">
                                         <div className="flex items-baseline gap-1.5 truncate">
@@ -528,19 +558,35 @@ export const DataTable: React.FC<DataTableProps> = ({ data, columns, sortConfig,
                             onStartEdit={(r, c) => handleStartEdit(r, c)} // Fix type mismatch manually if needed but simplified here
                             onUpdateCell={handleUpdateCell}
                             onCancelEdit={handleCancelEdit}
-                            onDeleteRow={onDeleteRow}
+                            onDeleteRow={onDeleteRow ?? (() => { })}
                             onFocusCell={(r, c) => setFocusedCell({ row: r, col: columns.indexOf(c) })}
                             onFocusDelete={(r) => setFocusedCell({ row: r, col: columns.length })}
+                            onOpenNested={(title, nestedData) => setNestedModal({ open: true, title, data: nestedData })}
+                            readOnly={readOnly}
                         />
                     ))}
                 </TableBody>
 
-                <QuickAddFooter
-                    columns={columns}
-                    onAdd={handleAddRow}
-                    firstInputRef={firstInputRef}
-                />
+                {!readOnly && (
+                    <QuickAddFooter
+                        columns={columns}
+                        onAdd={handleAddRow}
+                        firstInputRef={firstInputRef}
+                    />
+                )}
             </Table>
+
+            {/* Nested Table Modal for objects/arrays */}
+            {nestedModal && (
+                <NestedTableModal
+                    open={nestedModal.open}
+                    onOpenChange={(open) => {
+                        if (!open) setNestedModal(null);
+                    }}
+                    title={nestedModal.title}
+                    data={nestedModal.data}
+                />
+            )}
         </div>
     );
 };
