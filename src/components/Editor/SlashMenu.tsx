@@ -101,8 +101,12 @@ export const SlashMenu: React.FC<SlashMenuProps> = ({ query, onSelect, onClose, 
                         key={cmd.id}
                         className={`w-full flex items-center gap-2 px-2 py-1.5 text-sm rounded-sm transition-colors text-left ${idx === selectedIndex ? "bg-accent text-accent-foreground" : "hover:bg-muted"
                             }`}
-                        onMouseDown={(e) => e.preventDefault()} // Prevent taking focus from input
-                        onClick={() => onSelect(cmd.id)}
+                        onMouseDown={(e) => {
+                            e.preventDefault(); // Keep focus on input
+                            e.stopPropagation();
+                            onSelect(cmd.id);
+                        }}
+                    // onClick removed to avoid duplication/issues
                     >
                         <cmd.icon className="w-4 h-4 shrink-0 opacity-70" />
                         <div className="flex flex-col gap-0.5">

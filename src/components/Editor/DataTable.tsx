@@ -182,7 +182,7 @@ const DataTableRow = memo(({
                                         </span>
                                     )
                                 ) : (
-                                    <span className="truncate text-sm w-full">{String(val ?? "")}</span>
+                                    <span className={`truncate text-sm w-full ${typeof val === 'number' ? "font-mono" : ""}`}>{String(val ?? "")}</span>
                                 )}
                             </div>
                         )}
@@ -214,19 +214,34 @@ interface QuickAddFooterProps {
     onAdd: (row: RowData) => void;
     firstInputRef: React.RefObject<HTMLInputElement | null>;
     onOpenNested: (col: string, initialData: any, onSave: (data: any) => void) => void;
+    onFocus?: () => void;
 }
 
-const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstInputRef, onOpenNested }) => {
+const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstInputRef, onOpenNested, onFocus }) => {
     const [values, setValues] = useState<Record<string, any>>({});
     const [types, setTypes] = useState<Record<string, 'auto' | 'text' | 'number' | 'boolean'>>({});
     const inputRefs = useRef<Record<string, HTMLInputElement | null>>({});
 
     // Slash Menu State
     const [menuState, setMenuState] = useState<{ col: string; query: string; anchorEl: HTMLElement | null } | null>(null);
+    const [focusTarget, setFocusTarget] = useState<string | null>(null);
+
+    // Deterministic Focus Management
+    React.useLayoutEffect(() => {
+        if (focusTarget) {
+            const el = inputRefs.current[focusTarget];
+            if (el) {
+                el.focus();
+            }
+            setFocusTarget(null);
+        }
+    }, [focusTarget]);
 
     const handleAdd = () => {
         const newRow: RowData = {};
         let hasData = false;
+        // ... (omitted unchanged parts) ...
+
 
         columns.forEach(col => {
             const rawVal = values[col];
@@ -320,13 +335,14 @@ const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstIn
         switch (command) {
             case 'text':
             case 'number':
-            case 'bool':
                 setTypes(prev => ({ ...prev, [col]: command as any }));
-                setValues(prev => ({ ...prev, [col]: "" })); // Clear slash
-                // Restore focus to input
-                setTimeout(() => {
-                    inputRefs.current[col]?.focus();
-                }, 0);
+                setValues(prev => ({ ...prev, [col]: "" }));
+                setFocusTarget(col);
+                break;
+            case 'bool':
+                setTypes(prev => ({ ...prev, [col]: 'boolean' })); // Normalize 'bool' to 'boolean'
+                setValues(prev => ({ ...prev, [col]: "" }));
+                setFocusTarget(col);
                 break;
             case 'obj':
             case 'list':
@@ -395,11 +411,13 @@ const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstIn
                                             if (idx === 0) firstInputRef.current = el; // Keep existing firstRef logic
                                             inputRefs.current[col] = el;
                                         }}
+                                        key={`input-el-${col}`} // Stable key to prevent remounting
+                                        onFocus={onFocus} // Clear table focus
                                         placeholder={currentType && currentType !== 'auto' ? `${currentType}:` : col}
                                         value={typeof value === 'string' ? value : ""}
                                         onChange={(e) => handleInputChange(col, e.target.value, e.target as HTMLElement)}
                                         onKeyDown={handleKeyDown}
-                                        className={`h-8 text-xs font-normal bg-card border-transparent focus-visible:ring-0 focus-visible:border-transparent placeholder:text-muted-foreground/50 transition-colors w-full pr-8 ${currentType && currentType !== 'auto' ? "text-primary font-medium" : ""}`}
+                                        className={`h-8 text-xs font-normal bg-card border-transparent focus-visible:ring-0 focus-visible:border-transparent placeholder:text-muted-foreground/50 transition-colors w-full pr-8 ${currentType === 'number' ? "font-mono" : (currentType && currentType !== 'auto' ? "font-medium" : "")}`}
                                     />
                                 )}
 
@@ -572,6 +590,11 @@ export const DataTable: React.FC<DataTableProps> = ({ data, columns, sortConfig,
 
     // Keyboard Navigation Logic
     const handleTableKeyDown = (e: React.KeyboardEvent) => {
+        // Ignore events from Inputs (Footer, etc) to prevent table interference
+        // This is critical effectively for the Footer Input which isn't 'editingCell'
+        const target = e.target as HTMLElement;
+        if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable) return;
+
         // If we are editing, let the input handle it (unless it propagates, but we stopped prop in EditableCell)
         if (editingCell) return;
 
@@ -781,6 +804,7 @@ export const DataTable: React.FC<DataTableProps> = ({ data, columns, sortConfig,
                         columns={columns}
                         onAdd={handleAddRow}
                         firstInputRef={firstInputRef}
+                        onFocus={() => setFocusedCell(null)} // Clear table focus when footer is active
                         onOpenNested={(col, data, onSave) => setNestedModal({
                             open: true,
                             title: col,
