@@ -246,35 +246,42 @@ function App() {
       {/* Main Content Area - Scrollable */}
       <main className="flex-1 overflow-hidden relative flex flex-col">
         {data.length === 0 ? (
-          <div className="flex-1 flex flex-col items-center justify-center p-6 gap-8">
-            <Card
-              className="max-w-2xl w-full jte-card rounded-[3.5rem] transition-colors relative border-0"
-              onDragOver={handleDragOver}
-              onDragLeave={handleDragLeave}
-              onDrop={handleDrop}
-            >
-              {isDragging && (
-                <div className="absolute inset-0 z-50 flex items-center justify-center bg-card/95 backdrop-blur-sm rounded-[3.5rem] pointer-events-none">
-                  <h2 className="text-3xl font-semibold text-white">Drop to import</h2>
-                </div>
-              )}
-              <CardHeader className="p-16 pb-8 space-y-0 text-left pointer-events-none">
-                <CardTitle className="text-4xl font-semibold tracking-tight leading-[1.15]">The <span className="line-through decoration-white decoration-2 text-muted-foreground">simple</span> <span className="bg-gradient-to-r from-[rgb(245,190,85)] via-[rgb(217,126,75)] to-[rgb(190,70,70)] bg-clip-text text-transparent">overengineered</span><br />JSON table editor</CardTitle>
-                <CardDescription className="text-xl pt-6 leading-relaxed text-white/80">
-                  Because juggling JSON and Excel sucks. TableJSON is a beautifully overengineerd Excel-like editor for JSON files. All the simplicity, none of the suffering. <br /><br />Everything stays on your machine. Nowhere else.
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="px-16 pb-16 pt-4 flex flex-col gap-8">
-                <div className="flex flex-row gap-6">
-                  <PrimaryButton onClick={handlePaste} className="flex-1 h-14 text-base [&_svg]:size-6">
-                    <ClipboardPaste className="w-6 h-6" /> Paste JSON
-                  </PrimaryButton>
-                  <SecondaryButton onClick={() => fileInputRef.current?.click()} className="flex-1 h-14 text-base [&_svg]:size-6">
-                    <Import className="w-6 h-6" /> Import JSON File
-                  </SecondaryButton>
-                </div>
-              </CardContent>
-            </Card>
+          <div className="flex-1 flex flex-col items-center justify-center p-6 gap-8 relative overflow-hidden">
+            <div className="relative w-full max-w-2xl">
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-[55%] z-20 w-full text-center pointer-events-none">
+                <h1 className="neon-hero-title">
+                  TableJSON
+                </h1>
+              </div>
+              <Card
+                className="w-full jte-card rounded-[3.5rem] transition-colors relative border-0"
+                onDragOver={handleDragOver}
+                onDragLeave={handleDragLeave}
+                onDrop={handleDrop}
+              >
+                {isDragging && (
+                  <div className="absolute inset-0 z-50 flex items-center justify-center bg-card/95 backdrop-blur-sm rounded-[3.5rem] pointer-events-none">
+                    <h2 className="text-3xl font-semibold text-white">Drop to import</h2>
+                  </div>
+                )}
+                <CardHeader className="p-16 pb-8 space-y-0 text-left pointer-events-none">
+                  <CardTitle className="text-4xl font-semibold tracking-tight leading-[1.15]">The <span className="line-through decoration-white decoration-2 text-muted-foreground">simple</span> <span className="bg-gradient-to-r from-[rgb(245,190,85)] via-[rgb(217,126,75)] to-[rgb(190,70,70)] bg-clip-text text-transparent">overengineered</span><br />JSON table editor</CardTitle>
+                  <CardDescription className="text-xl pt-6 leading-relaxed text-white/80">
+                    Because juggling JSON and Excel sucks. TableJSON is a beautifully overengineerd Excel-like editor for JSON files. All the simplicity, none of the suffering. <br /><br />Everything stays on your machine. Nowhere else.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="px-16 pb-16 pt-4 flex flex-col gap-8">
+                  <div className="flex flex-row gap-6">
+                    <PrimaryButton onClick={handlePaste} className="flex-1 h-14 text-base [&_svg]:size-6">
+                      <ClipboardPaste className="w-6 h-6" /> Paste JSON
+                    </PrimaryButton>
+                    <SecondaryButton onClick={() => fileInputRef.current?.click()} className="flex-1 h-14 text-base [&_svg]:size-6">
+                      <Import className="w-6 h-6" /> Import JSON File
+                    </SecondaryButton>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
 
             {/* USPs below card */}
             <div className="flex flex-row justify-center gap-10 text-base text-white/80">
