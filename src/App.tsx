@@ -29,7 +29,7 @@ function App() {
   // Initialize with data from local storage if available
   const [initialData] = useState<TableRow[]>(loadInitialData);
 
-  const [data, setData, undo, redo, reset, canUndo, canRedo, history] = useUndoRedo<TableRow[]>(initialData, 100);
+  const [data, setData, undo, redo, reset, canUndo, canRedo] = useUndoRedo<TableRow[]>(initialData, 100);
 
   // Initialize columns based on the initial data
   const [columns, setColumns] = useState<string[]>(() => inferColumns(initialData));
@@ -210,17 +210,6 @@ function App() {
   });
 
   useEffect(() => {
-    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-      // Don't warn on reload anymore, since we persist data!
-      // But maybe still warn if they are about to close the tab? 
-      // User request: "Als de user nu ververst... niet data verliest"
-      // Usually persistence negates the need for this warning.
-      // I will remove the warning or keep it optional. 
-      // Given "not lose data", persistence is the key. 
-      // Let's remove the warning to make it seamless like a native app.
-    };
-
-    // ... global paste ...
     const handleGlobalPaste = (e: ClipboardEvent) => {
       // Ignore if user is interacting with an input or textarea
       if (
