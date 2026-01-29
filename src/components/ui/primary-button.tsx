@@ -8,7 +8,7 @@ const PrimaryButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
         return (
             <Button
                 ref={ref}
-                className={cn("btn-gradient-border gap-2 transition-all", className)}
+                className={cn("btn-gradient-border gap-2 transition-all rounded-[8px]", className)}
                 {...props}
             />
         )

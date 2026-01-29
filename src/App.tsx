@@ -4,11 +4,14 @@ import { DataTable, type SortConfig } from "@/components/Editor/DataTable";
 import { inferColumns, safeParseJSON, type TableRow } from "@/lib/data-utils";
 import { SecondaryButton } from "@/components/ui/secondary-button";
 import { PrimaryButton } from "@/components/ui/primary-button";
-import { Import, Download, Trash2, FileJson, Copy, ClipboardPaste, Shield, WifiOff, CloudOff, HammerIcon } from "lucide-react";
+import { Import, Download, Trash2, FileJson, Copy, ClipboardPaste, Shield, WifiOff, Undo, Redo, Command } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { useKeyboardShortcuts } from "@/hooks/use-keyboard-shortcuts";
+import { useUndoRedo } from "@/hooks/use-undo-redo";
 
 function App() {
-  const [data, setData] = useState<TableRow[]>([]);
+  // State
+  const [data, setData, undo, redo, reset, canUndo, canRedo, history] = useUndoRedo<TableRow[]>([], 100);
   const [columns, setColumns] = useState<string[]>([]);
   const [sortConfig, setSortConfig] = useState<SortConfig | null>(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -24,7 +27,7 @@ function App() {
       const parsed = safeParseJSON(text);
 
       if (parsed) {
-        setData(parsed);
+        reset(parsed); // Use reset to establish new baseline (cannot undo to empty)
         setColumns(inferColumns(parsed));
         setSortConfig(null);
         toast.success(`Imported ${parsed.length} rows successfully.`);
@@ -69,7 +72,7 @@ function App() {
       const parsed = safeParseJSON(text);
 
       if (parsed) {
-        setData(parsed);
+        reset(parsed); // New baseline
         setColumns(inferColumns(parsed));
         setSortConfig(null);
         toast.success(`Imported ${parsed.length} rows from clipboard.`);
@@ -82,15 +85,23 @@ function App() {
   };
 
   const updateCell = (rowIdx: number, col: string, val: any) => {
-    const newData = [...data];
-    newData[rowIdx] = { ...newData[rowIdx], [col]: val };
-    setData(newData);
+    setData(prev => {
+      // Optimization: Don't update if value hasn't changed.
+      // This prevents duplicate history states if save is triggered multiple times.
+      if (prev[rowIdx][col] === val) return prev;
+
+      const newData = [...prev];
+      newData[rowIdx] = { ...newData[rowIdx], [col]: val };
+      return newData;
+    });
   };
 
   const deleteRow = (rowIdx: number) => {
-    const newData = [...data];
-    newData.splice(rowIdx, 1);
-    setData(newData);
+    setData(prev => {
+      const newData = [...prev];
+      newData.splice(rowIdx, 1);
+      return newData;
+    });
     toast.success("Row deleted.");
   };
 
@@ -104,20 +115,67 @@ function App() {
       direction = "desc";
     }
     setSortConfig({ column: col, direction });
-    const sorted = [...data].sort((a, b) => {
-      const valA = a[col];
-      const valB = b[col];
-      if (valA === valB) return 0;
-      if (valA === null || valA === undefined) return 1;
-      if (valB === null || valB === undefined) return -1;
-      const strA = String(valA).toLowerCase();
-      const strB = String(valB).toLowerCase();
-      if (strA < strB) return direction === "asc" ? -1 : 1;
-      if (strA > strB) return direction === "asc" ? 1 : -1;
-      return 0;
+
+    // Sorting doesn't technically mutate "data" in a way that needs undo history 
+    // IF we consider sort view-only. BUT here we were settingData.
+    // If we want undo for SORT, use setData. If NOT, we should separate viewData from actualData.
+    // For now, let's keep it as is: sorting changes the order in data, so it IS undoable.
+
+    setData(prev => {
+      const sorted = [...prev].sort((a, b) => {
+        const valA = a[col];
+        const valB = b[col];
+        if (valA === valB) return 0;
+        if (valA === null || valA === undefined) return 1;
+        if (valB === null || valB === undefined) return -1;
+        const strA = String(valA).toLowerCase();
+        const strB = String(valB).toLowerCase();
+        if (strA < strB) return direction === "asc" ? -1 : 1;
+        if (strA > strB) return direction === "asc" ? 1 : -1;
+        return 0;
+      });
+      return sorted;
     });
-    setData(sorted);
   };
+
+  const handleUndo = () => {
+    if (!canUndo) return;
+    undo();
+    toast.info("Undone");
+  };
+
+  // Keyboard Shortcuts
+  useKeyboardShortcuts({
+    onSave: () => {
+      if (data.length > 0) {
+        handleExport();
+      }
+    },
+    onOpen: () => {
+      fileInputRef.current?.click();
+    },
+    onClear: () => {
+      if (data.length > 0) {
+        if (window.confirm("Are you sure you want to clear the workspace? This cannot be undone.")) {
+          setData([]);
+        }
+      }
+    },
+    onUndo: handleUndo,
+    onRedo: () => {
+      if (canRedo) {
+        redo();
+        toast.info("Redone");
+      }
+    },
+    onCopy: () => {
+      if (data.length > 0) {
+        const json = JSON.stringify(data, null, 2);
+        navigator.clipboard.writeText(json);
+        toast.success("JSON copied to clipboard");
+      }
+    }
+  });
 
   useEffect(() => {
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
@@ -126,6 +184,8 @@ function App() {
         e.returnValue = "";
       }
     };
+
+
 
     const handleGlobalPaste = (e: ClipboardEvent) => {
       // Ignore if user is interacting with an input or textarea
@@ -144,7 +204,7 @@ function App() {
 
       if (parsed) {
         e.preventDefault(); // Prevent default paste behavior
-        setData(parsed);
+        reset(parsed); // Reset history on global paste
         setColumns(inferColumns(parsed));
         setSortConfig(null);
         toast.success(`Imported ${parsed.length} rows from clipboard.`);
@@ -159,10 +219,6 @@ function App() {
     window.addEventListener("beforeunload", handleBeforeUnload);
     window.addEventListener("paste", handleGlobalPaste);
 
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-      window.removeEventListener("paste", handleGlobalPaste);
-    };
     return () => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
       window.removeEventListener("paste", handleGlobalPaste);
@@ -191,7 +247,7 @@ function App() {
         const text = event.target?.result as string;
         const parsed = safeParseJSON(text);
         if (parsed) {
-          setData(parsed);
+          reset(parsed); // Reset history on drop
           setColumns(inferColumns(parsed));
           setSortConfig(null);
           toast.success(`Imported ${parsed.length} rows.`);
@@ -225,19 +281,49 @@ function App() {
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
-            <SecondaryButton size="sm" onClick={handleExport} className="h-8 text-xs px-3">
-              <Download className="w-3.5 h-3.5" /> Download JSON
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-1 mr-2">
+              <SecondaryButton
+                onClick={handleUndo}
+                disabled={!canUndo}
+                className="h-9 w-9 px-0 disabled:opacity-30"
+                title="Undo (Ctrl+Z)"
+              >
+                <Undo className="w-4 h-4" />
+              </SecondaryButton>
+              <SecondaryButton
+                onClick={redo}
+                disabled={!canRedo}
+                className="h-9 w-9 px-0 disabled:opacity-30"
+                title="Redo (Ctrl+Shift+Z)"
+              >
+                <Redo className="w-4 h-4" />
+              </SecondaryButton>
+            </div>
+            <div className="w-px h-6 bg-border mx-1" />
+
+            <SecondaryButton onClick={() => {
+              const json = JSON.stringify(data, null, 2);
+              navigator.clipboard.writeText(json);
+              toast.success("JSON copied to clipboard");
+            }} className="h-9 px-3 text-xs gap-1.5 group relative">
+              <Copy className="w-4 h-4" /> Copy JSON
+              <kbd className="absolute top-full mt-2 hidden group-hover:inline-flex h-7 select-none items-center gap-1 rounded border bg-muted px-2 font-mono text-sm font-medium text-muted-foreground opacity-100 whitespace-nowrap z-50">
+                <span>⌘</span>C
+              </kbd>
             </SecondaryButton>
-            <SecondaryButton size="sm" onClick={() => {
-              navigator.clipboard.writeText(JSON.stringify(data, null, 2));
-              toast.success("Copied to clipboard");
-            }} className="h-8 text-xs px-3">
-              <Copy className="w-3.5 h-3.5" /> Copy JSON
+            <SecondaryButton onClick={handleExport} className="h-9 px-3 text-xs gap-1.5 group relative">
+              <Download className="w-4 h-4" /> Download JSON
+              <kbd className="absolute top-full mt-2 hidden group-hover:inline-flex h-7 select-none items-center gap-1 rounded border bg-muted px-2 font-mono text-sm font-medium text-muted-foreground opacity-100 whitespace-nowrap z-50">
+                <span>⌘</span>S
+              </kbd>
             </SecondaryButton>
-            <div className="h-4 w-[1px] bg-border mx-1" />
-            <SecondaryButton variant="destructive" size="sm" onClick={handleClear} className="h-8 text-xs px-3">
-              <Trash2 className="w-3.5 h-3.5" /> Clear workspace
+            <div className="w-px h-6 bg-border mx-1" />
+            <SecondaryButton onClick={handleClear} variant="destructive" className="h-9 px-3 text-xs gap-1.5 group relative">
+              <Trash2 className="w-4 h-4" /> Clear workspace
+              <kbd className="absolute top-full mt-2 hidden group-hover:inline-flex h-7 select-none items-center gap-1 rounded border bg-muted px-2 font-mono text-sm font-medium text-muted-foreground opacity-100 whitespace-nowrap z-50">
+                <span>⌘</span>⌫
+              </kbd>
             </SecondaryButton>
           </div>
         </header>
@@ -272,11 +358,17 @@ function App() {
                 </CardHeader>
                 <CardContent className="px-16 pb-16 pt-4 flex flex-col gap-8">
                   <div className="flex flex-row gap-6">
-                    <PrimaryButton onClick={handlePaste} className="flex-1 h-14 text-base [&_svg]:size-6">
+                    <PrimaryButton onClick={handlePaste} className="flex-1 h-14 text-base [&_svg]:size-6 group relative">
                       <ClipboardPaste className="w-6 h-6" /> Paste JSON
+                      <kbd className="absolute right-4 hidden group-hover:inline-flex h-6 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
+                        <span className="text-xs">⌘</span>V
+                      </kbd>
                     </PrimaryButton>
-                    <SecondaryButton onClick={() => fileInputRef.current?.click()} className="flex-1 h-14 text-base [&_svg]:size-6">
+                    <SecondaryButton onClick={() => fileInputRef.current?.click()} className="flex-1 h-14 text-base [&_svg]:size-6 group relative">
                       <Import className="w-6 h-6" /> Import JSON File
+                      <kbd className="absolute right-4 hidden group-hover:inline-flex h-6 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
+                        <span className="text-xs">⌘</span>O
+                      </kbd>
                     </SecondaryButton>
                   </div>
                 </CardContent>
@@ -294,8 +386,8 @@ function App() {
                 <span>100% offline</span>
               </div>
               <div className="flex items-center gap-3">
-                <HammerIcon className="w-5 h-5" style={{ stroke: 'url(#icon-gradient)' }} />
-                <span>Simply overengineered</span>
+                <Command className="w-5 h-5" style={{ stroke: 'url(#icon-gradient)' }} />
+                <span>Shortcuts for everything</span>
               </div>
             </div>
 

@@ -16,9 +16,7 @@ const SecondaryButton = React.forwardRef<HTMLButtonElement, SecondaryButtonProps
                 size={size}
                 className={cn(
                     // Base styles for all secondary buttons
-                    "bg-white/5 border border-white/15 gap-2 transition-all",
-                    // Radius logic: small = 8px, others = inherit default (primary-like)
-                    size === "sm" ? "rounded-[8px]" : "",
+                    "bg-white/5 border border-white/15 gap-2 transition-all rounded-[8px]",
                     // Default variant styles
                     variant === "default" && "hover:bg-white/10 text-white",
                     // Destructive variant styles

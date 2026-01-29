@@ -31,6 +31,8 @@ interface EditableCellProps {
 
 const EditableCell: React.FC<EditableCellProps> = ({ initialValue, onSave, onCancel }) => {
     const [value, setValue] = useState<string>("");
+    const isCanceling = useRef(false);
+    const isSaving = useRef(false);
 
     useEffect(() => {
         if (Array.isArray(initialValue)) {
@@ -42,13 +44,19 @@ const EditableCell: React.FC<EditableCellProps> = ({ initialValue, onSave, onCan
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
         if (e.key === 'Enter') {
+            e.stopPropagation(); // Prevent table listener from catching this
             handleSave();
         } else if (e.key === 'Escape') {
-            onCancel();
+            e.stopPropagation(); // Prevent table listener from catching this
+            isCanceling.current = true; // Flag to ignore blur
+            onCancel(); // Cancel without saving
         }
     };
 
     const handleSave = () => {
+        if (isCanceling.current || isSaving.current) return;
+        isSaving.current = true;
+
         let finalValue: any = value;
         if (Array.isArray(initialValue)) {
             finalValue = parseArrayInput(value);
@@ -61,6 +69,7 @@ const EditableCell: React.FC<EditableCellProps> = ({ initialValue, onSave, onCan
         onSave(finalValue);
     };
 
+    // Auto-focus the input when it mounts
     return (
         <div className="input-gradient-wrapper w-full relative group rounded-[8px]">
             <Input
@@ -88,16 +97,20 @@ interface DataTableRowProps {
     rowIdx: number;
     columns: string[];
     isEditingCell: { col: string } | null; // Only pass the col if this row is being edited
+    focusedCol: string | null; // Only pass the col if this row is focused
+    isDeleteFocused: boolean; // Is the delete button focused?
     lastAddedIndex: number | null;
-    onStartEdit: (rowIdx: number, col: string, val: any) => void;
+    onStartEdit: (rowIdx: number, col: string) => void;
     onUpdateCell: (rowIdx: number, col: string, val: any) => void;
     onCancelEdit: () => void;
     onDeleteRow: (rowIdx: number) => void;
+    onFocusCell: (rowIdx: number, col: string) => void;
+    onFocusDelete: (rowIdx: number) => void;
 }
 
 const DataTableRow = memo(({
-    row, rowIdx, columns, isEditingCell, lastAddedIndex,
-    onStartEdit, onUpdateCell, onCancelEdit, onDeleteRow
+    row, rowIdx, columns, isEditingCell, focusedCol, isDeleteFocused, lastAddedIndex,
+    onStartEdit, onUpdateCell, onCancelEdit, onDeleteRow, onFocusCell, onFocusDelete
 }: DataTableRowProps) => {
     return (
         <TableRow
@@ -107,12 +120,18 @@ const DataTableRow = memo(({
             {columns.map((col) => {
                 const val = row[col];
                 const isEditing = isEditingCell?.col === col;
+                const isFocused = focusedCol === col && !isEditing;
 
                 return (
                     <TableCell
                         key={col}
-                        className="cursor-pointer transition-colors px-4 py-5 overflow-hidden h-full flex items-center"
-                        onClick={() => !isEditing && onStartEdit(rowIdx, col, val)}
+                        className={`cursor-pointer transition-colors px-4 py-5 overflow-hidden h-full flex items-center relative ${isFocused ? "outline-2 outline-white outline-offset-[-2px] outline-double z-10" : "outline-none"}`}
+                        onClick={() => {
+                            onFocusCell(rowIdx, col);
+                            // Optional: Double click to edit handled via onDoubleClick? Or keep single click = focus, double = edit? 
+                            // For now, click sets focus. Enter triggers edit.
+                        }}
+                        onDoubleClick={() => onStartEdit(rowIdx, col)}
                     >
                         {isEditing ? (
                             <EditableCell
@@ -138,8 +157,10 @@ const DataTableRow = memo(({
                 <Button
                     variant="ghost"
                     size="icon"
-                    className="h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10"
+                    className={`h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10 ${isDeleteFocused ? "ring-2 ring-white ring-offset-2 ring-offset-background" : ""}`}
                     onClick={(e) => { e.stopPropagation(); onDeleteRow(rowIdx); }}
+                    onFocus={() => onFocusDelete(rowIdx)}
+                    tabIndex={-1} // Handled by manual focus state
                 >
                     <Trash2 className="h-4 w-4" />
                 </Button>
@@ -184,6 +205,7 @@ const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstIn
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
         if (e.key === 'Enter') {
+            e.stopPropagation();
             handleAdd();
         }
     };
@@ -229,11 +251,24 @@ const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstIn
 
 export const DataTable: React.FC<DataTableProps> = ({ data, columns, sortConfig, onSort, onUpdateCell, onDeleteRow, onAdd }) => {
     const [editingCell, setEditingCell] = useState<{ row: number; col: string } | null>(null);
+    const [focusedCell, setFocusedCell] = useState<{ row: number; col: number } | null>(null);
     const [lastAddedIndex, setLastAddedIndex] = useState<number | null>(null);
 
     const tableBodyRef = useRef<HTMLTableSectionElement>(null);
+    const tableContainerRef = useRef<HTMLDivElement>(null); // For capturing key events
     const firstInputRef = useRef<HTMLInputElement>(null);
     const shouldScrollRef = useRef(false);
+
+    useEffect(() => {
+        // Initial focus when data loads
+        if (data.length > 0 && !focusedCell) {
+            setFocusedCell({ row: 0, col: 0 });
+            // Defer focus to allow render
+            setTimeout(() => {
+                tableContainerRef.current?.focus();
+            }, 50);
+        }
+    }, [data.length]);
 
     useEffect(() => {
         if (shouldScrollRef.current && tableBodyRef.current) {
@@ -257,11 +292,14 @@ export const DataTable: React.FC<DataTableProps> = ({ data, columns, sortConfig,
 
     const handleCancelEdit = useCallback(() => {
         setEditingCell(null);
+        // Return focus to container so navigation works
+        tableContainerRef.current?.focus();
     }, []);
 
     const handleUpdateCell = useCallback((rowIdx: number, col: string, val: any) => {
         onUpdateCell(rowIdx, col, val);
         setEditingCell(null);
+        tableContainerRef.current?.focus();
     }, [onUpdateCell]);
 
     const handleAddRow = useCallback((row: RowData) => {
@@ -287,6 +325,143 @@ export const DataTable: React.FC<DataTableProps> = ({ data, columns, sortConfig,
     }, [data, columns]);
 
 
+    // Clamp focused cell if data shrinks (e.g. after delete)
+    useEffect(() => {
+        if (focusedCell) {
+            if (focusedCell.row >= data.length) {
+                setFocusedCell({ row: Math.max(0, data.length - 1), col: focusedCell.col });
+            }
+        }
+    }, [data.length, focusedCell]);
+
+    // Keyboard Navigation Logic
+    const handleTableKeyDown = (e: React.KeyboardEvent) => {
+        // If we are editing, let the input handle it (unless it propagates, but we stopped prop in EditableCell)
+        if (editingCell) return;
+
+        // Handle Re-entry with Arrows if no cell is focused but container is focused
+        if (!focusedCell && data.length > 0) {
+            if (e.key.startsWith("Arrow")) {
+                e.preventDefault();
+                setFocusedCell({ row: 0, col: 0 });
+            }
+            return;
+        }
+
+        // If no data or focus, ignore
+        if (!focusedCell || data.length === 0) return;
+
+        const { row, col } = focusedCell;
+        const colCount = columns.length;
+        const rowCount = data.length;
+
+        // Shortcuts that don't depend on specific keys first
+        if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) {
+            e.preventDefault();
+            firstInputRef.current?.focus();
+            return;
+        }
+
+        switch (e.key) {
+            case "Escape":
+                e.preventDefault();
+                setFocusedCell(null);
+                // We keep focus on the container, so native Tab will move to the next focusable element (Buttons in header or Footer inputs)
+                break;
+            case "ArrowUp":
+                e.preventDefault();
+                if (row > 0) setFocusedCell({ row: row - 1, col });
+                break;
+            case "ArrowDown":
+                e.preventDefault();
+                if (row < rowCount - 1) setFocusedCell({ row: row + 1, col });
+                break;
+            case "ArrowLeft":
+                e.preventDefault();
+                if (col > 0) setFocusedCell({ row, col: col - 1 });
+                break;
+            case "ArrowRight":
+                e.preventDefault();
+                // Allow moving to colCount (Delete Button) check
+                if (col < colCount) setFocusedCell({ row, col: col + 1 });
+                break;
+            case "Tab":
+                if (e.shiftKey) {
+                    // Shift+Tab: Move Left
+                    if (col > 0) {
+                        e.preventDefault();
+                        setFocusedCell({ row, col: col - 1 });
+                    } else if (row > 0) {
+                        e.preventDefault();
+                        // When going back to previous row, start at Delete Button (colCount)
+                        setFocusedCell({ row: row - 1, col: colCount });
+                    } else {
+                        // At start: Exit table (Shift+Tab out)
+                        setFocusedCell(null);
+                        // Do NOT prevent default -> allow focus to move to previous element
+                    }
+                } else {
+                    // Tab: Move Right
+                    if (col < colCount) {
+                        // Can move to next col (including Delete Button which is index colCount)
+                        e.preventDefault();
+                        setFocusedCell({ row, col: col + 1 });
+                    } else if (row < rowCount - 1) {
+                        e.preventDefault();
+                        setFocusedCell({ row: row + 1, col: 0 });
+                    } else {
+                        // At end (on Delete Button of last row): Exit table (Tab out)
+                        setFocusedCell(null);
+                        // Do NOT prevent default -> allow focus to move to next element
+                    }
+                }
+                break;
+            case "Enter":
+            case " ": // Space also activates buttons
+                e.preventDefault();
+                if (col === colCount) {
+                    // Delete Button
+                    onDeleteRow(row);
+                } else {
+                    // Start editing the focused cell
+                    const colName = columns[col];
+                    if (colName) {
+                        handleStartEdit(row, colName);
+                    }
+                }
+                break;
+            case "Delete":
+            case "Backspace":
+                if (!editingCell && !e.metaKey && !e.ctrlKey) {
+                    if (e.shiftKey || col === colCount) {
+                        // Shift + Delete/Backspace OR on Delete Button = Delete Row
+                        e.preventDefault();
+                        onDeleteRow(row);
+                    } else {
+                        // Regular Delete/Backspace = Clear Value
+                        e.preventDefault();
+                        const colName = columns[col];
+                        if (colName) {
+                            handleUpdateCell(row, colName, "");
+                        }
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+    };
+
+
+    const handleContainerFocus = (e: React.FocusEvent) => {
+        // Only if focusing the container directly (e.g. via Tab), not a child (input)
+        if (e.target === e.currentTarget && !focusedCell && data.length > 0) {
+            // Prevent scrolling to bottom when focusing top
+            // (Browser might try to scroll to focused element)
+            setFocusedCell({ row: 0, col: 0 });
+        }
+    };
+
     if (data.length === 0) {
         return (
             <div className="text-center py-20 text-muted-foreground bg-muted/10 rounded-lg border border-dashed">
@@ -296,7 +471,13 @@ export const DataTable: React.FC<DataTableProps> = ({ data, columns, sortConfig,
     }
 
     return (
-        <div className="jte-card-table h-full flex flex-col overflow-hidden">
+        <div
+            className="jte-card-table h-full flex flex-col overflow-hidden outline-none focus-visible:outline-none focus:outline-none focus-visible:ring-0 ring-0 border-transparent"
+            ref={tableContainerRef}
+            tabIndex={0}
+            onKeyDown={handleTableKeyDown}
+            onFocus={handleContainerFocus}
+        >
             <Table className="flex flex-col h-full w-full">
                 <TableHeader className="glass z-10 flex-none w-full block">
                     <TableRow
@@ -341,11 +522,15 @@ export const DataTable: React.FC<DataTableProps> = ({ data, columns, sortConfig,
                             rowIdx={rowIdx}
                             columns={columns}
                             isEditingCell={editingCell?.row === rowIdx ? editingCell : null}
+                            focusedCol={focusedCell?.row === rowIdx && focusedCell?.col !== undefined && focusedCell.col < columns.length ? columns[focusedCell.col] : null}
+                            isDeleteFocused={focusedCell?.row === rowIdx && focusedCell?.col === columns.length}
                             lastAddedIndex={lastAddedIndex}
-                            onStartEdit={handleStartEdit}
+                            onStartEdit={(r, c) => handleStartEdit(r, c)} // Fix type mismatch manually if needed but simplified here
                             onUpdateCell={handleUpdateCell}
                             onCancelEdit={handleCancelEdit}
                             onDeleteRow={onDeleteRow}
+                            onFocusCell={(r, c) => setFocusedCell({ row: r, col: columns.indexOf(c) })}
+                            onFocusDelete={(r) => setFocusedCell({ row: r, col: columns.length })}
                         />
                     ))}
                 </TableBody>

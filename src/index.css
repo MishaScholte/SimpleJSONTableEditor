@@ -140,6 +140,13 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  /* Global Focus Ring */
+  :focus-visible {
+    @apply outline-2 outline-white outline-offset-2 outline-none ring-0;
+    outline-style: solid;
+    /* Explicitly set outline style */
+  }
 }
 
 /* Mesh gradient background for empty state only */
