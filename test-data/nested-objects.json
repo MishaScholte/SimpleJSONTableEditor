@@ -1,0 +1,31 @@
+[
+    {
+        "name": "Alice van Berg",
+        "address": {
+            "street": "Herengracht 123",
+            "city": "Amsterdam",
+            "zip": "1015 BT"
+        },
+        "contact": {
+            "email": "alice@example.com",
+            "phone": "+31 6 12345678"
+        }
+    },
+    {
+        "name": "Bob de Vries",
+        "address": {
+            "street": "Coolsingel 42",
+            "city": "Rotterdam",
+            "zip": "3011 AD"
+        },
+        "contact": {
+            "email": "bob@example.com"
+        }
+    },
+    {
+        "name": "Charlie Jansen",
+        "address": {
+            "city": "Utrecht"
+        }
+    }
+]

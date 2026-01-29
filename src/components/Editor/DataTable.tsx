@@ -20,6 +20,7 @@ interface DataTableProps {
     onDeleteRow?: (rowIdx: number) => void;
     onAdd?: (row: RowData) => void;
     readOnly?: boolean;
+    onEditingChange?: (isEditing: boolean) => void;
 }
 
 // --- Sub-components for Performance ---
@@ -29,9 +30,10 @@ interface EditableCellProps {
     initialValue: any;
     onSave: (val: any) => void;
     onCancel: () => void;
+    onNavigate?: (dir: 'next' | 'prev') => void;
 }
 
-const EditableCell: React.FC<EditableCellProps> = ({ initialValue, onSave, onCancel }) => {
+const EditableCell: React.FC<EditableCellProps> = ({ initialValue, onSave, onCancel, onNavigate }) => {
     const [value, setValue] = useState<string>("");
     const isCanceling = useRef(false);
     const isSaving = useRef(false);
@@ -49,9 +51,17 @@ const EditableCell: React.FC<EditableCellProps> = ({ initialValue, onSave, onCan
             e.stopPropagation(); // Prevent table listener from catching this
             handleSave();
         } else if (e.key === 'Escape') {
+            e.preventDefault(); // Prevent Dialog from closing
             e.stopPropagation(); // Prevent table listener from catching this
             isCanceling.current = true; // Flag to ignore blur
             onCancel(); // Cancel without saving
+        } else if (e.key === ' ' || e.key === 'Spacebar') {
+            e.stopPropagation(); // Ensure space works in input
+        } else if (e.key === 'Tab') {
+            e.preventDefault();
+            e.stopPropagation();
+            handleSave();
+            onNavigate?.(e.shiftKey ? 'prev' : 'next');
         }
     };
 
@@ -109,12 +119,13 @@ interface DataTableRowProps {
     onDeleteRow: (rowIdx: number) => void;
     onFocusCell: (rowIdx: number, col: string) => void;
     onFocusDelete: (rowIdx: number) => void;
-    onOpenNested: (title: string, data: any) => void;
+    onOpenNested: (rowIdx: number, col: string, data: any) => void;
+    onNavigate: (dir: 'next' | 'prev') => void;
 }
 
 const DataTableRow = memo(({
     row, rowIdx, columns, isEditingCell, focusedCol, isDeleteFocused, lastAddedIndex, readOnly,
-    onStartEdit, onUpdateCell, onCancelEdit, onDeleteRow, onFocusCell, onFocusDelete, onOpenNested
+    onStartEdit, onUpdateCell, onCancelEdit, onDeleteRow, onFocusCell, onFocusDelete, onOpenNested, onNavigate
 }: DataTableRowProps) => {
     return (
         <TableRow
@@ -142,13 +153,14 @@ const DataTableRow = memo(({
                                 initialValue={val}
                                 onSave={(newVal) => onUpdateCell(rowIdx, col, newVal)}
                                 onCancel={onCancelEdit}
+                                onNavigate={onNavigate}
                             />
                         ) : (
                             <div className="flex items-center w-full overflow-hidden">
                                 {val !== null && typeof val === 'object' && !Array.isArray(val) ? (
                                     // Object Chip - clickable to open modal, shows key names
                                     <button
-                                        onClick={(e) => { e.stopPropagation(); onOpenNested(col, val); }}
+                                        onClick={(e) => { e.stopPropagation(); onOpenNested(rowIdx, col, val); }}
                                         className="bg-amber-500/20 text-amber-400 border border-amber-500/30 px-2 py-0.5 rounded text-xs font-mono cursor-pointer hover:bg-amber-500/30 transition-colors truncate max-w-full"
                                         title={Object.keys(val).join(", ")}
                                     >
@@ -158,7 +170,7 @@ const DataTableRow = memo(({
                                     // Check if array contains objects
                                     val.some(item => typeof item === 'object' && item !== null && !Array.isArray(item)) ? (
                                         <button
-                                            onClick={(e) => { e.stopPropagation(); onOpenNested(col, val); }}
+                                            onClick={(e) => { e.stopPropagation(); onOpenNested(rowIdx, col, val); }}
                                             className="bg-blue-500/20 text-blue-400 border border-blue-500/30 px-2 py-0.5 rounded text-xs font-mono cursor-pointer hover:bg-blue-500/30 transition-colors"
                                         >
                                             {"[ "}{val.length} items{" ]"}
@@ -225,6 +237,10 @@ const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstIn
         if (hasData) {
             onAdd(newRow);
             setValues({});
+            // Focus back to first input for rapid entry
+            setTimeout(() => {
+                firstInputRef.current?.focus();
+            }, 0);
         }
     };
 
@@ -232,6 +248,13 @@ const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstIn
         if (e.key === 'Enter') {
             e.stopPropagation();
             handleAdd();
+            return;
+        }
+
+        // Stop propagation for keys that would interfere with parent table navigation/actions
+        // But allow Escape to bubble (to close modal)
+        if (['Backspace', 'Delete', ' ', 'Spacebar', 'Tab', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(e.key)) {
+            e.stopPropagation();
         }
     };
 
@@ -274,16 +297,21 @@ const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstIn
 
 // --- Main Component ---
 
-export const DataTable: React.FC<DataTableProps> = ({ data, columns, sortConfig, onSort, onUpdateCell, onDeleteRow, onAdd, readOnly = false }) => {
+export const DataTable: React.FC<DataTableProps> = ({ data, columns, sortConfig, onSort, onUpdateCell, onDeleteRow, onAdd, readOnly = false, onEditingChange }) => {
     const [editingCell, setEditingCell] = useState<{ row: number; col: string } | null>(null);
     const [focusedCell, setFocusedCell] = useState<{ row: number; col: number } | null>(null);
     const [lastAddedIndex, setLastAddedIndex] = useState<number | null>(null);
-    const [nestedModal, setNestedModal] = useState<{ open: boolean; title: string; data: any } | null>(null);
+    const [nestedModal, setNestedModal] = useState<{ open: boolean; title: string; type?: string; data: any; rowIdx: number; col: string } | null>(null);
 
     const tableBodyRef = useRef<HTMLTableSectionElement>(null);
     const tableContainerRef = useRef<HTMLDivElement>(null); // For capturing key events
     const firstInputRef = useRef<HTMLInputElement>(null);
     const shouldScrollRef = useRef(false);
+
+    // Notify parent about editing state
+    useEffect(() => {
+        onEditingChange?.(!!editingCell);
+    }, [editingCell, onEditingChange]);
 
     useEffect(() => {
         // Initial focus when data loads
@@ -311,31 +339,6 @@ export const DataTable: React.FC<DataTableProps> = ({ data, columns, sortConfig,
         }
     }, [data.length]);
 
-    // Use callbacks to maintain referential identity for Memoized rows
-    const handleStartEdit = useCallback((rowIdx: number, col: string) => {
-        setEditingCell({ row: rowIdx, col });
-    }, []);
-
-    const handleCancelEdit = useCallback(() => {
-        setEditingCell(null);
-        // Return focus to container so navigation works
-        tableContainerRef.current?.focus();
-    }, []);
-
-    const handleUpdateCell = useCallback((rowIdx: number, col: string, val: any) => {
-        if (readOnly || !onUpdateCell) return;
-        onUpdateCell(rowIdx, col, val);
-        setEditingCell(null);
-        tableContainerRef.current?.focus();
-    }, [onUpdateCell, readOnly]);
-
-    const handleAddRow = useCallback((row: RowData) => {
-        if (readOnly || !onAdd) return;
-        shouldScrollRef.current = true;
-        onAdd(row);
-    }, [onAdd, readOnly]);
-
-
     const columnTypes = React.useMemo(() => {
         const types: Record<string, string> = {};
         columns.forEach(col => {
@@ -352,8 +355,83 @@ export const DataTable: React.FC<DataTableProps> = ({ data, columns, sortConfig,
         return types;
     }, [data, columns]);
 
+    // Use callbacks to maintain referential identity for Memoized rows
+    const handleStartEdit = useCallback((rowIdx: number, col: string) => {
+        if (readOnly) return;
 
-    // Clamp focused cell if data shrinks (e.g. after delete)
+        const val = data[rowIdx]?.[col];
+        // If value is object, always open modal
+        // If value is array, check content:
+        // - Array of objects -> Modal
+        // - Array of primitives -> Inline Edit (comma separated)
+        if (val !== null && typeof val === 'object') {
+            if (Array.isArray(val)) {
+                // Check if any item is an object
+                const hasObjects = val.some(v => v !== null && typeof v === 'object');
+                if (!hasObjects) {
+                    setEditingCell({ row: rowIdx, col });
+                    return;
+                }
+            }
+
+            setNestedModal({
+                open: true,
+                title: col,
+                type: columnTypes[col],
+                data: val,
+                rowIdx,
+                col
+            });
+            return;
+        }
+
+        setEditingCell({ row: rowIdx, col });
+    }, [data, readOnly, columnTypes]);
+
+    const handleCancelEdit = useCallback(() => {
+        setEditingCell(null);
+        // Return focus to container so navigation works
+        tableContainerRef.current?.focus();
+    }, []);
+
+    const handleNavigate = useCallback((dir: 'next' | 'prev') => {
+        if (!editingCell) return;
+        const { row, col: colName } = editingCell;
+        const colIdx = columns.indexOf(colName);
+        const colCount = columns.length;
+        const rowCount = data.length;
+
+        if (dir === 'next') {
+            if (colIdx < colCount) {
+                setFocusedCell({ row, col: colIdx + 1 });
+            } else if (row < rowCount - 1) {
+                setFocusedCell({ row: row + 1, col: 0 });
+            }
+        } else {
+            if (colIdx > 0) {
+                setFocusedCell({ row, col: colIdx - 1 });
+            } else if (row > 0) {
+                setFocusedCell({ row: row - 1, col: colCount });
+            }
+        }
+        setEditingCell(null);
+        tableContainerRef.current?.focus();
+    }, [editingCell, columns, data.length]);
+
+    const handleUpdateCell = useCallback((rowIdx: number, col: string, val: any) => {
+        if (readOnly || !onUpdateCell) return;
+        onUpdateCell(rowIdx, col, val);
+        setEditingCell(null);
+        tableContainerRef.current?.focus();
+    }, [onUpdateCell, readOnly]);
+
+    const handleAddRow = useCallback((row: RowData) => {
+        if (readOnly || !onAdd) return;
+        shouldScrollRef.current = true;
+        onAdd(row);
+    }, [onAdd, readOnly]);
+
+
     useEffect(() => {
         if (focusedCell) {
             if (focusedCell.row >= data.length) {
@@ -561,8 +639,9 @@ export const DataTable: React.FC<DataTableProps> = ({ data, columns, sortConfig,
                             onDeleteRow={onDeleteRow ?? (() => { })}
                             onFocusCell={(r, c) => setFocusedCell({ row: r, col: columns.indexOf(c) })}
                             onFocusDelete={(r) => setFocusedCell({ row: r, col: columns.length })}
-                            onOpenNested={(title, nestedData) => setNestedModal({ open: true, title, data: nestedData })}
+                            onOpenNested={(rowIdx, col, nestedData) => setNestedModal({ open: true, title: col, type: columnTypes[col], data: nestedData, rowIdx, col })}
                             readOnly={readOnly}
+                            onNavigate={handleNavigate}
                         />
                     ))}
                 </TableBody>
@@ -584,7 +663,14 @@ export const DataTable: React.FC<DataTableProps> = ({ data, columns, sortConfig,
                         if (!open) setNestedModal(null);
                     }}
                     title={nestedModal.title}
+                    type={nestedModal.type}
                     data={nestedModal.data}
+                    onUpdateData={(newData) => {
+                        // Propagate nested changes back to parent
+                        if (onUpdateCell && nestedModal) {
+                            onUpdateCell(nestedModal.rowIdx, nestedModal.col, newData);
+                        }
+                    }}
                 />
             )}
         </div>

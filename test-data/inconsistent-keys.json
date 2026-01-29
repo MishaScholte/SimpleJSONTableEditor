@@ -1,0 +1,27 @@
+[
+    {
+        "id": 1,
+        "name": "Product A",
+        "price": 29.99
+    },
+    {
+        "id": 2,
+        "name": "Product B",
+        "price": 49.99,
+        "category": "Electronics"
+    },
+    {
+        "id": 3,
+        "name": "Product C",
+        "stock": 150,
+        "tags": [
+            "sale",
+            "new"
+        ]
+    },
+    {
+        "id": 4,
+        "category": "Furniture",
+        "discount": 0.15
+    }
+]

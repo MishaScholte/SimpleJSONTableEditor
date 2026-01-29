@@ -62,8 +62,16 @@ export const inferColumns = (data: TableRow[]): string[] => {
     return Array.from(keys).sort(); // Sort alphabetically for consistency
 };
 
-export const parseArrayInput = (input: string): string[] => {
-    return input.split(',').map(s => s.trim()).filter(s => s.length > 0);
+export const parseArrayInput = (input: string): any[] => {
+    // Split by comma and trim. Then infer types.
+    return input.split(',').map(s => {
+        const trimmed = s.trim();
+        if (trimmed === "") return ""; // Will be filtered out
+        if (!isNaN(Number(trimmed))) return Number(trimmed);
+        if (trimmed.toLowerCase() === 'true') return true;
+        if (trimmed.toLowerCase() === 'false') return false;
+        return trimmed;
+    }).filter(s => s !== "");
 };
 
 export const formatArrayOutput = (arr: string[]): string => {

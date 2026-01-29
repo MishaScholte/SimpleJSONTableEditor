@@ -1,0 +1,29 @@
+[
+    {
+        "company": "TechCorp BV",
+        "details": {
+            "founded": 2015,
+            "location": {
+                "country": "Netherlands",
+                "city": "Amsterdam",
+                "coordinates": {
+                    "lat": 52.3676,
+                    "lng": 4.9041
+                }
+            }
+        },
+        "employees": 250
+    },
+    {
+        "company": "StartupXYZ",
+        "details": {
+            "founded": 2022,
+            "location": {
+                "country": "Belgium",
+                "city": "Brussels"
+            },
+            "funding": "Series A"
+        },
+        "employees": 15
+    }
+]
