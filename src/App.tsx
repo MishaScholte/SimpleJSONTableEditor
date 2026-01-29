@@ -9,13 +9,43 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { useKeyboardShortcuts } from "@/hooks/use-keyboard-shortcuts";
 import { useUndoRedo } from "@/hooks/use-undo-redo";
 
+
+// Helper to load initial data
+const loadInitialData = (): TableRow[] => {
+  if (typeof window === 'undefined') return [];
+  try {
+    const saved = localStorage.getItem("jte-data");
+    if (!saved) return [];
+    const parsed = safeParseJSON(saved);
+    return parsed || [];
+  } catch (e) {
+    console.error("Failed to load data from local storage", e);
+    return [];
+  }
+};
+
 function App() {
   // State
-  const [data, setData, undo, redo, reset, canUndo, canRedo, history] = useUndoRedo<TableRow[]>([], 100);
-  const [columns, setColumns] = useState<string[]>([]);
+  // Initialize with data from local storage if available
+  const [initialData] = useState<TableRow[]>(loadInitialData);
+
+  const [data, setData, undo, redo, reset, canUndo, canRedo, history] = useUndoRedo<TableRow[]>(initialData, 100);
+
+  // Initialize columns based on the initial data
+  const [columns, setColumns] = useState<string[]>(() => inferColumns(initialData));
+
   const [sortConfig, setSortConfig] = useState<SortConfig | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Persistence Effect
+  useEffect(() => {
+    if (data.length > 0) {
+      localStorage.setItem("jte-data", JSON.stringify(data));
+    } else {
+      localStorage.removeItem("jte-data");
+    }
+  }, [data]);
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -62,6 +92,7 @@ function App() {
       setData([]);
       setColumns([]);
       setSortConfig(null);
+      // localStorage removal handled by useEffect
       toast.info("Workspace cleared.");
     }
   };
@@ -158,6 +189,7 @@ function App() {
       if (data.length > 0) {
         if (window.confirm("Are you sure you want to clear the workspace? This cannot be undone.")) {
           setData([]);
+          // localStorage removal handled by useEffect
         }
       }
     },
@@ -179,14 +211,16 @@ function App() {
 
   useEffect(() => {
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-      if (data.length > 0) {
-        e.preventDefault();
-        e.returnValue = "";
-      }
+      // Don't warn on reload anymore, since we persist data!
+      // But maybe still warn if they are about to close the tab? 
+      // User request: "Als de user nu ververst... niet data verliest"
+      // Usually persistence negates the need for this warning.
+      // I will remove the warning or keep it optional. 
+      // Given "not lose data", persistence is the key. 
+      // Let's remove the warning to make it seamless like a native app.
     };
 
-
-
+    // ... global paste ...
     const handleGlobalPaste = (e: ClipboardEvent) => {
       // Ignore if user is interacting with an input or textarea
       if (
@@ -216,11 +250,11 @@ function App() {
       }
     };
 
-    window.addEventListener("beforeunload", handleBeforeUnload);
+    // window.addEventListener("beforeunload", handleBeforeUnload); // Removed warning
     window.addEventListener("paste", handleGlobalPaste);
 
     return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
+      // window.removeEventListener("beforeunload", handleBeforeUnload);
       window.removeEventListener("paste", handleGlobalPaste);
     };
   }, [data]);
