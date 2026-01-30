@@ -144,7 +144,7 @@ const DataTableRow = memo(({
 }: DataTableRowProps) => {
     return (
         <TableRow
-            className={`grid w-full items-center border-b last:border-0 hover:bg-muted/5 ${rowIdx === lastAddedIndex ? "animate-new-row" : ""}`}
+            className={`group grid w-full items-center border-b last:border-0 hover:bg-muted/5 ${rowIdx === lastAddedIndex ? "animate-new-row" : ""}`}
             style={{ gridTemplateColumns: `repeat(${columns.length}, minmax(100px, 1fr)) 50px` }}
         >
             {columns.map((col) => {
@@ -214,7 +214,7 @@ const DataTableRow = memo(({
                     <Button
                         variant="ghost"
                         size="icon"
-                        className={`h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10 ${isDeleteFocused ? "ring-2 ring-white ring-offset-2 ring-offset-background" : ""}`}
+                        className={`h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10 transition-opacity duration-200 opacity-0 group-hover:opacity-100 ${isDeleteFocused ? "ring-2 ring-white ring-offset-2 ring-offset-background opacity-100" : ""}`}
                         onClick={(e) => { e.stopPropagation(); onDeleteRow(rowIdx); }}
                         onFocus={() => onFocusDelete(rowIdx)}
                         tabIndex={-1} // Handled by manual focus state

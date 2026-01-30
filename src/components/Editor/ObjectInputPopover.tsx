@@ -142,12 +142,7 @@ export const ObjectInputPopover: React.FC<ObjectInputPopoverProps> = ({ inferred
                     <div className="pt-2 flex justify-end">
                         <Button
                             size="sm"
-                            className={`h-7 px-3 text-xs gap-1.5 transition-all text-white ${focusedKey === displayKeys[displayKeys.length - 1] ? "bg-white/20 hover:bg-white/30 text-white" : "bg-green-600 hover:bg-green-500"}`}
-                            // Use green for primary action usually, but if user wants "white corner down left", maybe neutral style? 
-                            // Prompt said: "kleine versie van onze primaire groene knop met een vinkje... Als user op laatste veld is, dan ... witte corner down left arrow"
-                            // So: Default Green+Check. Last Field -> Green+Arrow? Or White+Arrow? "witte corner down left arrow" implies the icon is white. 
-                            // Assuming button stays green, icon is white.
-                            onClick={() => setOpen(false)}
+                            className="h-7 px-3 text-xs gap-1.5 transition-all text-white bg-green-600 hover:bg-green-500"
                         >
                             {focusedKey === displayKeys[displayKeys.length - 1] ? (
                                 <CornerDownLeft className="w-3.5 h-3.5" />
