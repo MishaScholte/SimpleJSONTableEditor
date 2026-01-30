@@ -4,6 +4,7 @@ import { DataTable, type SortConfig } from "@/components/Editor/DataTable";
 import { inferColumns, safeParseJSON, unflattenObject, type TableRow, type ColumnType, type ColumnSchema, inferSchema } from "@/lib/data-utils";
 import { SecondaryButton } from "@/components/ui/secondary-button";
 import { PrimaryButton } from "@/components/ui/primary-button";
+import { Button } from "@/components/ui/button";
 import { Import, Download, Trash2, FileJson, Copy, ClipboardPaste, Shield, WifiOff, Undo, Redo, Command, Columns3 } from "lucide-react";
 import { ReorderColumnsDialog } from "@/components/Editor/ReorderColumnsDialog";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -398,6 +399,14 @@ function App() {
     toast.success(`Loaded debug dataset: ${debugData.length} rows.`);
   };
 
+  const handleStartScratch = () => {
+    const dummy = [{ id: 1, name: "" }];
+    reset(dummy);
+    setColumns(["id", "name"]);
+    setSchema({ id: 'number', name: 'text' });
+    toast.success("Started new empty table");
+  };
+
   return (
     <div className={`flex flex-col h-screen overflow-hidden bg-background text-foreground font-sans ${data.length === 0 ? 'mesh-background' : ''}`}>
       <input
@@ -505,19 +514,24 @@ function App() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="px-16 pb-16 pt-4 flex flex-col gap-8">
-                  <div className="flex flex-row gap-6">
-                    <PrimaryButton onClick={handlePaste} className="flex-1 h-14 text-base [&_svg]:size-6 group relative">
-                      <ClipboardPaste className="w-6 h-6" /> Paste JSON
-                      <kbd className="absolute right-4 hidden group-hover:inline-flex h-6 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
-                        <span className="text-xs">⌘</span>V
-                      </kbd>
-                    </PrimaryButton>
-                    <SecondaryButton onClick={() => fileInputRef.current?.click()} className="flex-1 h-14 text-base [&_svg]:size-6 group relative">
-                      <Import className="w-6 h-6" /> Import JSON File
-                      <kbd className="absolute right-4 hidden group-hover:inline-flex h-6 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
-                        <span className="text-xs">⌘</span>O
-                      </kbd>
-                    </SecondaryButton>
+                  <div className="flex flex-col gap-4">
+                    <div className="flex flex-row gap-6">
+                      <PrimaryButton onClick={handlePaste} className="flex-1 h-14 text-base [&_svg]:size-6 group relative">
+                        <ClipboardPaste className="w-6 h-6" /> Paste JSON
+                        <kbd className="absolute right-4 hidden group-hover:inline-flex h-6 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
+                          <span className="text-xs">⌘</span>V
+                        </kbd>
+                      </PrimaryButton>
+                      <SecondaryButton onClick={() => fileInputRef.current?.click()} className="flex-1 h-14 text-base [&_svg]:size-6 group relative">
+                        <Import className="w-6 h-6" /> Import JSON File
+                        <kbd className="absolute right-4 hidden group-hover:inline-flex h-6 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
+                          <span className="text-xs">⌘</span>O
+                        </kbd>
+                      </SecondaryButton>
+                    </div>
+                    <Button variant="ghost" onClick={handleStartScratch} className="w-full text-muted-foreground hover:text-white hover:bg-white/5">
+                      Start from scratch with an empty table
+                    </Button>
                   </div>
                 </CardContent>
               </Card>
