@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Popover, PopoverContent, PopoverAnchor } from "@/components/ui/popover";
-import { Input } from "@/components/ui/input";
+import { GradientInput } from "@/components/ui/gradient-input";
+
 import { Button } from "@/components/ui/button";
 import { Check, CornerDownLeft } from "lucide-react";
 
@@ -123,14 +124,16 @@ export const ObjectInputPopover: React.FC<ObjectInputPopoverProps> = ({ inferred
                         {displayKeys.map(key => (
                             <div key={key} className="flex items-center gap-2 group">
                                 <label className="text-[10px] uppercase tracking-wide text-neutral-400 font-mono w-1/3 truncate text-right shrink-0" title={key}>{key}</label>
-                                <Input
+                                <GradientInput
                                     data-object-input-first={displayKeys.indexOf(key) === 0 ? "true" : undefined}
                                     value={localValue[key] || ""}
                                     onChange={(e) => handleKeyChange(key, e.target.value)}
                                     onFocus={() => setFocusedKey(key)}
                                     onKeyDown={handleKeyDown}
-                                    className="h-7 text-xs bg-muted/20 border-white/5 focus:bg-muted/40 flex-1 min-w-0"
+                                    className="h-7 text-xs"
+                                    wrapperClassName="flex-1 min-w-0"
                                     placeholder="..."
+                                    noSuccessState={true}
                                 />
                             </div>
                         ))}
