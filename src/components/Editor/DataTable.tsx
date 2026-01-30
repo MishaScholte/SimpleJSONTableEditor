@@ -9,6 +9,8 @@ import { SlashMenu } from "./SlashMenu";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { AddColumnForm } from "./AddColumnForm";
 import { BooleanBadge } from "@/components/ui/BooleanBadge";
+import { ObjectInputPopover } from "./ObjectInputPopover";
+import { inferObjectKeys } from "@/lib/schema-utils";
 
 export interface SortConfig {
     column: string;
@@ -234,9 +236,10 @@ interface QuickAddFooterProps {
     onOpenNested: (col: string, initialData: any, onSave: (data: any) => void) => void;
     onFocus?: () => void;
     columnTypes: Record<string, string>;
+    data: RowData[];
 }
 
-const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstInputRef, onOpenNested, onFocus, columnTypes }) => {
+const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstInputRef, onOpenNested, onFocus, columnTypes, data }) => {
     const [values, setValues] = useState<Record<string, any>>({});
     const [types, setTypes] = useState<Record<string, 'auto' | 'text' | 'number' | 'boolean'>>({});
     const [errors, setErrors] = useState<Record<string, boolean>>({});
@@ -447,13 +450,82 @@ const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstIn
             >
                 {columns.map((col, idx) => {
                     const value = values[col];
+                    const schemaType = columnTypes[col];
+                    const isObject = schemaType === 'object';
+
+                    // Infer keys if it's an object column
+                    const inferredKeys = isObject ? inferObjectKeys(data, col) : [];
+
                     const isComplex = value !== null && typeof value === 'object';
                     const currentType = types[col];
-                    const schemaType = columnTypes[col];
                     const hasError = errors[col] === true;
 
                     const isBoolean = schemaType === 'boolean';
                     const boolValue = typeof value === 'boolean' ? value : null;
+
+                    const inputComponent = (
+                        <div className={`input-gradient-wrapper w-full relative group rounded-[8px] ${value ? "has-value" : ""} ${hasError ? "error ring-1 ring-destructive" : ""}`}>
+                            {isComplex ? (
+                                <div className="flex items-center gap-1 pl-2 pr-1 py-1 h-8 w-full bg-secondary/50 rounded-[8px] border border-white/10">
+                                    {Array.isArray(value) ? (
+                                        <span className="text-xs text-blue-400 font-mono flex-1 truncate">Array [{value.length}]</span>
+                                    ) : (
+                                        <span className="text-xs text-amber-400 font-mono flex-1 truncate">
+                                            &#123; {Object.keys(value).join(', ')} &#125;
+                                        </span>
+                                    )}
+                                    <button
+                                        onClick={() => setValues(prev => {
+                                            const next = { ...prev };
+                                            delete next[col];
+                                            return next;
+                                        })}
+                                        className="hover:bg-destructive/20 text-muted-foreground hover:text-destructive p-1 rounded"
+                                    >
+                                        <X className="w-3 h-3" />
+                                    </button>
+                                    <button
+                                        onClick={() => onOpenNested(col, value, (saved) => setValues(prev => ({ ...prev, [col]: saved })))}
+                                        className="hover:bg-primary/20 text-muted-foreground hover:text-primary p-1 rounded font-bold text-xs"
+                                    >
+                                        ✎
+                                    </button>
+                                </div>
+                            ) : (
+                                <div className="relative w-full">
+                                    <Input
+                                        ref={(el) => {
+                                            if (idx === 0) firstInputRef.current = el; // Keep existing firstRef logic
+                                            inputRefs.current[col] = el;
+                                        }}
+                                        key={`input-el-${col}`} // Stable key to prevent remounting
+                                        onFocus={onFocus} // Clear table focus
+                                        placeholder={isBoolean ? "T / F" : (isObject ? "Configure Object..." : (currentType && currentType !== 'auto' ? `${currentType}:` : col))}
+                                        value={typeof value === 'string' ? value : (typeof value === 'boolean' ? '' : "")} // Boolean hides text
+                                        onChange={(e) => !isBoolean && !isObject && handleInputChange(col, e.target.value, e.target as HTMLElement)}
+                                        onKeyDown={(e) => handleKeyDown(e, col)}
+                                        className={`h-8 text-xs font-normal bg-card border-transparent focus-visible:ring-0 focus-visible:border-transparent placeholder:text-muted-foreground/50 transition-colors w-full pr-8 ${schemaType === 'number' || currentType === 'number' ? "font-mono" : (currentType && currentType !== 'auto' ? "font-medium" : "")} ${hasError ? "text-destructive placeholder:text-destructive/50" : ""} ${isBoolean ? "font-mono text-center cursor-default tracking-widest uppercase text-muted-foreground/50 focus:text-foreground" : ""} ${isObject ? "cursor-pointer text-amber-500/80 placeholder:text-amber-500/50" : ""}`}
+                                        readOnly={(isBoolean && boolValue !== null) || isObject}
+                                    />
+                                    {isBoolean && boolValue !== null && (
+                                        <div className="absolute inset-0 flex items-center px-3 pointer-events-none">
+                                            <BooleanBadge value={boolValue} />
+                                        </div>
+                                    )}
+                                </div>
+                            )}
+
+                            {!isComplex && value?.length > 0 && !menuState && (
+                                <div className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none opacity-0 group-focus-within:opacity-100 transition-opacity duration-200">
+                                    <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border-[1px] border-solid border-green-500/20 bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
+                                        <span className="text-xs text-green-500">
+                                            ⏎
+                                        </span>
+                                    </kbd>
+                                </div>
+                            )}
+                        </div>
+                    );
 
                     return (
                         <TableCell key={`input-${col}`} className="p-4 py-5 flex items-center justify-center relative">
@@ -467,65 +539,18 @@ const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstIn
                                 />
                             )}
 
-                            <div className={`input-gradient-wrapper w-full relative group rounded-[8px] ${value ? "has-value" : ""} ${hasError ? "error ring-1 ring-destructive" : ""}`}>
-                                {isComplex ? (
-                                    <div className="flex items-center gap-1 pl-2 pr-1 py-1 h-8 w-full bg-secondary/50 rounded-[8px] border border-white/10">
-                                        {Array.isArray(value) ? (
-                                            <span className="text-xs text-blue-400 font-mono flex-1 truncate">Array [{value.length}]</span>
-                                        ) : (
-                                            <span className="text-xs text-amber-400 font-mono flex-1 truncate">Object &#123;...&#125;</span>
-                                        )}
-                                        <button
-                                            onClick={() => setValues(prev => {
-                                                const next = { ...prev };
-                                                delete next[col];
-                                                return next;
-                                            })}
-                                            className="hover:bg-destructive/20 text-muted-foreground hover:text-destructive p-1 rounded"
-                                        >
-                                            <X className="w-3 h-3" />
-                                        </button>
-                                        <button
-                                            onClick={() => onOpenNested(col, value, (saved) => setValues(prev => ({ ...prev, [col]: saved })))}
-                                            className="hover:bg-primary/20 text-muted-foreground hover:text-primary p-1 rounded font-bold text-xs"
-                                        >
-                                            ✎
-                                        </button>
-                                    </div>
-                                ) : (
-                                    <div className="relative w-full">
-                                        <Input
-                                            ref={(el) => {
-                                                if (idx === 0) firstInputRef.current = el; // Keep existing firstRef logic
-                                                inputRefs.current[col] = el;
-                                            }}
-                                            key={`input-el-${col}`} // Stable key to prevent remounting
-                                            onFocus={onFocus} // Clear table focus
-                                            placeholder={isBoolean ? "T / F" : (currentType && currentType !== 'auto' ? `${currentType}:` : col)}
-                                            value={typeof value === 'string' ? value : (typeof value === 'boolean' ? '' : "")} // Boolean hides text
-                                            onChange={(e) => !isBoolean && handleInputChange(col, e.target.value, e.target as HTMLElement)}
-                                            onKeyDown={(e) => handleKeyDown(e, col)}
-                                            className={`h-8 text-xs font-normal bg-card border-transparent focus-visible:ring-0 focus-visible:border-transparent placeholder:text-muted-foreground/50 transition-colors w-full pr-8 ${schemaType === 'number' || currentType === 'number' ? "font-mono" : (currentType && currentType !== 'auto' ? "font-medium" : "")} ${hasError ? "text-destructive placeholder:text-destructive/50" : ""} ${isBoolean ? "font-mono text-center cursor-default tracking-widest uppercase text-muted-foreground/50 focus:text-foreground" : ""}`}
-                                            readOnly={isBoolean && boolValue !== null}
-                                        />
-                                        {isBoolean && boolValue !== null && (
-                                            <div className="absolute inset-0 flex items-center px-3 pointer-events-none">
-                                                <BooleanBadge value={boolValue} />
-                                            </div>
-                                        )}
-                                    </div>
-                                )}
-
-                                {!isComplex && value?.length > 0 && !menuState && (
-                                    <div className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none opacity-0 group-focus-within:opacity-100 transition-opacity duration-200">
-                                        <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border-[1px] border-solid border-green-500/20 bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
-                                            <span className="text-xs text-green-500">
-                                                ⏎
-                                            </span>
-                                        </kbd>
-                                    </div>
-                                )}
-                            </div>
+                            {isObject ? (
+                                <ObjectInputPopover
+                                    columnName={col}
+                                    inferredKeys={inferredKeys}
+                                    value={value || {}}
+                                    onChange={(newObj) => setValues(prev => ({ ...prev, [col]: newObj }))}
+                                >
+                                    {inputComponent}
+                                </ObjectInputPopover>
+                            ) : (
+                                inputComponent
+                            )}
                         </TableCell>
                     );
                 })}
@@ -957,6 +982,7 @@ export const DataTable: React.FC<DataTableProps> = ({
                             onSave: onSave
                         })}
                         columnTypes={columnTypes}
+                        data={data}
                     />
                 )}
             </Table>
