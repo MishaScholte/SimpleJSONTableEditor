@@ -120,7 +120,7 @@ export const ObjectInputPopover: React.FC<ObjectInputPopoverProps> = ({ inferred
                         </h4>
                     </div>
 
-                    <div className="space-y-2 max-h-[200px] overflow-y-auto custom-scrollbar">
+                    <div className="space-y-2 max-h-[200px] overflow-y-auto custom-scrollbar p-1">
                         {displayKeys.map(key => (
                             <div key={key} className="flex items-center gap-2 group">
                                 <label className="text-[10px] uppercase tracking-wide text-neutral-400 font-mono w-1/3 truncate text-right shrink-0" title={key}>{key}</label>
@@ -130,7 +130,7 @@ export const ObjectInputPopover: React.FC<ObjectInputPopoverProps> = ({ inferred
                                     onChange={(e) => handleKeyChange(key, e.target.value)}
                                     onFocus={() => setFocusedKey(key)}
                                     onKeyDown={handleKeyDown}
-                                    className="h-7 text-xs"
+                                    className="" // Default (h-8 text-xs) matches AddColumnForm
                                     wrapperClassName="flex-1 min-w-0"
                                     placeholder="..."
                                     noSuccessState={true}
