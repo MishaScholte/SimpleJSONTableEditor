@@ -10,6 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { BooleanBadge } from "@/components/ui/BooleanBadge";
 import { ObjectBadge } from "@/components/ui/object-badge";
+import { ShortcutBadge } from "@/components/ui/shortcut-badge";
 
 export const DesignSystemPreview: React.FC = () => {
     return (
@@ -127,6 +128,36 @@ export const DesignSystemPreview: React.FC = () => {
                             <div className="flex flex-col items-center gap-1">
                                 <span className="text-[10px] text-muted-foreground uppercase">Object</span>
                                 <ObjectBadge keys={["id", "name", "status"]} onClick={() => { }} />
+                            </div>
+                        </div>
+                    </div>
+                    {/* Keyboard Shortcuts */}
+                    <div className="space-y-4">
+                        <h3 className="text-sm font-medium text-muted-foreground uppercase">Keyboard Shortcuts</h3>
+                        <div className="flex flex-wrap gap-4 items-center">
+                            <div className="flex flex-col items-center gap-1">
+                                <span className="text-[10px] text-muted-foreground uppercase">Small</span>
+                                <div className="flex items-center gap-1">
+                                    <ShortcutBadge variant="small">⌘</ShortcutBadge>
+                                    <ShortcutBadge variant="small">K</ShortcutBadge>
+                                </div>
+                            </div>
+                            <div className="flex flex-col items-center gap-1">
+                                <span className="text-[10px] text-muted-foreground uppercase">Arrow Keys</span>
+                                <div className="flex items-center gap-1">
+                                    <ShortcutBadge variant="small">↑</ShortcutBadge>
+                                    <ShortcutBadge variant="small">↓</ShortcutBadge>
+                                    <ShortcutBadge variant="small">←</ShortcutBadge>
+                                    <ShortcutBadge variant="small">→</ShortcutBadge>
+                                </div>
+                            </div>
+                            <div className="flex flex-col items-center gap-1">
+                                <span className="text-[10px] text-muted-foreground uppercase">Special Keys</span>
+                                <div className="flex items-center gap-1">
+                                    <ShortcutBadge variant="small">⏎</ShortcutBadge>
+                                    <ShortcutBadge variant="small">⌫</ShortcutBadge>
+                                    <ShortcutBadge variant="small">⎋</ShortcutBadge>
+                                </div>
                             </div>
                         </div>
                     </div>
