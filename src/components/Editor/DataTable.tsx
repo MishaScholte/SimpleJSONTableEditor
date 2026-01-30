@@ -486,7 +486,7 @@ const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstIn
                     const isPopoverOpen = activePopover === col;
 
                     const inputComponent = (
-                        <div className={`input-gradient-wrapper w-full relative group rounded-[8px] ${value ? "has-value" : ""} ${hasError ? "error ring-1 ring-destructive" : ""} ${isPopoverOpen ? "bg-muted border-white/40 z-20" : ""}`}>
+                        <div className={`input-gradient-wrapper w-full relative group rounded-[8px] ${hasError ? "error ring-1 ring-destructive" : ""} ${isPopoverOpen ? "bg-muted border-white/40 z-20" : ""}`}>
                             {isComplex ? (
                                 <div className="flex items-center gap-1 pl-2 pr-1 py-1 h-8 w-full bg-secondary/50 rounded-[8px] border border-white/10">
                                     {Array.isArray(value) ? (
