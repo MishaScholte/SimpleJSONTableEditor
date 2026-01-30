@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Popover, PopoverContent, PopoverAnchor } from "@/components/ui/popover";
 import { GradientInput } from "@/components/ui/gradient-input";
 
-import { Button } from "@/components/ui/button";
+import { PrimaryButton } from "@/components/ui/primary-button";
 import { Check, CornerDownLeft } from "lucide-react";
 
 interface ObjectInputPopoverProps {
@@ -165,9 +165,9 @@ export const ObjectInputPopover: React.FC<ObjectInputPopoverProps> = ({ inferred
                     </div>
 
                     <div className="pt-2 flex justify-end">
-                        <Button
+                        <PrimaryButton
                             size="sm"
-                            className="h-7 px-3 text-xs gap-1.5 transition-all text-white bg-green-600 hover:bg-green-500"
+                            className="h-7 px-3 text-xs gap-1.5"
                             onClick={(e) => {
                                 e.preventDefault();
                                 setOpen(false);
@@ -180,7 +180,7 @@ export const ObjectInputPopover: React.FC<ObjectInputPopoverProps> = ({ inferred
                                 <Check className="w-3.5 h-3.5" />
                             )}
                             Done
-                        </Button>
+                        </PrimaryButton>
                     </div>
                 </div>
             </PopoverContent>
