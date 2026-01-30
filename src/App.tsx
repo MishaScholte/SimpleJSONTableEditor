@@ -11,7 +11,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { useKeyboardShortcuts } from "@/hooks/use-keyboard-shortcuts";
 import { useUndoRedo } from "@/hooks/use-undo-redo";
 import { DebugPanel } from "@/components/Debug/DebugPanel"; // Debug
-import { ButtonPreview } from "@/components/Debug/ButtonPreview";
+import { DesignSystemPreview } from "@/components/Debug/DesignSystemPreview";
 
 // Helper to load initial data
 const loadInitialData = (): TableRow[] => {
@@ -29,8 +29,8 @@ const loadInitialData = (): TableRow[] => {
 
 function App() {
   // Debug Route
-  if (typeof window !== 'undefined' && window.location.search.includes('debug=buttons')) {
-    return <ButtonPreview />; // Hijack render for debug
+  if (typeof window !== 'undefined' && window.location.search.includes('debug=design')) {
+    return <DesignSystemPreview />; // Hijack render for debug
   }
 
   // State
