@@ -260,6 +260,20 @@ const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstIn
         }
     }, [focusTarget]);
 
+    const handleFieldEnter = (col: string) => {
+        const idx = columns.indexOf(col);
+        if (idx === -1) return;
+
+        if (idx < columns.length - 1) {
+            // Focus next
+            const nextCol = columns[idx + 1];
+            inputRefs.current[nextCol]?.focus();
+        } else {
+            // Submit row
+            handleAdd();
+        }
+    };
+
     const handleAdd = () => {
         // Block if any errors
         const hasErrors = Object.values(errors).some(e => e);
@@ -348,7 +362,12 @@ const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstIn
 
         if (e.key === 'Enter') {
             e.stopPropagation();
-            handleAdd();
+            e.preventDefault(); // Prevent default form submission if any
+            if (colName) {
+                handleFieldEnter(colName);
+            } else {
+                handleAdd(); // Fallback
+            }
             return;
         }
 
@@ -552,6 +571,7 @@ const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstIn
                                     value={value || {}}
                                     onChange={(newObj) => setValues(prev => ({ ...prev, [col]: newObj }))}
                                     onOpenChange={(open) => setActivePopover(open ? col : null)}
+                                    onSubmit={() => handleFieldEnter(col)}
                                 >
                                     {inputComponent}
                                 </ObjectInputPopover>

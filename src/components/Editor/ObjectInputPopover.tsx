@@ -12,9 +12,10 @@ interface ObjectInputPopoverProps {
     columnName: string;
     children: React.ReactNode;
     onOpenChange?: (open: boolean) => void;
+    onSubmit?: () => void;
 }
 
-export const ObjectInputPopover: React.FC<ObjectInputPopoverProps> = ({ inferredKeys, value, onChange, children, columnName, onOpenChange }) => {
+export const ObjectInputPopover: React.FC<ObjectInputPopoverProps> = ({ inferredKeys, value, onChange, children, columnName, onOpenChange, onSubmit }) => {
     const [open, setOpen] = useState(false);
 
     useEffect(() => {
@@ -48,6 +49,7 @@ export const ObjectInputPopover: React.FC<ObjectInputPopoverProps> = ({ inferred
             e.preventDefault();
             e.stopPropagation();
             setOpen(false); // Close on submit
+            onSubmit?.();
         }
     };
 
