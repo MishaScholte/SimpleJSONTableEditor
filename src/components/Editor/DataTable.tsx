@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { SecondaryButton } from "@/components/ui/secondary-button";
 import { Input } from "@/components/ui/input";
 import { formatArrayOutput, parseArrayInput, type TableRow as RowData, type ColumnSchema, type ColumnType } from "@/lib/data-utils";
-import { Trash2, ArrowUp, ArrowDown, ArrowUpDown, X, Plus, CornerDownLeft } from "lucide-react";
+import { Trash2, ArrowUp, ArrowDown, ArrowUpDown, X, Plus, CornerDownLeft, Hash, ToggleLeft, Package, Type as TypeIcon, Brackets } from "lucide-react";
 import { NestedTableModal } from "./NestedTableModal";
 import { SlashMenu } from "./SlashMenu";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -930,9 +930,19 @@ export const DataTable: React.FC<DataTableProps> = ({
                                     onClick={() => !readOnly && onSort?.(col)}
                                 >
                                     <div className="flex items-center gap-2 truncate w-full">
-                                        <div className="flex items-baseline gap-1.5 truncate">
-                                            <span className="truncate text-white">{col}</span>
-                                            <span className="text-white/80 text-[10px] font-normal">({columnTypes[col]})</span>
+                                        <div className="flex items-center gap-2 truncate">
+                                            {(() => {
+                                                const type = columnTypes[col];
+                                                const iconClass = "w-3.5 h-3.5 text-muted-foreground/70";
+                                                switch (type) {
+                                                    case 'number': return <Hash className={iconClass} />;
+                                                    case 'boolean': return <ToggleLeft className={iconClass} />;
+                                                    case 'object': return <Package className={iconClass} />;
+                                                    case 'array': return <Brackets className={iconClass} />;
+                                                    default: return <TypeIcon className={iconClass} />;
+                                                }
+                                            })()}
+                                            <span className="truncate text-foreground font-medium">{col}</span>
                                         </div>
                                         {isSorted ? (
                                             sortConfig.direction === "asc" ? (
