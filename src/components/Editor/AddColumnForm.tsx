@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
-import { Button } from "@/components/ui/button";
+import { PrimaryButton } from "@/components/ui/primary-button";
+import { SecondaryButton } from "@/components/ui/secondary-button";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { GradientInput } from "@/components/ui/gradient-input";
@@ -116,10 +117,10 @@ export const AddColumnForm = ({ onAdd, onCancel, existingColumns }: AddColumnFor
                 </div>
             )}
             <div className="flex justify-end gap-2 pt-2">
-                <Button type="button" variant="outline" size="sm" onClick={onCancel}>
+                <SecondaryButton type="button" size="sm" onClick={onCancel}>
                     Cancel
-                </Button>
-                <Button type="submit" size="sm">Add</Button>
+                </SecondaryButton>
+                <PrimaryButton type="submit" size="sm">Add</PrimaryButton>
             </div>
         </form >
     );
