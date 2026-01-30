@@ -11,6 +11,7 @@ import { AddColumnForm } from "./AddColumnForm";
 import { BooleanBadge } from "@/components/ui/BooleanBadge";
 import { ObjectInputPopover } from "./ObjectInputPopover";
 import { inferObjectKeys } from "@/lib/schema-utils";
+import { ObjectBadge } from "@/components/ui/object-badge";
 
 export interface SortConfig {
     column: string;
@@ -174,13 +175,10 @@ const DataTableRow = memo(({
                             <div className="flex items-center w-full overflow-hidden">
                                 {val !== null && typeof val === 'object' && !Array.isArray(val) ? (
                                     // Object Chip - clickable to open modal, shows key names
-                                    <button
+                                    <ObjectBadge
+                                        keys={Object.keys(val)}
                                         onClick={(e) => { e.stopPropagation(); onOpenNested(rowIdx, col, val); }}
-                                        className="bg-amber-500/20 text-amber-400 border border-amber-500/30 px-2 py-0.5 rounded text-xs font-mono cursor-pointer hover:bg-amber-500/30 transition-colors truncate max-w-full"
-                                        title={Object.keys(val).join(", ")}
-                                    >
-                                        {Object.keys(val).join(", ")}
-                                    </button>
+                                    />
                                 ) : Array.isArray(val) ? (
                                     // Check if array contains objects
                                     val.some(item => typeof item === 'object' && item !== null && !Array.isArray(item)) ? (
@@ -470,9 +468,13 @@ const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstIn
                                     {Array.isArray(value) ? (
                                         <span className="text-xs text-blue-400 font-mono flex-1 truncate">Array [{value.length}]</span>
                                     ) : (
-                                        <span className="text-xs text-amber-400 font-mono flex-1 truncate">
-                                            &#123; {Object.keys(value).join(', ')} &#125;
-                                        </span>
+                                        <div className="flex-1 truncate">
+                                            <ObjectBadge
+                                                keys={Object.keys(value)}
+                                                className="w-full text-left"
+                                                onClick={() => onOpenNested(col, value, (saved) => setValues(prev => ({ ...prev, [col]: saved })))}
+                                            />
+                                        </div>
                                     )}
                                     <button
                                         onClick={() => setValues(prev => {
