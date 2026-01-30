@@ -516,13 +516,13 @@ function App() {
                 <CardContent className="px-16 pb-16 pt-4 flex flex-col gap-8">
                   <div className="flex flex-col gap-4">
                     <div className="flex flex-row gap-6">
-                      <PrimaryButton onClick={handlePaste} className="flex-1 h-14 text-base [&_svg]:size-6 group relative">
+                      <PrimaryButton onClick={handlePaste} size="xl" className="flex-1 group relative">
                         <ClipboardPaste className="w-6 h-6" /> Paste JSON
                         <kbd className="absolute right-4 hidden group-hover:inline-flex h-6 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
                           <span className="text-xs">⌘</span>V
                         </kbd>
                       </PrimaryButton>
-                      <SecondaryButton onClick={() => fileInputRef.current?.click()} className="flex-1 h-14 text-base [&_svg]:size-6 group relative">
+                      <SecondaryButton onClick={() => fileInputRef.current?.click()} size="xl" className="flex-1 group relative">
                         <Import className="w-6 h-6" /> Import JSON File
                         <kbd className="absolute right-4 hidden group-hover:inline-flex h-6 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
                           <span className="text-xs">⌘</span>O

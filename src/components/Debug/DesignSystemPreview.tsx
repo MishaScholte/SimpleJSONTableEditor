@@ -207,6 +207,30 @@ export const DesignSystemPreview: React.FC = () => {
                         </div>
                     </div>
 
+                    {/* Sizing Comparison */}
+                    <div className="space-y-4 pt-4 border-t border-dashed">
+                        <h3 className="text-sm font-medium text-muted-foreground uppercase">Helper Sizes</h3>
+                        <div className="flex flex-wrap gap-6 items-end">
+                            <div className="space-y-2 text-center">
+                                <span className="text-[10px] uppercase text-muted-foreground">Small (h-8)</span>
+                                <div><PrimaryButton size="sm">Action</PrimaryButton></div>
+                            </div>
+                            <div className="space-y-2 text-center">
+                                <span className="text-[10px] uppercase text-muted-foreground">Default (h-9)</span>
+                                <div><PrimaryButton size="default">Action</PrimaryButton></div>
+                            </div>
+                            <div className="space-y-2 text-center">
+                                <span className="text-[10px] uppercase text-muted-foreground">Large (h-11)</span>
+                                <div><PrimaryButton size="lg">Action</PrimaryButton></div>
+                            </div>
+                            <div className="space-y-2 text-center">
+                                <span className="text-[10px] uppercase text-muted-foreground">XL / Hero (h-14)</span>
+                                {/* @ts-ignore - XL is valid but TS might lag */}
+                                <div><PrimaryButton size="xl">Start Action</PrimaryButton></div>
+                            </div>
+                        </div>
+                    </div>
+
                     {/* Ghost Button */}
                     <div className="space-y-4 pt-4 border-t border-dashed">
                         <h3 className="text-sm font-medium text-muted-foreground uppercase">Ghost (Native)</h3>
