@@ -534,12 +534,12 @@ const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstIn
                                         readOnly={(isBoolean && boolValue !== null) || isObject}
                                     />
                                     {isBoolean && boolValue === null && (
-                                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-50 gap-1.5">
+                                        <div className="absolute inset-0 flex items-center justify-start pl-2 pointer-events-none opacity-50 gap-1.5">
                                             <span className="text-[10px] text-muted-foreground/70 uppercase tracking-wider font-medium">{col}:</span>
                                             <div className="flex items-center gap-1">
-                                                <ShortcutBadge>t</ShortcutBadge>
+                                                <ShortcutBadge variant="small">t</ShortcutBadge>
                                                 <span className="text-muted-foreground/50">/</span>
-                                                <ShortcutBadge>f</ShortcutBadge>
+                                                <ShortcutBadge variant="small">f</ShortcutBadge>
                                             </div>
                                         </div>
                                     )}
