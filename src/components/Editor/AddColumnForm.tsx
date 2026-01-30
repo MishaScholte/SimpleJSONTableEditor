@@ -84,7 +84,7 @@ export const AddColumnForm = ({ onAdd, onCancel, existingColumns }: AddColumnFor
                 {/* Manual wrapper for Select since GradientInput only wraps Input */}
                 <div className="input-gradient-wrapper">
                     <Select value={type} onValueChange={(val) => setType(val as ColumnType)}>
-                        <SelectTrigger id="type" className="h-8 text-xs font-normal bg-card border-transparent focus:ring-0 focus:border-transparent">
+                        <SelectTrigger id="type" className="h-9 text-xs font-normal bg-card border-transparent focus:ring-0 focus:border-transparent">
                             <SelectValue placeholder="Select type" />
                         </SelectTrigger>
                         <SelectContent>
@@ -103,7 +103,7 @@ export const AddColumnForm = ({ onAdd, onCancel, existingColumns }: AddColumnFor
                     <Label htmlFor="defaultValue">Default Value</Label>
                     <div className="input-gradient-wrapper">
                         <Select value={defaultValue} onValueChange={setDefaultValue}>
-                            <SelectTrigger id="defaultValue" className="h-8 text-xs font-normal bg-card border-transparent focus:ring-0 focus:border-transparent">
+                            <SelectTrigger id="defaultValue" className="h-9 text-xs font-normal bg-card border-transparent focus:ring-0 focus:border-transparent">
                                 <SelectValue placeholder="Select default" />
                             </SelectTrigger>
                             <SelectContent>
