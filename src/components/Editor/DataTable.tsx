@@ -8,6 +8,7 @@ import { NestedTableModal } from "./NestedTableModal";
 import { SlashMenu } from "./SlashMenu";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { AddColumnForm } from "./AddColumnForm";
+import { BooleanBadge } from "@/components/ui/BooleanBadge";
 
 export interface SortConfig {
     column: string;
@@ -232,11 +233,13 @@ interface QuickAddFooterProps {
     firstInputRef: React.RefObject<HTMLInputElement | null>;
     onOpenNested: (col: string, initialData: any, onSave: (data: any) => void) => void;
     onFocus?: () => void;
+    columnTypes: Record<string, string>;
 }
 
-const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstInputRef, onOpenNested, onFocus }) => {
+const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstInputRef, onOpenNested, onFocus, columnTypes }) => {
     const [values, setValues] = useState<Record<string, any>>({});
     const [types, setTypes] = useState<Record<string, 'auto' | 'text' | 'number' | 'boolean'>>({});
+    const [errors, setErrors] = useState<Record<string, boolean>>({});
     const inputRefs = useRef<Record<string, HTMLInputElement | null>>({});
 
     // Slash Menu State
@@ -255,6 +258,10 @@ const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstIn
     }, [focusTarget]);
 
     const handleAdd = () => {
+        // Block if any errors
+        const hasErrors = Object.values(errors).some(e => e);
+        if (hasErrors) return;
+
         const newRow: RowData = {};
         let hasData = false;
         // ... (omitted unchanged parts) ...
@@ -271,22 +278,33 @@ const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstIn
             }
 
             // Primitive Handling with Type Enforcement
-            const type = types[col] || 'auto';
+            const schemaType = columnTypes[col];
+            const typeOverride = types[col]; // Slash command override
+
+            // Prioritize slash command, then schema, then auto
+            const finalType = typeOverride || (schemaType !== 'mixed' ? schemaType : 'auto');
             const valStr = String(rawVal || "");
 
-            if (type === 'text') {
+            if ((finalType as string) === 'text' || (finalType as string) === 'string') {
                 newRow[col] = valStr;
-            } else if (type === 'number') {
+            } else if (finalType === 'number') {
                 const num = Number(valStr);
+                // Schema enforcement: if it's supposed to be a number, it MUST be a number.
+                // But handleInputChange should prevent invalid input.
+                // If by some chance input is garbage, we shouldn't save NaN.
                 newRow[col] = isNaN(num) ? valStr : num;
-            } else if (type === 'boolean') {
-                newRow[col] = valStr.toLowerCase() === 'true';
+            } else if (finalType === 'boolean') {
+                // For boolean, value is stored as boolean in state or string 'true'/'false'
+                if (typeof rawVal === 'boolean') newRow[col] = rawVal;
+                else newRow[col] = valStr.toLowerCase() === 'true';
             } else {
                 // Auto (Default)
                 if (valStr.includes(',')) {
                     newRow[col] = parseArrayInput(valStr);
                 } else if (!isNaN(Number(valStr)) && valStr !== "") {
                     newRow[col] = Number(valStr);
+                } else if (valStr.toLowerCase() === 'true' || valStr.toLowerCase() === 'false') {
+                    newRow[col] = valStr.toLowerCase() === 'true';
                 } else {
                     newRow[col] = valStr;
                 }
@@ -297,6 +315,7 @@ const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstIn
             onAdd(newRow);
             setValues({});
             setTypes({});
+            setErrors({});
             // Focus back to first input
             setTimeout(() => {
                 firstInputRef.current?.focus();
@@ -304,7 +323,7 @@ const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstIn
         }
     };
 
-    const handleKeyDown = (e: React.KeyboardEvent) => {
+    const handleKeyDown = (e: React.KeyboardEvent, colName?: string) => {
         // If menu is open, let it handle arrows/enter (except Esc)
         if (menuState) {
             if (['ArrowUp', 'ArrowDown', 'Enter'].includes(e.key)) {
@@ -330,12 +349,58 @@ const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstIn
             return;
         }
 
+        // Boolean Power Keys (t/f)
+        if (colName && columnTypes[colName] === 'boolean' && !menuState) {
+            if (e.key === 't' || e.key === 'T') {
+                e.preventDefault();
+                e.stopPropagation();
+                setValues(prev => ({ ...prev, [colName]: true }));
+                // Auto-advance
+                const idx = columns.indexOf(colName);
+                if (idx < columns.length - 1) {
+                    const nextCol = columns[idx + 1];
+                    inputRefs.current[nextCol]?.focus();
+                }
+                return;
+            }
+            if (e.key === 'f' || e.key === 'F') {
+                e.preventDefault();
+                e.stopPropagation();
+                setValues(prev => ({ ...prev, [colName]: false }));
+                // Auto-advance
+                const idx = columns.indexOf(colName);
+                if (idx < columns.length - 1) {
+                    const nextCol = columns[idx + 1];
+                    inputRefs.current[nextCol]?.focus();
+                }
+                return;
+            }
+            if (e.key === 'Backspace' || e.key === 'Delete') {
+                // Clear boolean
+                setValues(prev => {
+                    const next = { ...prev };
+                    delete next[colName]; // undefined = empty
+                    return next;
+                });
+                // Allow default backspace behavior too (focus?)
+            }
+        }
+
         if (['Backspace', 'Delete', ' ', 'Spacebar', 'Tab', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(e.key)) {
             e.stopPropagation();
         }
     };
 
     const handleInputChange = (col: string, val: string, anchor?: HTMLElement) => {
+        // Validation for Number columns
+        if (columnTypes[col] === 'number') {
+            if (val !== "" && val !== "-" && isNaN(Number(val))) {
+                setErrors(prev => ({ ...prev, [col]: true }));
+            } else {
+                setErrors(prev => ({ ...prev, [col]: false }));
+            }
+        }
+
         // Check for Slash Command
         if (val.startsWith('/')) {
             setMenuState({ col, query: val.slice(1), anchorEl: anchor || null });
@@ -384,6 +449,11 @@ const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstIn
                     const value = values[col];
                     const isComplex = value !== null && typeof value === 'object';
                     const currentType = types[col];
+                    const schemaType = columnTypes[col];
+                    const hasError = errors[col] === true;
+
+                    const isBoolean = schemaType === 'boolean';
+                    const boolValue = typeof value === 'boolean' ? value : null;
 
                     return (
                         <TableCell key={`input-${col}`} className="p-4 py-5 flex items-center justify-center relative">
@@ -397,7 +467,7 @@ const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstIn
                                 />
                             )}
 
-                            <div className={`input-gradient-wrapper w-full relative group rounded-[8px] ${value ? "has-value" : ""}`}>
+                            <div className={`input-gradient-wrapper w-full relative group rounded-[8px] ${value ? "has-value" : ""} ${hasError ? "error ring-1 ring-destructive" : ""}`}>
                                 {isComplex ? (
                                     <div className="flex items-center gap-1 pl-2 pr-1 py-1 h-8 w-full bg-secondary/50 rounded-[8px] border border-white/10">
                                         {Array.isArray(value) ? (
@@ -423,19 +493,27 @@ const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstIn
                                         </button>
                                     </div>
                                 ) : (
-                                    <Input
-                                        ref={(el) => {
-                                            if (idx === 0) firstInputRef.current = el; // Keep existing firstRef logic
-                                            inputRefs.current[col] = el;
-                                        }}
-                                        key={`input-el-${col}`} // Stable key to prevent remounting
-                                        onFocus={onFocus} // Clear table focus
-                                        placeholder={currentType && currentType !== 'auto' ? `${currentType}:` : col}
-                                        value={typeof value === 'string' ? value : ""}
-                                        onChange={(e) => handleInputChange(col, e.target.value, e.target as HTMLElement)}
-                                        onKeyDown={handleKeyDown}
-                                        className={`h-8 text-xs font-normal bg-card border-transparent focus-visible:ring-0 focus-visible:border-transparent placeholder:text-muted-foreground/50 transition-colors w-full pr-8 ${currentType === 'number' ? "font-mono" : (currentType && currentType !== 'auto' ? "font-medium" : "")}`}
-                                    />
+                                    <div className="relative w-full">
+                                        <Input
+                                            ref={(el) => {
+                                                if (idx === 0) firstInputRef.current = el; // Keep existing firstRef logic
+                                                inputRefs.current[col] = el;
+                                            }}
+                                            key={`input-el-${col}`} // Stable key to prevent remounting
+                                            onFocus={onFocus} // Clear table focus
+                                            placeholder={isBoolean ? "T / F" : (currentType && currentType !== 'auto' ? `${currentType}:` : col)}
+                                            value={typeof value === 'string' ? value : (typeof value === 'boolean' ? '' : "")} // Boolean hides text
+                                            onChange={(e) => !isBoolean && handleInputChange(col, e.target.value, e.target as HTMLElement)}
+                                            onKeyDown={(e) => handleKeyDown(e, col)}
+                                            className={`h-8 text-xs font-normal bg-card border-transparent focus-visible:ring-0 focus-visible:border-transparent placeholder:text-muted-foreground/50 transition-colors w-full pr-8 ${schemaType === 'number' || currentType === 'number' ? "font-mono" : (currentType && currentType !== 'auto' ? "font-medium" : "")} ${hasError ? "text-destructive placeholder:text-destructive/50" : ""} ${isBoolean ? "font-mono text-center cursor-default tracking-widest uppercase text-muted-foreground/50 focus:text-foreground" : ""}`}
+                                            readOnly={isBoolean && boolValue !== null}
+                                        />
+                                        {isBoolean && boolValue !== null && (
+                                            <div className="absolute inset-0 flex items-center px-3 pointer-events-none">
+                                                <BooleanBadge value={boolValue} />
+                                            </div>
+                                        )}
+                                    </div>
                                 )}
 
                                 {!isComplex && value?.length > 0 && !menuState && (
@@ -878,6 +956,7 @@ export const DataTable: React.FC<DataTableProps> = ({
                             col: col,
                             onSave: onSave
                         })}
+                        columnTypes={columnTypes}
                     />
                 )}
             </Table>
