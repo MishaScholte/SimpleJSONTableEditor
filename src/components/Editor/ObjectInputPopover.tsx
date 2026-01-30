@@ -119,7 +119,15 @@ export const ObjectInputPopover: React.FC<ObjectInputPopoverProps> = ({ inferred
             <PopoverAnchor asChild>
                 {triggerWithHandlers}
             </PopoverAnchor>
-            <PopoverContent className="w-80 p-4 glass border border-white/10 rounded-[8px]" align="start">
+            <PopoverContent
+                className="w-80 p-4 glass border border-white/10 rounded-[8px]"
+                align="start"
+                onCloseAutoFocus={(e) => {
+                    // Prevent Radix from restoring focus to the trigger, 
+                    // so we can manually move focus to the next input in onSubmit
+                    e.preventDefault();
+                }}
+            >
                 <div className="space-y-3">
                     <div className="flex items-center justify-between pb-2">
                         <h4 className="font-medium leading-none text-sm text-neutral-400 font-mono">
