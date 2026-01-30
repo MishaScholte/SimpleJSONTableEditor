@@ -15,6 +15,7 @@ import { inferObjectKeys } from "@/lib/schema-utils";
 import { ObjectBadge } from "@/components/ui/object-badge";
 import { ShortcutBadge } from "@/components/ui/shortcut-badge";
 import { ArrayBadge } from "@/components/ui/array-badge";
+import { Badge } from "@/components/ui/badge";
 
 export interface SortConfig {
     column: string;
@@ -190,9 +191,9 @@ const DataTableRow = memo(({
                                             onClick={(e) => { e.stopPropagation(); onOpenNested(rowIdx, col, val); }}
                                         />
                                     ) : (
-                                        <span className="bg-secondary px-2 py-0.5 rounded text-xs font-medium truncate max-w-full">
+                                        <Badge variant="info" className="truncate max-w-full font-mono font-normal">
                                             {formatArrayOutput(val)}
-                                        </span>
+                                        </Badge>
                                     )
                                 ) : typeof val === 'boolean' ? (
                                     <div className="flex">
