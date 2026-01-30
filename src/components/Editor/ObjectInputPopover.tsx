@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Popover, PopoverContent, PopoverAnchor } from "@/components/ui/popover";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Check, CornerDownLeft } from "lucide-react";
@@ -94,19 +94,23 @@ export const ObjectInputPopover: React.FC<ObjectInputPopoverProps> = ({ inferred
         if (!open) setOpen(true);
     };
 
+    // Manual trigger handling instead of PopoverTrigger to avoid focus/click race conditions
     const triggerWithHandlers = React.cloneElement(children as React.ReactElement, {
         onFocus: (e: React.FocusEvent) => {
             handleTriggerFocus();
             (children as any).props.onFocus?.(e);
         },
-        // We also want to ensure Tab navigation works INTO the popover.
+        onClick: (e: React.MouseEvent) => {
+            if (!open) setOpen(true);
+            (children as any).props.onClick?.(e);
+        }
     } as any);
 
     return (
         <Popover open={open} onOpenChange={setOpen}>
-            <PopoverTrigger asChild>
+            <PopoverAnchor asChild>
                 {triggerWithHandlers}
-            </PopoverTrigger>
+            </PopoverAnchor>
             <PopoverContent className="w-80 p-4 glass border border-white/10 rounded-[8px]" align="start">
                 <div className="space-y-3">
                     <div className="flex items-center justify-between pb-2">
@@ -115,17 +119,17 @@ export const ObjectInputPopover: React.FC<ObjectInputPopoverProps> = ({ inferred
                         </h4>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-2 max-h-[200px] overflow-y-auto custom-scrollbar">
+                    <div className="space-y-2 max-h-[200px] overflow-y-auto custom-scrollbar">
                         {displayKeys.map(key => (
-                            <div key={key} className="space-y-1">
-                                <label className="text-[10px] uppercase tracking-wide text-muted-foreground font-mono pl-1 truncate block" title={key}>{key}</label>
+                            <div key={key} className="flex items-center gap-2 group">
+                                <label className="text-[10px] uppercase tracking-wide text-neutral-400 font-mono w-1/3 truncate text-right shrink-0" title={key}>{key}</label>
                                 <Input
                                     data-object-input-first={displayKeys.indexOf(key) === 0 ? "true" : undefined}
                                     value={localValue[key] || ""}
                                     onChange={(e) => handleKeyChange(key, e.target.value)}
                                     onFocus={() => setFocusedKey(key)}
                                     onKeyDown={handleKeyDown}
-                                    className="h-7 text-xs bg-muted/20 border-white/5 focus:bg-muted/40"
+                                    className="h-7 text-xs bg-muted/20 border-white/5 focus:bg-muted/40 flex-1 min-w-0"
                                     placeholder="..."
                                 />
                             </div>
