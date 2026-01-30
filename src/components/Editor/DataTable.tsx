@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback, memo } from "react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, TableFooter } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
+import { SecondaryButton } from "@/components/ui/secondary-button";
 import { Input } from "@/components/ui/input";
 import { formatArrayOutput, parseArrayInput, type TableRow as RowData, type ColumnSchema, type ColumnType } from "@/lib/data-utils";
 import { Trash2, ArrowUp, ArrowDown, ArrowUpDown, X, Plus, CornerDownLeft } from "lucide-react";
@@ -589,14 +590,12 @@ const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstIn
                         const hasData = Object.values(values).some(v => v !== "" && v !== null && v !== undefined);
                         // console.log("Footer Render: values=", values, "hasData=", hasData);
                         return hasData && (
-                            <Button
-                                variant="secondary"
-                                size="icon"
-                                className="text-emerald-600 hover:text-emerald-700"
+                            <SecondaryButton
+                                className="h-9 w-9 px-0 text-emerald-500 hover:text-emerald-400 hover:bg-emerald-500/10 border-emerald-500/20"
                                 onClick={handleAdd}
                             >
                                 <CornerDownLeft className="h-4 w-4" />
-                            </Button>
+                            </SecondaryButton>
                         );
                     })()}
                 </TableCell>
