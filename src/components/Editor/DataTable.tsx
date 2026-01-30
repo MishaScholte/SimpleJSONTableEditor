@@ -530,7 +530,7 @@ const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstIn
                                         value={typeof value === 'string' ? value : (typeof value === 'boolean' ? '' : "")} // Boolean hides text
                                         onChange={(e) => !isBoolean && !isObject && handleInputChange(col, e.target.value, e.target as HTMLElement)}
                                         onKeyDown={(e) => handleKeyDown(e, col)}
-                                        className={`h-8 text-xs font-normal border-transparent focus-visible:ring-0 focus-visible:border-transparent placeholder:text-muted-foreground/50 transition-colors w-full pr-8 ${isPopoverOpen ? "bg-muted/50" : "bg-card"} ${schemaType === 'number' || currentType === 'number' ? "font-mono" : (currentType && currentType !== 'auto' ? "font-medium" : "")} ${hasError ? "text-destructive placeholder:text-destructive/50" : ""} ${isBoolean ? "font-mono text-center cursor-default tracking-widest uppercase text-muted-foreground/50 focus:text-foreground" : ""} ${isObject ? "cursor-pointer" : ""}`}
+                                        className={`h-8 text-xs font-normal border-transparent focus-visible:ring-0 focus-visible:border-transparent placeholder:text-muted-foreground/50 transition-colors w-full pr-8 ${isPopoverOpen ? "bg-muted/50" : "bg-card"} ${schemaType === 'number' || currentType === 'number' ? "font-mono" : (currentType && currentType !== 'auto' ? "font-medium" : "")} ${hasError ? "text-destructive placeholder:text-destructive/50" : ""} ${isBoolean ? "font-mono cursor-default tracking-widest uppercase text-muted-foreground/50 focus:text-foreground" : ""} ${isObject ? "cursor-pointer" : ""}`}
                                         readOnly={(isBoolean && boolValue !== null) || isObject}
                                     />
                                     {isBoolean && boolValue === null && (
@@ -544,7 +544,7 @@ const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstIn
                                         </div>
                                     )}
                                     {isBoolean && boolValue !== null && (
-                                        <div className="absolute inset-0 flex items-center px-3 pointer-events-none">
+                                        <div className="absolute inset-0 flex items-center justify-start pl-2 pointer-events-none">
                                             <BooleanBadge value={boolValue} />
                                         </div>
                                     )}
