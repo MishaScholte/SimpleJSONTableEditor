@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Plus, X } from "lucide-react";
+import { Check, CornerDownLeft } from "lucide-react";
 
 interface ObjectInputPopoverProps {
     inferredKeys: string[];
@@ -33,23 +33,15 @@ export const ObjectInputPopover: React.FC<ObjectInputPopoverProps> = ({ inferred
         // Live update feels better for "Quick Add".
     };
 
-    const handleRemoveKey = (key: string) => {
-        const next = { ...localValue };
-        delete next[key];
-        setLocalValue(next);
-        onChange(next);
-    };
 
-    const handleManualAddKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
+
+    const [focusedKey, setFocusedKey] = useState<string | null>(null);
+
+    const handleKeyDown = (e: React.KeyboardEvent) => {
         if (e.key === 'Enter') {
             e.preventDefault();
-            const key = e.currentTarget.value.trim();
-            if (key) {
-                if (!(key in localValue)) {
-                    handleKeyChange(key, "");
-                }
-                e.currentTarget.value = "";
-            }
+            e.stopPropagation();
+            setOpen(false); // Close on submit
         }
     };
 
@@ -69,62 +61,94 @@ export const ObjectInputPopover: React.FC<ObjectInputPopoverProps> = ({ inferred
     // QuickAddFooter renders: TableCell > div(wrapper) > Input.
     // We can wrap the inner Input.
 
-    // If inferredKeys is empty and value is empty, show a way to add a key.
+    // Auto-focus first input when popover opens
+    useEffect(() => {
+        if (open) {
+            // Small delay to allow popover to render
+            setTimeout(() => {
+                const firstInput = document.querySelector('[data-object-input-first]');
+                if (firstInput instanceof HTMLElement) firstInput.focus();
+            }, 50);
+        }
+    }, [open]);
+
+    // Expose a way to programmatically open? 
+    // Or just rely on the trigger being focused?
+    // The previous issue was: "als het volgende input field de object is, dan zie ik niet de object popover met de focus op het eerste veld"
+    // This typically means we need to detect when the wrapping trigger (which is likely the Div acting as input replacement) gets focus.
+
+    // Actually, in DataTable.tsx, the ObjectInputPopover wraps the 'inputComponent'.
+    // If the 'inputComponent' (the Input replacement) gets focus, we want to open this popover.
+
+    // We can use `onFocus` on the trigger child?
+    // But `children` is opaque here.
+
+    // Let's modify the Trigger to be an interactive element that handles `onFocus`.
+    // But Radix PopoverTrigger handles click.
+    // We want it to open on FOCUS too.
+
+    // Let's wrap `children` in a `div` that handles `onFocus`? 
+    // Or clone the child and add `onFocus`?
+
+    const handleTriggerFocus = () => {
+        if (!open) setOpen(true);
+    };
+
+    const triggerWithHandlers = React.cloneElement(children as React.ReactElement, {
+        onFocus: (e: React.FocusEvent) => {
+            handleTriggerFocus();
+            (children as any).props.onFocus?.(e);
+        },
+        // We also want to ensure Tab navigation works INTO the popover.
+    } as any);
 
     return (
         <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
-                {children}
+                {triggerWithHandlers}
             </PopoverTrigger>
             <PopoverContent className="w-80 p-4 glass border border-white/10 rounded-[8px]" align="start">
                 <div className="space-y-3">
-                    <div className="flex items-center justify-between pb-2 border-b border-white/10">
-                        <h4 className="font-medium leading-none text-sm text-amber-400 font-mono">
+                    <div className="flex items-center justify-between pb-2">
+                        <h4 className="font-medium leading-none text-sm text-neutral-400 font-mono">
                             {columnName} <span className="text-muted-foreground opacity-50">&#123; &#125;</span>
                         </h4>
                     </div>
 
-                    <div className="space-y-2 max-h-[200px] overflow-y-auto custom-scrollbar">
+                    <div className="grid grid-cols-2 gap-2 max-h-[200px] overflow-y-auto custom-scrollbar">
                         {displayKeys.map(key => (
-                            <div key={key} className="grid grid-cols-[1fr_auto] gap-2 items-center group">
-                                <div className="space-y-1">
-                                    <label className="text-[10px] uppercase tracking-wide text-muted-foreground font-mono pl-1">{key}</label>
-                                    <Input
-                                        value={localValue[key] || ""}
-                                        onChange={(e) => handleKeyChange(key, e.target.value)}
-                                        className="h-7 text-xs bg-muted/20 border-white/5 focus:bg-muted/40"
-                                        placeholder="value..."
-                                        onKeyDown={(e) => {
-                                            if (e.key === 'Enter') e.stopPropagation(); // Prevent Form Submit
-                                        }}
-                                    />
-                                </div>
-                                <Button
-                                    variant="ghost"
-                                    size="icon"
-                                    className="h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity text-muted-foreground hover:text-destructive mt-4"
-                                    onClick={() => handleRemoveKey(key)}
-                                >
-                                    <X className="w-3 h-3" />
-                                </Button>
+                            <div key={key} className="space-y-1">
+                                <label className="text-[10px] uppercase tracking-wide text-muted-foreground font-mono pl-1 truncate block" title={key}>{key}</label>
+                                <Input
+                                    data-object-input-first={displayKeys.indexOf(key) === 0 ? "true" : undefined}
+                                    value={localValue[key] || ""}
+                                    onChange={(e) => handleKeyChange(key, e.target.value)}
+                                    onFocus={() => setFocusedKey(key)}
+                                    onKeyDown={handleKeyDown}
+                                    className="h-7 text-xs bg-muted/20 border-white/5 focus:bg-muted/40"
+                                    placeholder="..."
+                                />
                             </div>
                         ))}
-                        {displayKeys.length === 0 && (
-                            <div className="text-xs text-muted-foreground py-2 text-center italic">
-                                No keys inferred. Add one below.
-                            </div>
-                        )}
                     </div>
 
-                    <div className="pt-2 border-t border-white/10">
-                        <div className="relative">
-                            <Plus className="absolute left-2 top-1/2 -translate-y-1/2 w-3 h-3 text-muted-foreground" />
-                            <Input
-                                placeholder="Add new key (Press Enter)..."
-                                className="h-7 pl-7 text-xs bg-transparent border-dashed border-white/20 focus:border-solid"
-                                onKeyDown={handleManualAddKey}
-                            />
-                        </div>
+                    <div className="pt-2 flex justify-end">
+                        <Button
+                            size="sm"
+                            className={`h-7 px-3 text-xs gap-1.5 transition-all text-white ${focusedKey === displayKeys[displayKeys.length - 1] ? "bg-white/20 hover:bg-white/30 text-white" : "bg-green-600 hover:bg-green-500"}`}
+                            // Use green for primary action usually, but if user wants "white corner down left", maybe neutral style? 
+                            // Prompt said: "kleine versie van onze primaire groene knop met een vinkje... Als user op laatste veld is, dan ... witte corner down left arrow"
+                            // So: Default Green+Check. Last Field -> Green+Arrow? Or White+Arrow? "witte corner down left arrow" implies the icon is white. 
+                            // Assuming button stays green, icon is white.
+                            onClick={() => setOpen(false)}
+                        >
+                            {focusedKey === displayKeys[displayKeys.length - 1] ? (
+                                <CornerDownLeft className="w-3.5 h-3.5" />
+                            ) : (
+                                <Check className="w-3.5 h-3.5" />
+                            )}
+                            Done
+                        </Button>
                     </div>
                 </div>
             </PopoverContent>

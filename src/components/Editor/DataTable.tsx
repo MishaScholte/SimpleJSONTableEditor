@@ -500,11 +500,11 @@ const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstIn
                                         }}
                                         key={`input-el-${col}`} // Stable key to prevent remounting
                                         onFocus={onFocus} // Clear table focus
-                                        placeholder={isBoolean ? "T / F" : (isObject ? "Configure Object..." : (currentType && currentType !== 'auto' ? `${currentType}:` : col))}
+                                        placeholder={isBoolean ? "T / F" : (isObject ? col : (currentType && currentType !== 'auto' ? `${currentType}:` : col))}
                                         value={typeof value === 'string' ? value : (typeof value === 'boolean' ? '' : "")} // Boolean hides text
                                         onChange={(e) => !isBoolean && !isObject && handleInputChange(col, e.target.value, e.target as HTMLElement)}
                                         onKeyDown={(e) => handleKeyDown(e, col)}
-                                        className={`h-8 text-xs font-normal bg-card border-transparent focus-visible:ring-0 focus-visible:border-transparent placeholder:text-muted-foreground/50 transition-colors w-full pr-8 ${schemaType === 'number' || currentType === 'number' ? "font-mono" : (currentType && currentType !== 'auto' ? "font-medium" : "")} ${hasError ? "text-destructive placeholder:text-destructive/50" : ""} ${isBoolean ? "font-mono text-center cursor-default tracking-widest uppercase text-muted-foreground/50 focus:text-foreground" : ""} ${isObject ? "cursor-pointer text-amber-500/80 placeholder:text-amber-500/50" : ""}`}
+                                        className={`h-8 text-xs font-normal bg-card border-transparent focus-visible:ring-0 focus-visible:border-transparent placeholder:text-muted-foreground/50 transition-colors w-full pr-8 ${schemaType === 'number' || currentType === 'number' ? "font-mono" : (currentType && currentType !== 'auto' ? "font-medium" : "")} ${hasError ? "text-destructive placeholder:text-destructive/50" : ""} ${isBoolean ? "font-mono text-center cursor-default tracking-widest uppercase text-muted-foreground/50 focus:text-foreground" : ""} ${isObject ? "cursor-pointer" : ""}`}
                                         readOnly={(isBoolean && boolValue !== null) || isObject}
                                     />
                                     {isBoolean && boolValue !== null && (
