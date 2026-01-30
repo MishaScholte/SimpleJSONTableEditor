@@ -14,6 +14,7 @@ import { ObjectInputPopover } from "./ObjectInputPopover";
 import { inferObjectKeys } from "@/lib/schema-utils";
 import { ObjectBadge } from "@/components/ui/object-badge";
 import { ShortcutBadge } from "@/components/ui/shortcut-badge";
+import { ArrayBadge } from "@/components/ui/array-badge";
 
 export interface SortConfig {
     column: string;
@@ -184,12 +185,10 @@ const DataTableRow = memo(({
                                 ) : Array.isArray(val) ? (
                                     // Check if array contains objects
                                     val.some(item => typeof item === 'object' && item !== null && !Array.isArray(item)) ? (
-                                        <button
+                                        <ArrayBadge
+                                            length={val.length}
                                             onClick={(e) => { e.stopPropagation(); onOpenNested(rowIdx, col, val); }}
-                                            className="bg-blue-500/20 text-blue-400 border border-blue-500/30 px-2 py-0.5 rounded text-xs font-mono cursor-pointer hover:bg-blue-500/30 transition-colors"
-                                        >
-                                            {"[ "}{val.length} items{" ]"}
-                                        </button>
+                                        />
                                     ) : (
                                         <span className="bg-secondary px-2 py-0.5 rounded text-xs font-medium truncate max-w-full">
                                             {formatArrayOutput(val)}
@@ -489,7 +488,9 @@ const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstIn
                             {isComplex ? (
                                 <div className="flex items-center gap-1 pl-2 pr-1 py-1 h-9 w-full bg-secondary/50 rounded-[8px] border border-white/10">
                                     {Array.isArray(value) ? (
-                                        <span className="text-xs text-blue-400 font-mono flex-1 truncate">Array [{value.length}]</span>
+                                        <div className="flex-1 truncate">
+                                            <ArrayBadge length={value.length} className="w-full text-left cursor-default" />
+                                        </div>
                                     ) : (
                                         <div className="flex-1 truncate">
                                             <ObjectBadge
