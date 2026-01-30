@@ -212,7 +212,7 @@ const DataTableRow = memo(({
                     <SecondaryButton
                         variant="destructive"
                         size="icon"
-                        className={`transition - opacity duration - 200 opacity - 0 group - hover: opacity - 100 ${isDeleteFocused ? "ring-2 ring-white ring-offset-2 ring-offset-background opacity-100" : ""} `}
+                        className={`transition-opacity duration-200 opacity-0 group-hover:opacity-100 ${isDeleteFocused ? "ring-2 ring-white ring-offset-2 ring-offset-background opacity-100" : ""}`}
                         onClick={(e) => { e.stopPropagation(); onDeleteRow(rowIdx); }}
                         onFocus={() => onFocusDelete(rowIdx)}
                         tabIndex={-1} // Handled by manual focus state
@@ -485,7 +485,7 @@ const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstIn
                     const isPopoverOpen = activePopover === col;
 
                     const inputComponent = (
-                        <div className={`input - gradient - wrapper w - full relative group rounded - [8px] ${hasError ? "error ring-1 ring-destructive" : ""} ${isPopoverOpen ? "bg-muted border-white/40 z-20" : ""} `}>
+                        <div className={`input-gradient-wrapper w-full relative group rounded-[8px] ${hasError ? "error ring-1 ring-destructive" : ""} ${isPopoverOpen ? "bg-muted border-white/40 z-20" : ""}`}>
                             {isComplex ? (
                                 <div className="flex items-center gap-1 pl-2 pr-1 py-1 h-9 w-full bg-secondary/50 rounded-[8px] border border-white/10">
                                     {Array.isArray(value) ? (
@@ -523,13 +523,13 @@ const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstIn
                                             if (idx === 0) firstInputRef.current = el; // Keep existing firstRef logic
                                             inputRefs.current[col] = el;
                                         }}
-                                        key={`input - el - ${col} `} // Stable key to prevent remounting
+                                        key={`input-el-${col}`} // Stable key to prevent remounting
                                         onFocus={onFocus} // Clear table focus
                                         placeholder={isBoolean ? "" : (isObject ? col : (currentType && currentType !== 'auto' ? `${currentType}: ` : col))}
                                         value={typeof value === 'string' ? value : (typeof value === 'boolean' ? '' : "")} // Boolean hides text
                                         onChange={(e) => !isBoolean && !isObject && handleInputChange(col, e.target.value, e.target as HTMLElement)}
                                         onKeyDown={(e) => handleKeyDown(e, col)}
-                                        className={`h - 9 text - xs font - normal border - transparent focus - visible: ring - 0 focus - visible: border - transparent placeholder: text - muted - foreground / 50 transition - colors w - full pr - 8 ${isPopoverOpen ? "bg-muted/50" : "bg-card"} ${schemaType === 'number' || currentType === 'number' ? "font-mono" : (currentType && currentType !== 'auto' ? "font-medium" : "")} ${hasError ? "text-destructive placeholder:text-destructive/50" : ""} ${isBoolean ? "font-mono cursor-default tracking-widest uppercase text-muted-foreground/50 focus:text-foreground" : ""} ${isObject ? "cursor-pointer" : ""} `}
+                                        className={`h-9 text-xs font-normal border-transparent focus-visible:ring-0 focus-visible:border-transparent placeholder:text-muted-foreground/50 transition-colors w-full pr-8 ${isPopoverOpen ? "bg-muted/50" : "bg-card"} ${schemaType === 'number' || currentType === 'number' ? "font-mono" : (currentType && currentType !== 'auto' ? "font-medium" : "")} ${hasError ? "text-destructive placeholder:text-destructive/50" : ""} ${isBoolean ? "font-mono cursor-default tracking-widest uppercase text-muted-foreground/50 focus:text-foreground" : ""} ${isObject ? "cursor-pointer" : ""}`}
                                         readOnly={(isBoolean && boolValue !== null) || isObject}
                                     />
                                     {isBoolean && boolValue === null && (
@@ -933,7 +933,7 @@ export const DataTable: React.FC<DataTableProps> = ({
                             return (
                                 <TableHead
                                     key={col}
-                                    className={`flex items - center px - 4 py - 5 font - semibold ${!readOnly && onSort ? 'cursor-pointer hover:bg-muted/50' : ''} transition - colors select - none overflow - hidden ${isSorted ? "text-foreground font-bold" : ""} `}
+                                    className={`flex items-center px-4 py-5 font-semibold ${!readOnly && onSort ? 'cursor-pointer hover:bg-muted/50' : ''} transition-colors select-none overflow-hidden ${isSorted ? "text-foreground font-bold" : ""}`}
                                     onClick={() => !readOnly && onSort?.(col)}
                                 >
                                     <div className="flex items-center gap-2 truncate w-full">
