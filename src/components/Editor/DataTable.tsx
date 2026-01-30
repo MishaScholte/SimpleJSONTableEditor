@@ -575,8 +575,9 @@ const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstIn
                 <TableCell className="w-[50px] p-0 flex items-center justify-center">
                     {(() => {
                         const hasData = Object.values(values).some(v => v !== "" && v !== null && v !== undefined);
+                        const hasErrors = Object.values(errors).some(e => e);
                         // console.log("Footer Render: values=", values, "hasData=", hasData);
-                        return hasData && (
+                        return hasData && !hasErrors && (
                             <SecondaryButton
                                 variant="success"
                                 className="h-9 w-9 px-0"
