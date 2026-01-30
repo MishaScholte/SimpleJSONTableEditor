@@ -6,7 +6,8 @@ import {
     DialogTitle,
 } from "@/components/ui/dialog";
 import { DataTable } from "./DataTable";
-import { inferColumns } from "@/lib/data-utils";
+import { inferColumns, inferSchema } from "@/lib/data-utils";
+import { ReorderColumnsDialog } from "./ReorderColumnsDialog";
 
 interface NestedTableModalProps {
     open: boolean;
@@ -44,7 +45,31 @@ export const NestedTableModal: React.FC<NestedTableModalProps> = ({
     // Track editing state to prevent closing modal on Escape when editing
     const [isEditing, setIsEditing] = useState(false);
 
+    // Column Reordering State
+    const [columnOrder, setColumnOrder] = useState<string[]>([]);
+    const [isReorderOpen, setIsReorderOpen] = useState(false);
+    const [isAddColumnOpen, setIsAddColumnOpen] = useState(false);
+
     const isArray = Array.isArray(localData);
+
+
+    // Sync column order with data changes
+    React.useEffect(() => {
+        if (!isArray) return;
+
+        const currentColumns = inferColumns(localData as Array<Record<string, any>>);
+        setColumnOrder(prev => {
+            // Keep existing order for known columns, append new ones
+            const existing = prev.filter(c => currentColumns.includes(c));
+            const newCols = currentColumns.filter(c => !prev.includes(c));
+
+            // If strictly equal sets, don't update to avoid loops (though strict equality check is hard here, 
+            // but length check + every check helps)
+            if (existing.length === prev.length && newCols.length === 0) return prev;
+
+            return [...existing, ...newCols];
+        });
+    }, [localData, isArray]);
 
     // Handle cell updates for array data
     const handleUpdateCell = useCallback((rowIdx: number, col: string, value: any) => {
@@ -142,14 +167,70 @@ export const NestedTableModal: React.FC<NestedTableModalProps> = ({
         }
     }, [localData, isArray, onUpdateData]);
 
+    const handleAddColumn = useCallback((name: string, type: string, defaultValue: any = null) => {
+        if (isArray) {
+            // Determine default value based on type if not provided
+            if (defaultValue === undefined || defaultValue === null) {
+                if (type === 'text') defaultValue = "";
+                else if (type === 'number') defaultValue = 0;
+                else if (type === 'boolean') defaultValue = false;
+                else if (type === 'list') defaultValue = [];
+                else if (type === 'object') defaultValue = {};
+            }
+
+            // Add new property to all items in array
+            const newData = (localData as Array<Record<string, any>>).map(item => ({
+                ...item,
+                [name]: defaultValue
+            }));
+            setLocalData(newData);
+            onUpdateData?.(newData);
+        }
+    }, [localData, isArray, onUpdateData]);
+
+    const handleRenameColumn = useCallback((oldName: string, newName: string) => {
+        if (isArray) {
+            // Rename property in all items
+            const newData = (localData as Array<Record<string, any>>).map(item => {
+                const { [oldName]: value } = item;
+                // Place new key at end or try to preserve order? 
+                // Simple spread puts it at end. To preserve order we act like Object.entries logic usually
+                const newItem: Record<string, any> = {};
+                Object.keys(item).forEach(k => {
+                    if (k === oldName) newItem[newName] = value;
+                    else newItem[k] = item[k];
+                });
+                return newItem;
+            });
+            setLocalData(newData);
+            onUpdateData?.(newData);
+        }
+    }, [localData, isArray, onUpdateData]);
+
+    const handleDeleteColumn = useCallback((colName: string) => {
+        if (isArray) {
+            // Remove property from all items
+            const newData = (localData as Array<Record<string, any>>).map(item => {
+                const { [colName]: _, ...rest } = item;
+                return rest;
+            });
+            setLocalData(newData);
+            onUpdateData?.(newData);
+        }
+    }, [localData, isArray, onUpdateData]);
+
     // Prepare data for DataTable
     const tableData = isArray
         ? (localData as Array<Record<string, any>>)
         : Object.entries(localData).map(([key, value]) => ({ key, value }));
 
     const tableColumns = isArray
-        ? inferColumns(localData as Array<Record<string, any>>)
+        ? columnOrder
         : ["key", "value"];
+
+    const tableSchema = isArray
+        ? inferSchema(localData as Array<Record<string, any>>)
+        : { key: "text", value: "text" } as const;
 
     return (
         <>
@@ -174,12 +255,30 @@ export const NestedTableModal: React.FC<NestedTableModalProps> = ({
                         <DataTable
                             data={tableData}
                             columns={tableColumns}
+                            schema={tableSchema}
                             onUpdateCell={handleUpdateCell}
                             onDeleteRow={handleDeleteRow}
                             onAdd={handleAddRow}
+                            onAddColumn={handleAddColumn}
+                            onRenameColumn={handleRenameColumn}
+                            onDeleteColumn={handleDeleteColumn}
                             onEditingChange={setIsEditing}
+                            lockColumns={!isArray}
+                            onOpenReorder={isArray ? () => setIsReorderOpen(true) : undefined}
+                            isAddColumnOpen={isAddColumnOpen}
+                            onAddColumnOpenChange={setIsAddColumnOpen}
                         />
                     </div>
+
+                    {/* Reorder Dialog */}
+                    {isArray && (
+                        <ReorderColumnsDialog
+                            open={isReorderOpen}
+                            onOpenChange={setIsReorderOpen}
+                            columns={columnOrder}
+                            onReorder={setColumnOrder}
+                        />
+                    )}
                 </DialogContent>
             </Dialog>
 

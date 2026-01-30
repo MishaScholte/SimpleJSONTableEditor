@@ -308,3 +308,8 @@
 .input-gradient-wrapper.has-value:focus-within::before {
   border-color: #22c55e;
 }
+
+.input-gradient-wrapper.error::before,
+.input-gradient-wrapper.error:focus-within::before {
+  border-color: hsl(var(--destructive));
+}

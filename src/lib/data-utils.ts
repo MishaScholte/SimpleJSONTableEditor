@@ -65,6 +65,33 @@ export const inferColumns = (data: TableRow[]): string[] => {
     return Array.from(keys).sort(); // Sort alphabetically for consistency
 };
 
+export const inferSchema = (data: TableRow[]): ColumnSchema => {
+    const schema: ColumnSchema = {};
+    if (data.length === 0) return schema;
+
+    const keys = new Set<string>();
+    data.forEach(row => Object.keys(row).forEach(k => keys.add(k)));
+
+    keys.forEach(key => {
+        // Find first non-null value to infer type
+        const value = data.find(row => row[key] !== null && row[key] !== undefined)?.[key];
+
+        if (Array.isArray(value)) {
+            schema[key] = 'list';
+        } else if (value && typeof value === 'object') {
+            schema[key] = 'object';
+        } else if (typeof value === 'boolean') {
+            schema[key] = 'boolean';
+        } else if (typeof value === 'number') {
+            schema[key] = 'number';
+        } else {
+            schema[key] = 'text';
+        }
+    });
+
+    return schema;
+};
+
 export const parseArrayInput = (input: string): any[] => {
     // Split by comma and trim. Then infer types.
     return input.split(',').map(s => {

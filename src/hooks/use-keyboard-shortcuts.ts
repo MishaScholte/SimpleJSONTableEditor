@@ -7,6 +7,8 @@ interface UseKeyboardShortcutsProps {
     onUndo?: () => void;
     onRedo?: () => void;
     onCopy?: () => void;
+    onAddColumn?: () => void;
+    onReorderColumns?: () => void;
 }
 
 export function useKeyboardShortcuts({
@@ -16,6 +18,8 @@ export function useKeyboardShortcuts({
     onUndo,
     onRedo,
     onCopy,
+    onAddColumn,
+    onReorderColumns,
 }: UseKeyboardShortcutsProps) {
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
@@ -32,9 +36,17 @@ export function useKeyboardShortcuts({
                         }
                         break;
                     case "o":
-                        if (onOpen) {
-                            e.preventDefault();
-                            onOpen();
+                        // Cmd + Shift + O = Reorder Columns
+                        if (isShift) {
+                            if (onReorderColumns) {
+                                e.preventDefault();
+                                onReorderColumns();
+                            }
+                        } else {
+                            if (onOpen) {
+                                e.preventDefault();
+                                onOpen();
+                            }
                         }
                         break;
                     case "backspace":
@@ -66,6 +78,15 @@ export function useKeyboardShortcuts({
                             if (onCopy) {
                                 e.preventDefault();
                                 onCopy();
+                            }
+                        }
+                        break;
+                    case "a":
+                        // Shift + Cmd + A = Add Column
+                        if (isShift) {
+                            if (onAddColumn) {
+                                e.preventDefault();
+                                onAddColumn();
                             }
                         }
                         break;

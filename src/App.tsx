@@ -1,10 +1,11 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { toast, Toaster } from "sonner";
 import { DataTable, type SortConfig } from "@/components/Editor/DataTable";
-import { inferColumns, safeParseJSON, unflattenObject, type TableRow, type ColumnType, type ColumnSchema } from "@/lib/data-utils";
+import { inferColumns, safeParseJSON, unflattenObject, type TableRow, type ColumnType, type ColumnSchema, inferSchema } from "@/lib/data-utils";
 import { SecondaryButton } from "@/components/ui/secondary-button";
 import { PrimaryButton } from "@/components/ui/primary-button";
-import { Import, Download, Trash2, FileJson, Copy, ClipboardPaste, Shield, WifiOff, Undo, Redo, Command } from "lucide-react";
+import { Import, Download, Trash2, FileJson, Copy, ClipboardPaste, Shield, WifiOff, Undo, Redo, Command, Columns3 } from "lucide-react";
+import { ReorderColumnsDialog } from "@/components/Editor/ReorderColumnsDialog";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { useKeyboardShortcuts } from "@/hooks/use-keyboard-shortcuts";
 import { useUndoRedo } from "@/hooks/use-undo-redo";
@@ -35,7 +36,10 @@ function App() {
   // Initialize columns based on the initial data
   const [columns, setColumns] = useState<string[]>(() => inferColumns(initialData));
   // Global Schema State (Future-proofing for strict type management)
-  const [schema, setSchema] = useState<ColumnSchema>({});
+  // Global Schema State (Future-proofing for strict type management)
+  const [schema, setSchema] = useState<ColumnSchema>(() => inferSchema(initialData)); // Initialize schema from initial data
+  const [isAddColumnOpen, setIsAddColumnOpen] = useState(false);
+  const [isReorderOpen, setIsReorderOpen] = useState(false); // Reorder Modal State
 
   // --- Phase 1: Column Management Logic ---
 
@@ -48,25 +52,24 @@ function App() {
     return { valid: true };
   };
 
-  const handleAddColumn = (name: string, type: ColumnType) => {
+  const handleAddColumn = useCallback((name: string, type: ColumnType, defaultValue: any = null) => {
     const validation = isValidColumnName(name, columns);
     if (!validation.valid) {
       toast.error(validation.error);
       return;
     }
 
-    const newSchema = { ...schema, [name]: type };
-    setSchema(newSchema);
+    // 1. Add to columns list
+    setColumns(prev => [...prev, name]);
 
-    // Update all rows with an undefined value for this new key (native JSON behavior)
-    // We do NOT strictly need to map over data if we accept that 'undefined' keys are just missing.
-    // However, to ensure uniformity for Grid/Table renderers, we usually just update the column list.
-    const newColumns = [...columns, name];
-    setColumns(newColumns);
+    // 2. Add to data with default value
+    setData(prev => prev.map(row => ({ ...row, [name]: defaultValue })));
 
-    // We intentionally do NOT mutate 'data' here if the value is undefined (saves performance).
-    toast.success(`Column "${name}" added.`);
-  };
+    // 3. Update schema
+    setSchema(prev => ({ ...prev, [name]: type }));
+
+    toast.success(`Column "${name}" added`);
+  }, [columns, setData, setColumns, setSchema]);
 
   const handleDeleteColumn = (colName: string) => {
     // 1. Remove from Schema
@@ -121,6 +124,11 @@ function App() {
     toast.success(`Renamed "${oldName}" to "${newName}".`);
   };
 
+  const handleReorderColumns = (newOrder: string[]) => {
+    setColumns(newOrder); // Update state directly
+    toast.success("Columns reordered.");
+  };
+
   const [sortConfig, setSortConfig] = useState<SortConfig | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -146,6 +154,7 @@ function App() {
       if (parsed) {
         reset(parsed); // Use reset to establish new baseline (cannot undo to empty)
         setColumns(inferColumns(parsed));
+        setSchema(inferSchema(parsed)); // Infer schema
         setSortConfig(null);
         toast.success(`Imported ${parsed.length} rows successfully.`);
       } else {
@@ -180,6 +189,7 @@ function App() {
     if (confirm("Are you sure you want to clear all data? This cannot be undone.")) {
       setData([]);
       setColumns([]);
+      setSchema({}); // Clear schema
       setSortConfig(null);
       // localStorage removal handled by useEffect
       toast.info("Workspace cleared.");
@@ -194,6 +204,7 @@ function App() {
       if (parsed) {
         reset(parsed); // New baseline
         setColumns(inferColumns(parsed));
+        setSchema(inferSchema(parsed)); // Infer schema
         setSortConfig(null);
         toast.success(`Imported ${parsed.length} rows from clipboard.`);
       } else {
@@ -295,7 +306,8 @@ function App() {
         navigator.clipboard.writeText(json);
         toast.success("JSON copied to clipboard");
       }
-    }
+    },
+    onReorderColumns: () => setIsReorderOpen(true)
   });
 
   useEffect(() => {
@@ -318,6 +330,7 @@ function App() {
         e.preventDefault(); // Prevent default paste behavior
         reset(parsed); // Reset history on global paste
         setColumns(inferColumns(parsed));
+        setSchema(inferSchema(parsed)); // Infer schema
         setSortConfig(null);
         toast.success(`Imported ${parsed.length} rows from clipboard.`);
       } else {
@@ -335,7 +348,7 @@ function App() {
       // window.removeEventListener("beforeunload", handleBeforeUnload);
       window.removeEventListener("paste", handleGlobalPaste);
     };
-  }, [data]);
+  }, [data, reset, setColumns, setSchema, setSortConfig]);
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
@@ -361,6 +374,7 @@ function App() {
         if (parsed) {
           reset(parsed); // Reset history on drop
           setColumns(inferColumns(parsed));
+          setSchema(inferSchema(parsed)); // Infer schema
           setSortConfig(null);
           toast.success(`Imported ${parsed.length} rows.`);
         } else {
@@ -374,6 +388,7 @@ function App() {
   const handleLoadDebugData = (debugData: TableRow[]) => {
     reset(debugData);
     setColumns(inferColumns(debugData));
+    setSchema(inferSchema(debugData)); // Infer schema
     setSortConfig(null);
     toast.success(`Loaded debug dataset: ${debugData.length} rows.`);
   };
@@ -419,6 +434,15 @@ function App() {
                 <Redo className="w-4 h-4" />
               </SecondaryButton>
             </div>
+            <div className="w-px h-6 bg-border mx-1" />
+
+            <SecondaryButton onClick={() => setIsReorderOpen(true)} className="h-9 w-9 px-0 group relative" title="Reorder Columns">
+              <Columns3 className="w-4 h-4" />
+              <kbd className="absolute top-full mt-2 hidden group-hover:inline-flex h-7 select-none items-center gap-1 rounded border bg-muted px-2 font-mono text-sm font-medium text-muted-foreground opacity-100 whitespace-nowrap z-50">
+                <span>⇧⌘</span>O
+              </kbd>
+            </SecondaryButton>
+
             <div className="w-px h-6 bg-border mx-1" />
 
             <SecondaryButton onClick={() => {
@@ -512,7 +536,9 @@ function App() {
 
             {/* Debug Panel (Dev Only) */}
             {import.meta.env.DEV && (
-              <DebugPanel onLoad={handleLoadDebugData} />
+              <>
+                <DebugPanel onLoad={handleLoadDebugData} />
+              </>
             )}
 
           </div>
@@ -523,17 +549,25 @@ function App() {
               <DataTable
                 data={data}
                 columns={columns}
+                schema={schema} // Pass schema prop
                 onUpdateCell={updateCell}
                 onDeleteRow={deleteRow}
                 sortConfig={sortConfig}
                 onSort={handleSort}
                 onAdd={addRow}
-                onAddColumn={handleAddColumn}
+                onAddColumn={(name, type, defaultValue) => {
+                  handleAddColumn(name, type as ColumnType, defaultValue);
+                  setIsAddColumnOpen(false);
+                }}
+                isAddColumnOpen={isAddColumnOpen}
+                onAddColumnOpenChange={setIsAddColumnOpen}
                 onDeleteColumn={handleDeleteColumn}
                 onRenameColumn={handleRenameColumn}
-                schema={schema} // Pass schema down
+                onOpenReorder={() => setIsReorderOpen(true)}
               />
             </div>
+
+
 
           </div>
         )}
@@ -551,6 +585,14 @@ function App() {
       </svg>
 
       <Toaster position="bottom-right" theme="dark" className="font-sans" offset={80} style={{ right: 16 }} />
+
+      {/* Reorder Dialog */}
+      <ReorderColumnsDialog
+        open={isReorderOpen}
+        onOpenChange={setIsReorderOpen}
+        columns={columns}
+        onReorder={handleReorderColumns}
+      />
     </div>
   );
 }

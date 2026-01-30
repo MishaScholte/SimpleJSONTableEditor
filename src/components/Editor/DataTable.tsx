@@ -3,9 +3,11 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, TableFoo
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { formatArrayOutput, parseArrayInput, type TableRow as RowData, type ColumnSchema, type ColumnType } from "@/lib/data-utils";
-import { Trash2, ArrowUp, ArrowDown, ArrowUpDown, X } from "lucide-react";
+import { Trash2, ArrowUp, ArrowDown, ArrowUpDown, X, Plus } from "lucide-react";
 import { NestedTableModal } from "./NestedTableModal";
 import { SlashMenu } from "./SlashMenu";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { AddColumnForm } from "./AddColumnForm";
 
 export interface SortConfig {
     column: string;
@@ -21,9 +23,13 @@ interface DataTableProps {
     onDeleteRow?: (rowIdx: number) => void;
     onAdd?: (row: RowData) => void;
     // Column Management Handlers
-    onAddColumn?: (name: string, type: ColumnType) => void;
+    onAddColumn?: (name: string, type: ColumnType, defaultValue?: any) => void;
+    isAddColumnOpen?: boolean;
+    onAddColumnOpenChange?: (open: boolean) => void;
+    lockColumns?: boolean;
     onDeleteColumn?: (col: string) => void;
     onRenameColumn?: (oldName: string, newName: string) => void;
+    onOpenReorder?: () => void;
     schema?: ColumnSchema;
     readOnly?: boolean;
     onEditingChange?: (isEditing: boolean) => void;
@@ -186,6 +192,12 @@ const DataTableRow = memo(({
                                             {formatArrayOutput(val)}
                                         </span>
                                     )
+                                ) : typeof val === 'boolean' ? (
+                                    <div className="flex">
+                                        <span className={`px-2 py-0.5 rounded text-xs font-medium border ${val ? "bg-green-500/10 text-green-500 border-green-500/20" : "bg-red-500/10 text-red-500 border-red-500/20"}`}>
+                                            {val ? "True" : "False"}
+                                        </span>
+                                    </div>
                                 ) : (
                                     <span className={`truncate text-sm w-full ${typeof val === 'number' ? "font-mono" : ""}`}>{String(val ?? "")}</span>
                                 )}
@@ -449,7 +461,20 @@ const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstIn
 
 // --- Main Component ---
 
-export const DataTable: React.FC<DataTableProps> = ({ data, columns, sortConfig, onSort, onUpdateCell, onDeleteRow, onAdd, readOnly = false, onEditingChange }) => {
+export const DataTable: React.FC<DataTableProps> = ({
+    data,
+    columns,
+    sortConfig,
+    onSort,
+    onUpdateCell,
+    onDeleteRow,
+    onAdd,
+    readOnly = false,
+    onEditingChange,
+    onAddColumn,
+    isAddColumnOpen,
+    onAddColumnOpenChange
+}) => {
     const [editingCell, setEditingCell] = useState<{ row: number; col: string } | null>(null);
     const [focusedCell, setFocusedCell] = useState<{ row: number; col: number } | null>(null);
     const [lastAddedIndex, setLastAddedIndex] = useState<number | null>(null);
@@ -595,10 +620,19 @@ export const DataTable: React.FC<DataTableProps> = ({ data, columns, sortConfig,
 
     // Keyboard Navigation Logic
     const handleTableKeyDown = (e: React.KeyboardEvent) => {
-        // Ignore events from Inputs (Footer, etc) to prevent table interference
-        // This is critical effectively for the Footer Input which isn't 'editingCell'
+        // Ignore events when Add Column popover is open
+        if (isAddColumnOpen) return;
+
+        // Ignore events from Inputs, Textareas, Buttons, and ContentEditable elements
+        // This prevents the table from stealing focus/events from these interactive elements
         const target = e.target as HTMLElement;
-        if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable) return;
+        if (
+            target.tagName === 'INPUT' ||
+            target.tagName === 'TEXTAREA' ||
+            target.tagName === 'BUTTON' ||
+            target.isContentEditable ||
+            target.closest('[role="dialog"]') // Ignore if inside a dialog/popover
+        ) return;
 
         // If we are editing, let the input handle it (unless it propagates, but we stopped prop in EditableCell)
         if (editingCell) return;
@@ -776,7 +810,32 @@ export const DataTable: React.FC<DataTableProps> = ({ data, columns, sortConfig,
                                 </TableHead>
                             );
                         })}
-                        <TableHead className="w-[50px] p-0"></TableHead>
+                        <TableHead className="w-[50px] p-0">
+                            {!readOnly && onAddColumn && (
+                                <Popover open={isAddColumnOpen} onOpenChange={(open) => {
+                                    if (open) setFocusedCell(null);
+                                    onAddColumnOpenChange?.(open);
+                                }}>
+                                    <PopoverTrigger asChild>
+                                        <Button
+                                            variant="ghost"
+                                            size="icon"
+                                            className="h-full w-full rounded-none hover:bg-muted"
+                                            title="Add Column"
+                                        >
+                                            <Plus className="h-4 w-4 text-muted-foreground" />
+                                        </Button>
+                                    </PopoverTrigger>
+                                    <PopoverContent align="end" className="w-80">
+                                        <AddColumnForm
+                                            onAdd={(name, type, defaultValue) => onAddColumn(name, type, defaultValue)}
+                                            onCancel={() => onAddColumnOpenChange?.(false)}
+                                            existingColumns={columns}
+                                        />
+                                    </PopoverContent>
+                                </Popover>
+                            )}
+                        </TableHead>
                     </TableRow>
                 </TableHeader>
 
