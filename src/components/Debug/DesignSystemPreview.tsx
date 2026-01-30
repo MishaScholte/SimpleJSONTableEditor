@@ -11,6 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { BooleanBadge } from "@/components/ui/BooleanBadge";
 import { ObjectBadge } from "@/components/ui/object-badge";
 import { ShortcutBadge } from "@/components/ui/shortcut-badge";
+import { ArrayBadge } from "@/components/ui/array-badge";
 
 export const DesignSystemPreview: React.FC = () => {
     return (
@@ -111,6 +112,7 @@ export const DesignSystemPreview: React.FC = () => {
                             <Badge variant="success">Success</Badge>
                             <Badge variant="error">Error</Badge>
                             <Badge variant="warning">Warning</Badge>
+                            <Badge variant="info">Info</Badge>
                         </div>
                     </div>
                     {/* Specialized Badges */}
@@ -128,6 +130,10 @@ export const DesignSystemPreview: React.FC = () => {
                             <div className="flex flex-col items-center gap-1">
                                 <span className="text-[10px] text-muted-foreground uppercase">Object</span>
                                 <ObjectBadge keys={["id", "name", "status"]} onClick={() => { }} />
+                            </div>
+                            <div className="flex flex-col items-center gap-1">
+                                <span className="text-[10px] text-muted-foreground uppercase">Array</span>
+                                <ArrayBadge length={5} onClick={() => { }} />
                             </div>
                         </div>
                     </div>
