@@ -28,7 +28,7 @@ const GradientInput = React.forwardRef<HTMLInputElement, GradientInputProps>(
                     ref={ref}
                     value={value}
                     className={cn(
-                        "h-8 text-xs font-normal bg-card border-transparent focus-visible:ring-0 focus-visible:border-transparent placeholder:text-muted-foreground/50 transition-colors w-full",
+                        "h-9 text-xs font-normal bg-card border-transparent focus-visible:ring-0 focus-visible:border-transparent placeholder:text-muted-foreground/50 transition-colors w-full",
                         className
                     )}
                     {...props}

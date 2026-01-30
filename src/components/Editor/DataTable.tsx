@@ -108,7 +108,7 @@ const EditableCell: React.FC<EditableCellProps> = ({ initialValue, onSave, onCan
                 onChange={(e) => setValue(e.target.value)}
                 onBlur={handleSave}
                 onKeyDown={handleKeyDown}
-                className="h-8 w-full focus-visible:ring-0 focus-visible:border-transparent bg-background pr-8"
+                className="h-9 w-full focus-visible:ring-0 focus-visible:border-transparent bg-background pr-8"
             />
             <div className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none opacity-100 transition-opacity duration-200">
                 <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border-[1px] border-solid border-green-500/20 bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
@@ -489,7 +489,7 @@ const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstIn
                     const inputComponent = (
                         <div className={`input-gradient-wrapper w-full relative group rounded-[8px] ${hasError ? "error ring-1 ring-destructive" : ""} ${isPopoverOpen ? "bg-muted border-white/40 z-20" : ""}`}>
                             {isComplex ? (
-                                <div className="flex items-center gap-1 pl-2 pr-1 py-1 h-8 w-full bg-secondary/50 rounded-[8px] border border-white/10">
+                                <div className="flex items-center gap-1 pl-2 pr-1 py-1 h-9 w-full bg-secondary/50 rounded-[8px] border border-white/10">
                                     {Array.isArray(value) ? (
                                         <span className="text-xs text-blue-400 font-mono flex-1 truncate">Array [{value.length}]</span>
                                     ) : (
@@ -531,7 +531,7 @@ const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstIn
                                         value={typeof value === 'string' ? value : (typeof value === 'boolean' ? '' : "")} // Boolean hides text
                                         onChange={(e) => !isBoolean && !isObject && handleInputChange(col, e.target.value, e.target as HTMLElement)}
                                         onKeyDown={(e) => handleKeyDown(e, col)}
-                                        className={`h-8 text-xs font-normal border-transparent focus-visible:ring-0 focus-visible:border-transparent placeholder:text-muted-foreground/50 transition-colors w-full pr-8 ${isPopoverOpen ? "bg-muted/50" : "bg-card"} ${schemaType === 'number' || currentType === 'number' ? "font-mono" : (currentType && currentType !== 'auto' ? "font-medium" : "")} ${hasError ? "text-destructive placeholder:text-destructive/50" : ""} ${isBoolean ? "font-mono cursor-default tracking-widest uppercase text-muted-foreground/50 focus:text-foreground" : ""} ${isObject ? "cursor-pointer" : ""}`}
+                                        className={`h-9 text-xs font-normal border-transparent focus-visible:ring-0 focus-visible:border-transparent placeholder:text-muted-foreground/50 transition-colors w-full pr-8 ${isPopoverOpen ? "bg-muted/50" : "bg-card"} ${schemaType === 'number' || currentType === 'number' ? "font-mono" : (currentType && currentType !== 'auto' ? "font-medium" : "")} ${hasError ? "text-destructive placeholder:text-destructive/50" : ""} ${isBoolean ? "font-mono cursor-default tracking-widest uppercase text-muted-foreground/50 focus:text-foreground" : ""} ${isObject ? "cursor-pointer" : ""}`}
                                         readOnly={(isBoolean && boolValue !== null) || isObject}
                                     />
                                     {isBoolean && boolValue === null && (
@@ -585,7 +585,7 @@ const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstIn
                         </TableCell>
                     );
                 })}
-                <TableCell className="w-[50px] p-4 py-5 flex items-center justify-center">
+                <TableCell className="w-[50px] p-0 flex items-center justify-center">
                     {(() => {
                         const hasData = Object.values(values).some(v => v !== "" && v !== null && v !== undefined);
                         // console.log("Footer Render: values=", values, "hasData=", hasData);
