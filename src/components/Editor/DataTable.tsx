@@ -323,8 +323,11 @@ const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstIn
             setErrors({});
             // Focus back to first input
             setTimeout(() => {
-                firstInputRef.current?.focus();
-            }, 0);
+                const firstCol = columns[0];
+                // Try local ref first, then parent ref
+                const el = inputRefs.current[firstCol] || firstInputRef.current;
+                el?.focus();
+            }, 10);
         }
     };
 
