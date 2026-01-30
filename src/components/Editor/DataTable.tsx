@@ -247,6 +247,8 @@ const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstIn
     const [menuState, setMenuState] = useState<{ col: string; query: string; anchorEl: HTMLElement | null } | null>(null);
     const [focusTarget, setFocusTarget] = useState<string | null>(null);
 
+    const [activePopover, setActivePopover] = useState<string | null>(null);
+
     // Deterministic Focus Management
     React.useLayoutEffect(() => {
         if (focusTarget) {
@@ -461,8 +463,10 @@ const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstIn
                     const isBoolean = schemaType === 'boolean';
                     const boolValue = typeof value === 'boolean' ? value : null;
 
+                    const isPopoverOpen = activePopover === col;
+
                     const inputComponent = (
-                        <div className={`input-gradient-wrapper w-full relative group rounded-[8px] ${value ? "has-value" : ""} ${hasError ? "error ring-1 ring-destructive" : ""}`}>
+                        <div className={`input-gradient-wrapper w-full relative group rounded-[8px] ${value ? "has-value" : ""} ${hasError ? "error ring-1 ring-destructive" : ""} ${isPopoverOpen ? "ring-2 ring-white ring-offset-[-2px] ring-offset-background z-10" : ""}`}>
                             {isComplex ? (
                                 <div className="flex items-center gap-1 pl-2 pr-1 py-1 h-8 w-full bg-secondary/50 rounded-[8px] border border-white/10">
                                     {Array.isArray(value) ? (
@@ -547,6 +551,7 @@ const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstIn
                                     inferredKeys={inferredKeys}
                                     value={value || {}}
                                     onChange={(newObj) => setValues(prev => ({ ...prev, [col]: newObj }))}
+                                    onOpenChange={(open) => setActivePopover(open ? col : null)}
                                 >
                                     {inputComponent}
                                 </ObjectInputPopover>

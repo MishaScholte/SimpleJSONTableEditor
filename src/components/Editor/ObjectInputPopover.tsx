@@ -11,10 +11,15 @@ interface ObjectInputPopoverProps {
     onChange: (val: Record<string, any>) => void;
     columnName: string;
     children: React.ReactNode;
+    onOpenChange?: (open: boolean) => void;
 }
 
-export const ObjectInputPopover: React.FC<ObjectInputPopoverProps> = ({ inferredKeys, value, onChange, children, columnName }) => {
+export const ObjectInputPopover: React.FC<ObjectInputPopoverProps> = ({ inferredKeys, value, onChange, children, columnName, onOpenChange }) => {
     const [open, setOpen] = useState(false);
+
+    useEffect(() => {
+        onOpenChange?.(open);
+    }, [open, onOpenChange]);
     const [localValue, setLocalValue] = useState<Record<string, any>>({});
 
     // Sync local state when popover opens or value changes externally
