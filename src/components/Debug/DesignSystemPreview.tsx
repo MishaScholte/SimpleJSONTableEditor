@@ -281,6 +281,14 @@ export const DesignSystemPreview: React.FC = () => {
                                 <SecondaryButton variant="destructive" size="icon"><Trash2 className="w-4 h-4" /></SecondaryButton>
                             </div>
                         </div>
+                        <div className="space-y-4">
+                            <h3 className="text-sm font-medium text-destructive uppercase">Destructive Ghost</h3>
+                            <div className="flex flex-wrap gap-4 items-center">
+                                <Button variant="destructive-ghost">Delete</Button>
+                                <Button variant="destructive-ghost"><Trash2 className="w-4 h-4" /> Remove</Button>
+                                <Button variant="destructive-ghost" size="icon"><Trash2 className="w-4 h-4" /></Button>
+                            </div>
+                        </div>
                     </div>
 
                     {/* Sizing Comparison */}

@@ -210,9 +210,9 @@ const DataTableRow = memo(({
             {!readOnly && (
                 <TableCell className="w-[50px] flex items-center justify-center p-0">
                     <Button
-                        variant="ghost"
+                        variant="destructive-ghost"
                         size="icon"
-                        className={`w-7 h-7 text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-all duration-200 opacity-0 group-hover:opacity-100 ${isDeleteFocused ? "ring-2 ring-destructive/20 opacity-100 bg-destructive/5 text-destructive" : ""}`}
+                        className={`w-7 h-7 transition-all duration-200 opacity-0 group-hover:opacity-100 ${isDeleteFocused ? "ring-2 ring-destructive/20 opacity-100 bg-destructive/5 text-destructive" : ""}`}
                         onClick={(e) => { e.stopPropagation(); onDeleteRow(rowIdx); }}
                         onFocus={() => onFocusDelete(rowIdx)}
                         tabIndex={-1} // Handled by manual focus state
