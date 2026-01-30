@@ -103,19 +103,9 @@ export const DesignSystemPreview: React.FC = () => {
                     <span className="text-muted-foreground text-lg">03.</span> Badges
                 </h2>
                 <div className="space-y-8">
-                    {/* Standard Variants */}
+                    {/* Badge Variants */}
                     <div className="space-y-4">
-                        <h3 className="text-sm font-medium text-muted-foreground uppercase">Standard Variants</h3>
-                        <div className="flex flex-wrap gap-4 items-center">
-                            <Badge variant="default">Default</Badge>
-                            <Badge variant="secondary">Secondary</Badge>
-                            <Badge variant="destructive">Destructive</Badge>
-                            <Badge variant="outline">Outline</Badge>
-                        </div>
-                    </div>
-                    {/* Semantic Variants */}
-                    <div className="space-y-4">
-                        <h3 className="text-sm font-medium text-muted-foreground uppercase">Semantic Variants (Soft)</h3>
+                        <h3 className="text-sm font-medium text-muted-foreground uppercase">Badge Variants</h3>
                         <div className="flex flex-wrap gap-4 items-center">
                             <Badge variant="success">Success</Badge>
                             <Badge variant="error">Error</Badge>
