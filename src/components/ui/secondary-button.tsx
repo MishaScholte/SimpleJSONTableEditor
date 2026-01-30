@@ -20,7 +20,7 @@ const SecondaryButton = React.forwardRef<HTMLButtonElement, SecondaryButtonProps
                     // Default variant styles
                     variant === "default" && "hover:bg-white/10 text-white",
                     // Destructive variant styles
-                    variant === "destructive" && "text-destructive hover:bg-destructive/10 hover:text-destructive",
+                    variant === "destructive" && "text-white hover:bg-destructive/10 hover:text-destructive",
                     // Success variant styles
                     variant === "success" && "text-emerald-500 hover:bg-emerald-500/10 hover:text-emerald-400",
                     className
