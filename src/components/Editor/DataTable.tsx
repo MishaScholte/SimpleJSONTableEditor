@@ -209,16 +209,16 @@ const DataTableRow = memo(({
             })}
             {!readOnly && (
                 <TableCell className="w-[50px] flex items-center justify-center p-0">
-                    <SecondaryButton
-                        variant="destructive"
+                    <Button
+                        variant="ghost"
                         size="icon"
-                        className={`transition-opacity duration-200 opacity-0 group-hover:opacity-100 ${isDeleteFocused ? "ring-2 ring-white ring-offset-2 ring-offset-background opacity-100" : ""}`}
+                        className={`w-7 h-7 text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-all duration-200 opacity-0 group-hover:opacity-100 ${isDeleteFocused ? "ring-2 ring-destructive/20 opacity-100 bg-destructive/5 text-destructive" : ""}`}
                         onClick={(e) => { e.stopPropagation(); onDeleteRow(rowIdx); }}
                         onFocus={() => onFocusDelete(rowIdx)}
                         tabIndex={-1} // Handled by manual focus state
                     >
                         <Trash2 className="h-4 w-4" />
-                    </SecondaryButton>
+                    </Button>
                 </TableCell>
             )}
         </TableRow>
