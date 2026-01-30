@@ -1,8 +1,9 @@
 import { cn } from "@/lib/utils";
+import { badgeVariants } from "@/components/ui/badge";
 
 interface ObjectBadgeProps extends React.HTMLAttributes<HTMLButtonElement> {
     keys: string[];
-    className?: string;
+    className?: string; // Allow overrides
 }
 
 export const ObjectBadge = ({ keys, className, ...props }: ObjectBadgeProps) => {
@@ -10,7 +11,8 @@ export const ObjectBadge = ({ keys, className, ...props }: ObjectBadgeProps) => 
         <button
             type="button"
             className={cn(
-                "bg-amber-500/20 text-amber-400 border border-amber-500/30 px-2 py-0.5 rounded text-xs font-mono cursor-pointer hover:bg-amber-500/30 transition-colors truncate max-w-full block",
+                badgeVariants({ variant: "warning" }),
+                "font-mono cursor-pointer truncate max-w-full block hover:opacity-80", // badgeVariants has hover bg logic, but we can tweak
                 className
             )}
             title={keys.join(", ")}
