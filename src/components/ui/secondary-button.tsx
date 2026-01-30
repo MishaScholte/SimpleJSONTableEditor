@@ -4,7 +4,7 @@ import { Button, type ButtonProps } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
 interface SecondaryButtonProps extends Omit<ButtonProps, "variant"> {
-    variant?: "default" | "destructive"
+    variant?: "default" | "destructive" | "success"
 }
 
 const SecondaryButton = React.forwardRef<HTMLButtonElement, SecondaryButtonProps>(
@@ -21,6 +21,8 @@ const SecondaryButton = React.forwardRef<HTMLButtonElement, SecondaryButtonProps
                     variant === "default" && "hover:bg-white/10 text-white",
                     // Destructive variant styles
                     variant === "destructive" && "text-destructive hover:bg-destructive/10 hover:text-destructive hover:border-destructive/20",
+                    // Success variant styles
+                    variant === "success" && "text-emerald-500 hover:bg-emerald-500/10 hover:text-emerald-400 hover:border-emerald-500/20",
                     className
                 )}
                 {...props}

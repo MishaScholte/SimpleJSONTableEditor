@@ -591,7 +591,8 @@ const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstIn
                         // console.log("Footer Render: values=", values, "hasData=", hasData);
                         return hasData && (
                             <SecondaryButton
-                                className="h-9 w-9 px-0 text-emerald-500 hover:text-emerald-400 hover:bg-emerald-500/10 border-emerald-500/20"
+                                variant="success"
+                                size="icon"
                                 onClick={handleAdd}
                             >
                                 <CornerDownLeft className="h-4 w-4" />
