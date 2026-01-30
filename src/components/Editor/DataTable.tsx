@@ -12,6 +12,7 @@ import { BooleanBadge } from "@/components/ui/BooleanBadge";
 import { ObjectInputPopover } from "./ObjectInputPopover";
 import { inferObjectKeys } from "@/lib/schema-utils";
 import { ObjectBadge } from "@/components/ui/object-badge";
+import { ShortcutBadge } from "@/components/ui/shortcut-badge";
 
 export interface SortConfig {
     column: string;
@@ -525,13 +526,23 @@ const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstIn
                                         }}
                                         key={`input-el-${col}`} // Stable key to prevent remounting
                                         onFocus={onFocus} // Clear table focus
-                                        placeholder={isBoolean ? "T / F" : (isObject ? col : (currentType && currentType !== 'auto' ? `${currentType}:` : col))}
+                                        placeholder={isBoolean ? "" : (isObject ? col : (currentType && currentType !== 'auto' ? `${currentType}:` : col))}
                                         value={typeof value === 'string' ? value : (typeof value === 'boolean' ? '' : "")} // Boolean hides text
                                         onChange={(e) => !isBoolean && !isObject && handleInputChange(col, e.target.value, e.target as HTMLElement)}
                                         onKeyDown={(e) => handleKeyDown(e, col)}
                                         className={`h-8 text-xs font-normal border-transparent focus-visible:ring-0 focus-visible:border-transparent placeholder:text-muted-foreground/50 transition-colors w-full pr-8 ${isPopoverOpen ? "bg-muted/50" : "bg-card"} ${schemaType === 'number' || currentType === 'number' ? "font-mono" : (currentType && currentType !== 'auto' ? "font-medium" : "")} ${hasError ? "text-destructive placeholder:text-destructive/50" : ""} ${isBoolean ? "font-mono text-center cursor-default tracking-widest uppercase text-muted-foreground/50 focus:text-foreground" : ""} ${isObject ? "cursor-pointer" : ""}`}
                                         readOnly={(isBoolean && boolValue !== null) || isObject}
                                     />
+                                    {isBoolean && boolValue === null && (
+                                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-50 gap-1.5">
+                                            <span className="text-[10px] text-muted-foreground/70 uppercase tracking-wider font-medium">{col}:</span>
+                                            <div className="flex items-center gap-1">
+                                                <ShortcutBadge>t</ShortcutBadge>
+                                                <span className="text-muted-foreground/50">/</span>
+                                                <ShortcutBadge>f</ShortcutBadge>
+                                            </div>
+                                        </div>
+                                    )}
                                     {isBoolean && boolValue !== null && (
                                         <div className="absolute inset-0 flex items-center px-3 pointer-events-none">
                                             <BooleanBadge value={boolValue} />
