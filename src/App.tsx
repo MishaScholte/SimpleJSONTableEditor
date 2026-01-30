@@ -12,6 +12,7 @@ import { useKeyboardShortcuts } from "@/hooks/use-keyboard-shortcuts";
 import { useUndoRedo } from "@/hooks/use-undo-redo";
 import { DebugPanel } from "@/components/Debug/DebugPanel"; // Debug
 import { DesignSystemPreview } from "@/components/Debug/DesignSystemPreview";
+import { ToolbarButton } from "@/components/ui/toolbar-button";
 
 // Helper to load initial data
 const loadInitialData = (): TableRow[] => {
@@ -431,57 +432,58 @@ function App() {
 
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-1 mr-2">
-              <SecondaryButton
+              <ToolbarButton
                 onClick={handleUndo}
                 disabled={!canUndo}
-                className="h-9 w-9 px-0 disabled:opacity-30"
-                title="Undo (Ctrl+Z)"
-              >
-                <Undo className="w-4 h-4" />
-              </SecondaryButton>
-              <SecondaryButton
+                icon={<Undo className="w-4 h-4" />}
+                label="Undo"
+                shortcut="⌘Z"
+                className="disabled:opacity-30"
+              />
+              <ToolbarButton
                 onClick={redo}
                 disabled={!canRedo}
-                className="h-9 w-9 px-0 disabled:opacity-30"
-                title="Redo (Ctrl+Shift+Z)"
-              >
-                <Redo className="w-4 h-4" />
-              </SecondaryButton>
+                icon={<Redo className="w-4 h-4" />}
+                label="Redo"
+                shortcut="⇧⌘Z"
+                className="disabled:opacity-30"
+              />
             </div>
             <div className="w-px h-6 bg-border mx-1" />
 
-            <SecondaryButton onClick={() => setIsReorderOpen(true)} className="h-9 w-9 px-0 group relative" title="Reorder Columns">
-              <Columns3 className="w-4 h-4" />
-              <kbd className="absolute top-full mt-2 hidden group-hover:inline-flex h-7 select-none items-center gap-1 rounded border bg-muted px-2 font-mono text-sm font-medium text-muted-foreground opacity-100 whitespace-nowrap z-50">
-                <span>⇧⌘</span>O
-              </kbd>
-            </SecondaryButton>
+            <ToolbarButton
+              onClick={() => setIsReorderOpen(true)}
+              icon={<Columns3 className="w-4 h-4" />}
+              label="Reorder Columns"
+              shortcut="⇧⌘O"
+            />
 
             <div className="w-px h-6 bg-border mx-1" />
 
-            <SecondaryButton onClick={() => {
-              const json = JSON.stringify(data, null, 2);
-              navigator.clipboard.writeText(json);
-              toast.success("JSON copied to clipboard");
-            }} className="h-9 px-3 text-xs gap-1.5 group relative">
-              <Copy className="w-4 h-4" /> Copy JSON
-              <kbd className="absolute top-full mt-2 hidden group-hover:inline-flex h-7 select-none items-center gap-1 rounded border bg-muted px-2 font-mono text-sm font-medium text-muted-foreground opacity-100 whitespace-nowrap z-50">
-                <span>⌘</span>C
-              </kbd>
-            </SecondaryButton>
-            <SecondaryButton onClick={handleExport} className="h-9 px-3 text-xs gap-1.5 group relative">
-              <Download className="w-4 h-4" /> Download JSON
-              <kbd className="absolute top-full mt-2 hidden group-hover:inline-flex h-7 select-none items-center gap-1 rounded border bg-muted px-2 font-mono text-sm font-medium text-muted-foreground opacity-100 whitespace-nowrap z-50">
-                <span>⌘</span>S
-              </kbd>
-            </SecondaryButton>
+            <ToolbarButton
+              onClick={() => {
+                const json = JSON.stringify(data, null, 2);
+                navigator.clipboard.writeText(json);
+                toast.success("JSON copied to clipboard");
+              }}
+              icon={<Copy className="w-4 h-4" />}
+              label="Copy JSON"
+              shortcut="⌘C"
+            />
+            <ToolbarButton
+              onClick={handleExport}
+              icon={<Download className="w-4 h-4" />}
+              label="Download JSON"
+              shortcut="⌘S"
+            />
             <div className="w-px h-6 bg-border mx-1" />
-            <SecondaryButton onClick={handleClear} variant="destructive" className="h-9 px-3 text-xs gap-1.5 group relative">
-              <Trash2 className="w-4 h-4" /> Clear workspace
-              <kbd className="absolute top-full mt-2 hidden group-hover:inline-flex h-7 select-none items-center gap-1 rounded border bg-muted px-2 font-mono text-sm font-medium text-muted-foreground opacity-100 whitespace-nowrap z-50">
-                <span>⌘</span>⌫
-              </kbd>
-            </SecondaryButton>
+            <ToolbarButton
+              onClick={handleClear}
+              variant="destructive"
+              icon={<Trash2 className="w-4 h-4" />}
+              label="Clear workspace"
+              shortcut="⌘⌫"
+            />
           </div>
         </header>
       )}
