@@ -617,7 +617,9 @@ export const DataTable: React.FC<DataTableProps> = ({
     const tableBodyRef = useRef<HTMLTableSectionElement>(null);
     const tableContainerRef = useRef<HTMLDivElement>(null); // For capturing key events
     const firstInputRef = useRef<HTMLInputElement>(null);
+
     const shouldScrollRef = useRef(false);
+    const hasFocusedInitial = useRef(false);
 
     // Notify parent about editing state
     useEffect(() => {
@@ -626,8 +628,9 @@ export const DataTable: React.FC<DataTableProps> = ({
 
     useEffect(() => {
         // Initial focus when data loads
-        if (data.length > 0 && !focusedCell) {
+        if (data.length > 0 && !focusedCell && !hasFocusedInitial.current) {
             setFocusedCell({ row: 0, col: 0 });
+            hasFocusedInitial.current = true;
             // Defer focus to allow render
             setTimeout(() => {
                 tableContainerRef.current?.focus();
