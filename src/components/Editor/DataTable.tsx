@@ -585,16 +585,20 @@ const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstIn
                     );
                 })}
                 <TableCell className="w-[50px] p-4 py-5 flex items-center justify-center">
-                    {Object.values(values).some(v => v !== "" && v !== null && v !== undefined) && (
-                        <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-8 w-8 text-emerald-500 hover:text-emerald-600 hover:bg-emerald-500/10"
-                            onClick={handleAdd}
-                        >
-                            <CornerDownLeft className="h-4 w-4" />
-                        </Button>
-                    )}
+                    {(() => {
+                        const hasData = Object.values(values).some(v => v !== "" && v !== null && v !== undefined);
+                        // console.log("Footer Render: values=", values, "hasData=", hasData);
+                        return hasData && (
+                            <Button
+                                variant="secondary"
+                                size="icon"
+                                className="text-emerald-600 hover:text-emerald-700"
+                                onClick={handleAdd}
+                            >
+                                <CornerDownLeft className="h-4 w-4" />
+                            </Button>
+                        );
+                    })()}
                 </TableCell>
             </TableRow>
         </TableFooter>
