@@ -551,15 +551,7 @@ const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstIn
                                 </div>
                             )}
 
-                            {!isComplex && value?.length > 0 && !menuState && (
-                                <div className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none opacity-0 group-focus-within:opacity-100 transition-opacity duration-200">
-                                    <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border-[1px] border-solid border-green-500/20 bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
-                                        <span className="text-xs text-green-500">
-                                            ⏎
-                                        </span>
-                                    </kbd>
-                                </div>
-                            )}
+
                         </div>
                     );
 
