@@ -158,6 +158,11 @@ export const ObjectInputPopover: React.FC<ObjectInputPopoverProps> = ({ inferred
                         <Button
                             size="sm"
                             className="h-7 px-3 text-xs gap-1.5 transition-all text-white bg-green-600 hover:bg-green-500"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                setOpen(false);
+                                setTimeout(() => onSubmit?.(), 0);
+                            }}
                         >
                             {focusedKey === displayKeys[displayKeys.length - 1] ? (
                                 <CornerDownLeft className="w-3.5 h-3.5" />
