@@ -50,6 +50,16 @@ export const ObjectInputPopover: React.FC<ObjectInputPopoverProps> = ({ inferred
             e.stopPropagation();
             setOpen(false); // Close on submit
             onSubmit?.();
+        } else if (e.key === 'Tab' && !e.shiftKey) {
+            // If tabbing from the last field, submit and move to next cell
+            const lastKey = displayKeys[displayKeys.length - 1];
+            if (focusedKey === lastKey) {
+                e.preventDefault();
+                e.stopPropagation();
+                setOpen(false);
+                // Defer submit to allow popover to close
+                setTimeout(() => onSubmit?.(), 0);
+            }
         }
     };
 
