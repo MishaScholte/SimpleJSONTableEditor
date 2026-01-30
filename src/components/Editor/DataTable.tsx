@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, useCallback, memo } from "react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, TableFooter } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { formatArrayOutput, parseArrayInput, type TableRow as RowData } from "@/lib/data-utils";
+import { formatArrayOutput, parseArrayInput, type TableRow as RowData, type ColumnSchema, type ColumnType } from "@/lib/data-utils";
 import { Trash2, ArrowUp, ArrowDown, ArrowUpDown, X } from "lucide-react";
 import { NestedTableModal } from "./NestedTableModal";
 import { SlashMenu } from "./SlashMenu";
@@ -20,6 +20,11 @@ interface DataTableProps {
     onUpdateCell?: (rowIdx: number, col: string, value: any) => void;
     onDeleteRow?: (rowIdx: number) => void;
     onAdd?: (row: RowData) => void;
+    // Column Management Handlers
+    onAddColumn?: (name: string, type: ColumnType) => void;
+    onDeleteColumn?: (col: string) => void;
+    onRenameColumn?: (oldName: string, newName: string) => void;
+    schema?: ColumnSchema;
     readOnly?: boolean;
     onEditingChange?: (isEditing: boolean) => void;
 }

@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { toast, Toaster } from "sonner";
 import { DataTable, type SortConfig } from "@/components/Editor/DataTable";
-import { inferColumns, safeParseJSON, unflattenObject, type TableRow } from "@/lib/data-utils";
+import { inferColumns, safeParseJSON, unflattenObject, type TableRow, type ColumnType, type ColumnSchema } from "@/lib/data-utils";
 import { SecondaryButton } from "@/components/ui/secondary-button";
 import { PrimaryButton } from "@/components/ui/primary-button";
 import { Import, Download, Trash2, FileJson, Copy, ClipboardPaste, Shield, WifiOff, Undo, Redo, Command } from "lucide-react";
@@ -34,6 +34,92 @@ function App() {
 
   // Initialize columns based on the initial data
   const [columns, setColumns] = useState<string[]>(() => inferColumns(initialData));
+  // Global Schema State (Future-proofing for strict type management)
+  const [schema, setSchema] = useState<ColumnSchema>({});
+
+  // --- Phase 1: Column Management Logic ---
+
+  // Helper: Strictly validate column names
+  const isValidColumnName = (name: string, existingCols: string[]): { valid: boolean; error?: string } => {
+    const trimmed = name.trim();
+    if (!trimmed) return { valid: false, error: "Column name cannot be empty." };
+    if (trimmed.includes(" ")) return { valid: false, error: "Column name cannot contain spaces." };
+    if (existingCols.includes(trimmed)) return { valid: false, error: "Column name must be unique." };
+    return { valid: true };
+  };
+
+  const handleAddColumn = (name: string, type: ColumnType) => {
+    const validation = isValidColumnName(name, columns);
+    if (!validation.valid) {
+      toast.error(validation.error);
+      return;
+    }
+
+    const newSchema = { ...schema, [name]: type };
+    setSchema(newSchema);
+
+    // Update all rows with an undefined value for this new key (native JSON behavior)
+    // We do NOT strictly need to map over data if we accept that 'undefined' keys are just missing.
+    // However, to ensure uniformity for Grid/Table renderers, we usually just update the column list.
+    const newColumns = [...columns, name];
+    setColumns(newColumns);
+
+    // We intentionally do NOT mutate 'data' here if the value is undefined (saves performance).
+    toast.success(`Column "${name}" added.`);
+  };
+
+  const handleDeleteColumn = (colName: string) => {
+    // 1. Remove from Schema
+    const newSchema = { ...schema };
+    delete newSchema[colName];
+    setSchema(newSchema);
+
+    // 2. Remove from Columns List
+    const newColumns = columns.filter(c => c !== colName);
+    setColumns(newColumns);
+
+    // 3. Remove key from ALL rows (Expensive but necessary for 'Delete')
+    const newData = data.map(row => {
+      const newRow = { ...row };
+      delete newRow[colName];
+      return newRow;
+    });
+    setData(newData); // Undo/Redo handles this automatically because we use 'setData'
+    toast.success(`Column "${colName}" deleted.`);
+  };
+
+  const handleRenameColumn = (oldName: string, newName: string) => {
+    const validation = isValidColumnName(newName, columns);
+    if (!validation.valid) {
+      toast.error(validation.error);
+      return;
+    }
+
+    // 1. Update Schema Key
+    const newSchema = { ...schema };
+    const type = newSchema[oldName] || 'text'; // preserve type
+    delete newSchema[oldName];
+    newSchema[newName] = type;
+    setSchema(newSchema);
+
+    // 2. Update Columns List
+    const newColumns = columns.map(c => c === oldName ? newName : c);
+    setColumns(newColumns);
+
+    // 3. Update Data Keys (Expensive)
+    const newData = data.map(row => {
+      const val = row[oldName];
+      const newRow = { ...row };
+      delete newRow[oldName];
+      // Only start tracking the new key if old key existed (or we can just force migration)
+      if (val !== undefined) {
+        newRow[newName] = val;
+      }
+      return newRow;
+    });
+    setData(newData);
+    toast.success(`Renamed "${oldName}" to "${newName}".`);
+  };
 
   const [sortConfig, setSortConfig] = useState<SortConfig | null>(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -442,6 +528,10 @@ function App() {
                 sortConfig={sortConfig}
                 onSort={handleSort}
                 onAdd={addRow}
+                onAddColumn={handleAddColumn}
+                onDeleteColumn={handleDeleteColumn}
+                onRenameColumn={handleRenameColumn}
+                schema={schema} // Pass schema down
               />
             </div>
 

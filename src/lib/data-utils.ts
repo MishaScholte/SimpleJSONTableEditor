@@ -1,6 +1,9 @@
 export type CellValue = string | number | boolean | string[] | null;
 export type TableRow = Record<string, CellValue>;
 
+export type ColumnType = 'text' | 'number' | 'boolean' | 'list' | 'object' | 'auto';
+export type ColumnSchema = Record<string, ColumnType>;
+
 /**
  * Flattens a nested object using dot notation.
  * { address: { city: "Amsterdam" } } → { "address.city": "Amsterdam" }
