@@ -4,7 +4,6 @@ import { DataTable, type SortConfig } from "@/components/Editor/DataTable";
 import { inferColumns, safeParseJSON, unflattenObject, type TableRow, type ColumnType, type ColumnSchema, inferSchema } from "@/lib/data-utils";
 import { SecondaryButton } from "@/components/ui/secondary-button";
 import { PrimaryButton } from "@/components/ui/primary-button";
-import { Button } from "@/components/ui/button";
 import { Import, Download, Trash2, FileJson, Copy, ClipboardPaste, Shield, WifiOff, Undo, Redo, Command, Columns3 } from "lucide-react";
 import { ReorderColumnsDialog } from "@/components/Editor/ReorderColumnsDialog";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -398,14 +397,6 @@ function App() {
     setSchema(inferSchema(debugData)); // Infer schema
     setSortConfig(null);
     toast.success(`Loaded debug dataset: ${debugData.length} rows.`);
-  };
-
-  const handleStartScratch = () => {
-    const dummy = [{ id: 1, name: "" }];
-    reset(dummy);
-    setColumns(["id", "name"]);
-    setSchema({ id: 'number', name: 'text' });
-    toast.success("Started new empty table");
   };
 
   return (
