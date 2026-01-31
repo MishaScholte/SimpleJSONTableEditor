@@ -1,0 +1,6686 @@
+[
+  {
+    "id": 1,
+    "subscriptionActive": false,
+    "personalDetails": {
+      "firstName": "Tom",
+      "lastName": "Janssen",
+      "email": "tom.janssen@email.com",
+      "dateOfBirth": "1986-10-09",
+      "city": "Tilburg"
+    },
+    "fitnessProfile": {
+      "level": "Advanced",
+      "experienceYears": 1,
+      "primaryGoal": "Improve endurance",
+      "secondaryGoal": "Consistency",
+      "targetDate": "2026-10-04",
+      "preferredSessionTime": "Evening",
+      "workoutPlans": []
+    },
+    "workoutHistory": [
+      {
+        "visitDate": "2026-01-24",
+        "startTime": "07:15",
+        "endTime": "08:14",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 59,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-11-30",
+        "startTime": "09:15",
+        "endTime": "10:06",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 51,
+        "workedOutWith": "Solo"
+      }
+    ],
+    "metadata": {
+      "lastEdited": "2026-01-24T07:41:17.461639Z",
+      "source": "CrossFitApp.demo"
+    }
+  },
+  {
+    "id": 2,
+    "subscriptionActive": true,
+    "personalDetails": {
+      "firstName": "Rick",
+      "lastName": "Hendriksen",
+      "email": "rick.hendriksen@email.com",
+      "dateOfBirth": "1992-05-19",
+      "city": "Leiden"
+    },
+    "fitnessProfile": {
+      "level": "Beginner",
+      "experienceYears": 2,
+      "primaryGoal": "Master gymnastics",
+      "secondaryGoal": "Master gymnastics",
+      "targetDate": "2026-07-02",
+      "preferredSessionTime": "Morning",
+      "workoutPlans": [
+        {
+          "planName": "Strength Focus",
+          "type": "Mixed",
+          "sessionsPerWeek": 2,
+          "startDate": "2025-10-07",
+          "endDate": "2025-12-12"
+        }
+      ]
+    },
+    "workoutHistory": [
+      {
+        "visitDate": "2026-01-20",
+        "startTime": "16:15",
+        "endTime": "17:18",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 63,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2026-01-11",
+        "startTime": "14:30",
+        "endTime": "15:55",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 85,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-12-09",
+        "startTime": "16:30",
+        "endTime": "17:59",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 89,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-11-25",
+        "startTime": "14:15",
+        "endTime": "15:32",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 77,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-11-24",
+        "startTime": "07:15",
+        "endTime": "08:36",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 81,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-10-26",
+        "startTime": "10:45",
+        "endTime": "12:10",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 85,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-10-22",
+        "startTime": "16:45",
+        "endTime": "17:39",
+        "sessionType": "Open gym",
+        "completed": false,
+        "durationMinutes": 54,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-09-23",
+        "startTime": "13:00",
+        "endTime": "13:48",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 48,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-09-18",
+        "startTime": "10:00",
+        "endTime": "11:28",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 88,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-09-17",
+        "startTime": "17:15",
+        "endTime": "18:10",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 55,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-09-04",
+        "startTime": "12:45",
+        "endTime": "13:53",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 68,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-08-30",
+        "startTime": "10:00",
+        "endTime": "11:14",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 74,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-08-21",
+        "startTime": "14:15",
+        "endTime": "15:09",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 54,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-08-20",
+        "startTime": "11:00",
+        "endTime": "12:03",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 63,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-08-10",
+        "startTime": "12:00",
+        "endTime": "13:09",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 69,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-08-09",
+        "startTime": "11:00",
+        "endTime": "11:59",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 59,
+        "workedOutWith": "Partner"
+      }
+    ],
+    "metadata": {
+      "lastEdited": "2026-01-12T07:41:17.461811Z",
+      "source": "CrossFitApp.demo"
+    }
+  },
+  {
+    "id": 3,
+    "subscriptionActive": true,
+    "personalDetails": {
+      "firstName": "Fiona",
+      "lastName": "Uitterhoeven",
+      "email": "fiona.uitterhoeven@email.com",
+      "dateOfBirth": "1992-09-26",
+      "city": "Breda"
+    },
+    "fitnessProfile": {
+      "level": "Beginner",
+      "experienceYears": 1,
+      "primaryGoal": "Compete",
+      "secondaryGoal": "Lose weight",
+      "targetDate": "2026-12-15",
+      "preferredSessionTime": "Morning",
+      "workoutPlans": [
+        {
+          "planName": "Competition Prep",
+          "type": "Strength",
+          "sessionsPerWeek": 6,
+          "startDate": "2025-12-11",
+          "endDate": "2026-03-27"
+        },
+        {
+          "planName": "Competition Prep",
+          "type": "Conditioning",
+          "sessionsPerWeek": 4,
+          "startDate": "2026-03-28",
+          "endDate": "2026-06-04"
+        }
+      ]
+    },
+    "workoutHistory": [
+      {
+        "visitDate": "2026-01-26",
+        "startTime": "15:15",
+        "endTime": "16:37",
+        "sessionType": "Skill",
+        "completed": false,
+        "durationMinutes": 82,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2026-01-16",
+        "startTime": "12:30",
+        "endTime": "13:21",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 51,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-12-27",
+        "startTime": "12:15",
+        "endTime": "13:17",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 62,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-12-20",
+        "startTime": "12:45",
+        "endTime": "14:00",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 75,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-12-20",
+        "startTime": "12:00",
+        "endTime": "13:09",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 69,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-12-08",
+        "startTime": "14:15",
+        "endTime": "15:45",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 90,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-12-04",
+        "startTime": "07:00",
+        "endTime": "08:06",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 66,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-11-30",
+        "startTime": "18:45",
+        "endTime": "19:56",
+        "sessionType": "Skill",
+        "completed": false,
+        "durationMinutes": 71,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-11-26",
+        "startTime": "09:30",
+        "endTime": "10:30",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 60,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-11-19",
+        "startTime": "12:45",
+        "endTime": "13:39",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 54,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-11-02",
+        "startTime": "12:45",
+        "endTime": "13:59",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 74,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-10-11",
+        "startTime": "14:45",
+        "endTime": "15:37",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 52,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-10-10",
+        "startTime": "18:00",
+        "endTime": "18:48",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 48,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-09-25",
+        "startTime": "19:15",
+        "endTime": "20:03",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 48,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-09-05",
+        "startTime": "17:00",
+        "endTime": "18:05",
+        "sessionType": "WOD",
+        "completed": false,
+        "durationMinutes": 65,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-09-05",
+        "startTime": "15:00",
+        "endTime": "16:24",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 84,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-09-01",
+        "startTime": "07:15",
+        "endTime": "08:25",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 70,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-08-13",
+        "startTime": "13:15",
+        "endTime": "14:34",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 79,
+        "workedOutWith": "Partner"
+      }
+    ],
+    "metadata": {
+      "lastEdited": "2026-01-17T07:41:17.462000Z",
+      "source": "CrossFitApp.demo"
+    }
+  },
+  {
+    "id": 4,
+    "subscriptionActive": true,
+    "personalDetails": {
+      "firstName": "Jorn",
+      "lastName": "Thijs",
+      "email": "jorn.thijs@email.com",
+      "dateOfBirth": "1988-06-14",
+      "city": "Den Haag"
+    },
+    "fitnessProfile": {
+      "level": "Intermediate",
+      "experienceYears": 5,
+      "primaryGoal": "Improve endurance",
+      "secondaryGoal": "Consistency",
+      "targetDate": "2026-04-26",
+      "preferredSessionTime": "Evening",
+      "workoutPlans": [
+        {
+          "planName": "Skills Mastery",
+          "type": "Strength",
+          "sessionsPerWeek": 3,
+          "startDate": "2025-10-26",
+          "endDate": "2026-01-02"
+        }
+      ]
+    },
+    "workoutHistory": [
+      {
+        "visitDate": "2026-01-20",
+        "startTime": "06:30",
+        "endTime": "07:23",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 53,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-12-21",
+        "startTime": "18:15",
+        "endTime": "19:26",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 71,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-11-23",
+        "startTime": "10:15",
+        "endTime": "11:45",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 90,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-11-14",
+        "startTime": "11:00",
+        "endTime": "12:07",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 67,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-11-02",
+        "startTime": "18:45",
+        "endTime": "20:09",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 84,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-10-11",
+        "startTime": "19:30",
+        "endTime": "20:54",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 84,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-09-24",
+        "startTime": "13:30",
+        "endTime": "14:18",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 48,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-09-14",
+        "startTime": "06:30",
+        "endTime": "07:52",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 82,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-09-12",
+        "startTime": "17:45",
+        "endTime": "19:05",
+        "sessionType": "WOD",
+        "completed": false,
+        "durationMinutes": 80,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-08-15",
+        "startTime": "07:15",
+        "endTime": "08:16",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 61,
+        "workedOutWith": "Team"
+      }
+    ],
+    "metadata": {
+      "lastEdited": "2026-01-06T07:41:17.462110Z",
+      "source": "CrossFitApp.demo"
+    }
+  },
+  {
+    "id": 5,
+    "subscriptionActive": true,
+    "personalDetails": {
+      "firstName": "Iris",
+      "lastName": "Smit",
+      "email": "iris.smit@email.com",
+      "dateOfBirth": "2005-10-28",
+      "city": "Amsterdam"
+    },
+    "fitnessProfile": {
+      "level": "Intermediate",
+      "experienceYears": 8,
+      "primaryGoal": "Lose weight",
+      "secondaryGoal": "Build strength",
+      "targetDate": "2026-10-21",
+      "preferredSessionTime": "Evening",
+      "workoutPlans": [
+        {
+          "planName": "Competition Prep",
+          "type": "Skills",
+          "sessionsPerWeek": 4,
+          "startDate": "2025-11-06",
+          "endDate": "2026-01-17"
+        },
+        {
+          "planName": "Endurance Builder",
+          "type": "Conditioning",
+          "sessionsPerWeek": 2,
+          "startDate": "2026-01-18",
+          "endDate": "2026-05-13"
+        }
+      ]
+    },
+    "workoutHistory": [
+      {
+        "visitDate": "2026-01-31",
+        "startTime": "14:15",
+        "endTime": "15:23",
+        "sessionType": "Open workout",
+        "completed": false,
+        "durationMinutes": 68,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2026-01-08",
+        "startTime": "19:15",
+        "endTime": "20:43",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 88,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-12-17",
+        "startTime": "15:30",
+        "endTime": "16:17",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 47,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-11-15",
+        "startTime": "10:15",
+        "endTime": "11:27",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 72,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-11-12",
+        "startTime": "12:00",
+        "endTime": "13:09",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 69,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-10-21",
+        "startTime": "11:30",
+        "endTime": "12:19",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 49,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-10-20",
+        "startTime": "17:30",
+        "endTime": "18:50",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 80,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-08-25",
+        "startTime": "11:00",
+        "endTime": "12:04",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 64,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-08-12",
+        "startTime": "09:45",
+        "endTime": "10:40",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 55,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-08-11",
+        "startTime": "19:30",
+        "endTime": "20:16",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 46,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-08-11",
+        "startTime": "17:15",
+        "endTime": "18:39",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 84,
+        "workedOutWith": "Solo"
+      }
+    ],
+    "metadata": {
+      "lastEdited": "2026-01-27T07:41:17.462239Z",
+      "source": "CrossFitApp.demo"
+    }
+  },
+  {
+    "id": 6,
+    "subscriptionActive": true,
+    "personalDetails": {
+      "firstName": "Niels",
+      "lastName": "Uitterhoeven",
+      "email": "niels.uitterhoeven@email.com",
+      "dateOfBirth": "1985-02-19",
+      "city": "Amsterdam"
+    },
+    "fitnessProfile": {
+      "level": "Elite",
+      "experienceYears": 6,
+      "primaryGoal": "Consistency",
+      "secondaryGoal": "Consistency",
+      "targetDate": "2026-09-25",
+      "preferredSessionTime": "Afternoon",
+      "workoutPlans": [
+        {
+          "planName": "Competition Prep",
+          "type": "Conditioning",
+          "sessionsPerWeek": 3,
+          "startDate": "2025-09-25",
+          "endDate": "2025-12-25"
+        },
+        {
+          "planName": "Strength Focus",
+          "type": "Mixed",
+          "sessionsPerWeek": 3,
+          "startDate": "2025-12-26",
+          "endDate": "2026-02-24"
+        }
+      ]
+    },
+    "workoutHistory": [
+      {
+        "visitDate": "2025-11-23",
+        "startTime": "11:30",
+        "endTime": "12:49",
+        "sessionType": "WOD",
+        "completed": false,
+        "durationMinutes": 79,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-11-16",
+        "startTime": "18:45",
+        "endTime": "19:56",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 71,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-11-08",
+        "startTime": "14:45",
+        "endTime": "15:56",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 71,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-10-25",
+        "startTime": "17:15",
+        "endTime": "18:45",
+        "sessionType": "Skill",
+        "completed": false,
+        "durationMinutes": 90,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-10-24",
+        "startTime": "18:00",
+        "endTime": "19:21",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 81,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-10-08",
+        "startTime": "10:15",
+        "endTime": "11:40",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 85,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-10-07",
+        "startTime": "08:45",
+        "endTime": "10:12",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 87,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-08-28",
+        "startTime": "19:45",
+        "endTime": "21:05",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 80,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-08-24",
+        "startTime": "09:30",
+        "endTime": "10:43",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 73,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-08-06",
+        "startTime": "14:45",
+        "endTime": "15:33",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 48,
+        "workedOutWith": "Solo"
+      }
+    ],
+    "metadata": {
+      "lastEdited": "2026-01-18T07:41:17.462354Z",
+      "source": "CrossFitApp.demo"
+    }
+  },
+  {
+    "id": 7,
+    "subscriptionActive": true,
+    "personalDetails": {
+      "firstName": "Lisa",
+      "lastName": "Peeters",
+      "email": "lisa.peeters@email.com",
+      "dateOfBirth": "1986-01-28",
+      "city": "Tilburg"
+    },
+    "fitnessProfile": {
+      "level": "Elite",
+      "experienceYears": 6,
+      "primaryGoal": "Build strength",
+      "secondaryGoal": "Compete",
+      "targetDate": "2026-08-15",
+      "preferredSessionTime": "Morning",
+      "workoutPlans": [
+        {
+          "planName": "Competition Prep",
+          "type": "Strength",
+          "sessionsPerWeek": 2,
+          "startDate": "2025-08-18",
+          "endDate": "2025-10-18"
+        },
+        {
+          "planName": "Competition Prep",
+          "type": "Conditioning",
+          "sessionsPerWeek": 2,
+          "startDate": "2025-10-19",
+          "endDate": "2025-12-26"
+        }
+      ]
+    },
+    "workoutHistory": [
+      {
+        "visitDate": "2026-01-28",
+        "startTime": "19:45",
+        "endTime": "21:01",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 76,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2026-01-05",
+        "startTime": "17:30",
+        "endTime": "18:58",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 88,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-12-11",
+        "startTime": "19:00",
+        "endTime": "20:24",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 84,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-11-21",
+        "startTime": "18:45",
+        "endTime": "19:46",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 61,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-11-13",
+        "startTime": "15:45",
+        "endTime": "16:55",
+        "sessionType": "Skill",
+        "completed": false,
+        "durationMinutes": 70,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-11-10",
+        "startTime": "19:15",
+        "endTime": "20:05",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 50,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-11-04",
+        "startTime": "14:45",
+        "endTime": "16:12",
+        "sessionType": "Open gym",
+        "completed": false,
+        "durationMinutes": 87,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-11-03",
+        "startTime": "09:00",
+        "endTime": "10:26",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 86,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-10-26",
+        "startTime": "11:15",
+        "endTime": "12:29",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 74,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-08-29",
+        "startTime": "15:00",
+        "endTime": "15:55",
+        "sessionType": "Open gym",
+        "completed": false,
+        "durationMinutes": 55,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-08-27",
+        "startTime": "18:45",
+        "endTime": "19:59",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 74,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-08-22",
+        "startTime": "19:45",
+        "endTime": "21:15",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 90,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-08-13",
+        "startTime": "07:15",
+        "endTime": "08:29",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 74,
+        "workedOutWith": "Team"
+      }
+    ],
+    "metadata": {
+      "lastEdited": "2026-01-07T07:41:17.462525Z",
+      "source": "CrossFitApp.demo"
+    }
+  },
+  {
+    "id": 8,
+    "subscriptionActive": true,
+    "personalDetails": {
+      "firstName": "Julia",
+      "lastName": "Hermans",
+      "email": "julia.hermans@email.com",
+      "dateOfBirth": "1995-10-15",
+      "city": "Rotterdam"
+    },
+    "fitnessProfile": {
+      "level": "Elite",
+      "experienceYears": 10,
+      "primaryGoal": "Lose weight",
+      "secondaryGoal": "Lose weight",
+      "targetDate": "2026-06-25",
+      "preferredSessionTime": "Afternoon",
+      "workoutPlans": [
+        {
+          "planName": "Skills Mastery",
+          "type": "Skills",
+          "sessionsPerWeek": 6,
+          "startDate": "2025-10-27",
+          "endDate": "2026-01-16"
+        }
+      ]
+    },
+    "workoutHistory": [
+      {
+        "visitDate": "2026-01-10",
+        "startTime": "09:45",
+        "endTime": "11:01",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 76,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-12-17",
+        "startTime": "10:00",
+        "endTime": "11:30",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 90,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-12-13",
+        "startTime": "11:00",
+        "endTime": "12:19",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 79,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-11-28",
+        "startTime": "19:45",
+        "endTime": "20:37",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 52,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-11-22",
+        "startTime": "17:30",
+        "endTime": "18:21",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 51,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-11-14",
+        "startTime": "16:30",
+        "endTime": "17:45",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 75,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-11-02",
+        "startTime": "17:45",
+        "endTime": "18:47",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 62,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-10-09",
+        "startTime": "18:00",
+        "endTime": "18:50",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 50,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-09-12",
+        "startTime": "10:15",
+        "endTime": "11:40",
+        "sessionType": "Open workout",
+        "completed": false,
+        "durationMinutes": 85,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-09-07",
+        "startTime": "10:45",
+        "endTime": "12:00",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 75,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-09-06",
+        "startTime": "16:00",
+        "endTime": "16:54",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 54,
+        "workedOutWith": "Coach"
+      }
+    ],
+    "metadata": {
+      "lastEdited": "2026-01-29T07:41:17.462640Z",
+      "source": "CrossFitApp.demo"
+    }
+  },
+  {
+    "id": 9,
+    "subscriptionActive": true,
+    "personalDetails": {
+      "firstName": "Pieter",
+      "lastName": "Peeters",
+      "email": "pieter.peeters@email.com",
+      "dateOfBirth": "1992-06-02",
+      "city": "Rotterdam"
+    },
+    "fitnessProfile": {
+      "level": "Elite",
+      "experienceYears": 9,
+      "primaryGoal": "Build strength",
+      "secondaryGoal": "Consistency",
+      "targetDate": "2026-12-04",
+      "preferredSessionTime": "Evening",
+      "workoutPlans": [
+        {
+          "planName": "Competition Prep",
+          "type": "Skills",
+          "sessionsPerWeek": 6,
+          "startDate": "2025-10-17",
+          "endDate": "2026-02-09"
+        },
+        {
+          "planName": "Strength Focus",
+          "type": "Conditioning",
+          "sessionsPerWeek": 3,
+          "startDate": "2026-02-10",
+          "endDate": "2026-05-20"
+        }
+      ]
+    },
+    "workoutHistory": [
+      {
+        "visitDate": "2026-01-31",
+        "startTime": "12:45",
+        "endTime": "14:14",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 89,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-11-25",
+        "startTime": "18:15",
+        "endTime": "19:27",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 72,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-11-24",
+        "startTime": "19:15",
+        "endTime": "20:04",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 49,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-11-19",
+        "startTime": "17:30",
+        "endTime": "18:59",
+        "sessionType": "Open workout",
+        "completed": false,
+        "durationMinutes": 89,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-11-19",
+        "startTime": "16:45",
+        "endTime": "18:05",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 80,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-11-10",
+        "startTime": "16:00",
+        "endTime": "16:55",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 55,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-10-13",
+        "startTime": "17:30",
+        "endTime": "18:53",
+        "sessionType": "Open gym",
+        "completed": false,
+        "durationMinutes": 83,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-10-03",
+        "startTime": "14:45",
+        "endTime": "15:47",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 62,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-09-01",
+        "startTime": "17:30",
+        "endTime": "18:43",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 73,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-08-22",
+        "startTime": "19:45",
+        "endTime": "20:35",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 50,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-08-15",
+        "startTime": "07:15",
+        "endTime": "08:15",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 60,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-08-12",
+        "startTime": "19:00",
+        "endTime": "20:28",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 88,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-08-05",
+        "startTime": "12:30",
+        "endTime": "13:47",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 77,
+        "workedOutWith": "Solo"
+      }
+    ],
+    "metadata": {
+      "lastEdited": "2026-01-23T07:41:17.462776Z",
+      "source": "CrossFitApp.demo"
+    }
+  },
+  {
+    "id": 10,
+    "subscriptionActive": true,
+    "personalDetails": {
+      "firstName": "Noa",
+      "lastName": "Smit",
+      "email": "noa.smit@email.com",
+      "dateOfBirth": "2005-04-05",
+      "city": "Utrecht"
+    },
+    "fitnessProfile": {
+      "level": "Advanced",
+      "experienceYears": 2,
+      "primaryGoal": "Compete",
+      "secondaryGoal": "Build strength",
+      "targetDate": "2026-11-26",
+      "preferredSessionTime": "Evening",
+      "workoutPlans": [
+        {
+          "planName": "Competition Prep",
+          "type": "Mixed",
+          "sessionsPerWeek": 2,
+          "startDate": "2025-10-01",
+          "endDate": "2026-01-08"
+        }
+      ]
+    },
+    "workoutHistory": [
+      {
+        "visitDate": "2025-12-24",
+        "startTime": "13:45",
+        "endTime": "14:52",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 67,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-12-22",
+        "startTime": "10:00",
+        "endTime": "11:20",
+        "sessionType": "Open workout",
+        "completed": false,
+        "durationMinutes": 80,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-11-19",
+        "startTime": "13:45",
+        "endTime": "14:37",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 52,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-11-05",
+        "startTime": "18:30",
+        "endTime": "19:15",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 45,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-10-25",
+        "startTime": "09:15",
+        "endTime": "10:04",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 49,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-10-18",
+        "startTime": "06:30",
+        "endTime": "07:45",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 75,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-10-17",
+        "startTime": "19:45",
+        "endTime": "21:00",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 75,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-10-07",
+        "startTime": "11:15",
+        "endTime": "12:44",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 89,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-10-05",
+        "startTime": "07:15",
+        "endTime": "08:31",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 76,
+        "workedOutWith": "Coach"
+      }
+    ],
+    "metadata": {
+      "lastEdited": "2026-01-16T07:41:17.462876Z",
+      "source": "CrossFitApp.demo"
+    }
+  },
+  {
+    "id": 11,
+    "subscriptionActive": true,
+    "personalDetails": {
+      "firstName": "Lucas",
+      "lastName": "Hendriksen",
+      "email": "lucas.hendriksen@email.com",
+      "dateOfBirth": "1996-10-19",
+      "city": "Almere"
+    },
+    "fitnessProfile": {
+      "level": "Elite",
+      "experienceYears": 9,
+      "primaryGoal": "Master gymnastics",
+      "secondaryGoal": "Build strength",
+      "targetDate": "2026-09-20",
+      "preferredSessionTime": "Morning",
+      "workoutPlans": [
+        {
+          "planName": "Competition Prep",
+          "type": "Skills",
+          "sessionsPerWeek": 4,
+          "startDate": "2025-11-23",
+          "endDate": "2026-01-26"
+        },
+        {
+          "planName": "Strength Focus",
+          "type": "Skills",
+          "sessionsPerWeek": 6,
+          "startDate": "2026-01-27",
+          "endDate": "2026-04-22"
+        }
+      ]
+    },
+    "workoutHistory": [
+      {
+        "visitDate": "2026-01-26",
+        "startTime": "19:45",
+        "endTime": "20:47",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 62,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2026-01-20",
+        "startTime": "11:00",
+        "endTime": "12:03",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 63,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-12-29",
+        "startTime": "07:30",
+        "endTime": "08:35",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 65,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-12-06",
+        "startTime": "16:15",
+        "endTime": "17:39",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 84,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-12-03",
+        "startTime": "13:30",
+        "endTime": "14:44",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 74,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-11-30",
+        "startTime": "14:45",
+        "endTime": "16:06",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 81,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-11-19",
+        "startTime": "16:15",
+        "endTime": "17:04",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 49,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-11-17",
+        "startTime": "17:30",
+        "endTime": "18:22",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 52,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-11-11",
+        "startTime": "16:45",
+        "endTime": "18:04",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 79,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-09-30",
+        "startTime": "07:15",
+        "endTime": "08:24",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 69,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-09-15",
+        "startTime": "11:30",
+        "endTime": "12:25",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 55,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-08-29",
+        "startTime": "17:45",
+        "endTime": "18:48",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 63,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-08-28",
+        "startTime": "19:45",
+        "endTime": "21:09",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 84,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-08-24",
+        "startTime": "07:00",
+        "endTime": "08:04",
+        "sessionType": "Open workout",
+        "completed": false,
+        "durationMinutes": 64,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-08-23",
+        "startTime": "16:30",
+        "endTime": "17:29",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 59,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-08-22",
+        "startTime": "17:00",
+        "endTime": "18:13",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 73,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-08-21",
+        "startTime": "12:30",
+        "endTime": "13:44",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 74,
+        "workedOutWith": "Partner"
+      }
+    ],
+    "metadata": {
+      "lastEdited": "2026-01-07T07:41:17.463050Z",
+      "source": "CrossFitApp.demo"
+    }
+  },
+  {
+    "id": 12,
+    "subscriptionActive": true,
+    "personalDetails": {
+      "firstName": "Rick",
+      "lastName": "Thijs",
+      "email": "rick.thijs@email.com",
+      "dateOfBirth": "2006-04-03",
+      "city": "Purmerend"
+    },
+    "fitnessProfile": {
+      "level": "Intermediate",
+      "experienceYears": 10,
+      "primaryGoal": "Master gymnastics",
+      "secondaryGoal": "Build strength",
+      "targetDate": "2026-05-30",
+      "preferredSessionTime": "Evening",
+      "workoutPlans": [
+        {
+          "planName": "Skills Mastery",
+          "type": "Mixed",
+          "sessionsPerWeek": 4,
+          "startDate": "2025-09-29",
+          "endDate": "2026-01-10"
+        }
+      ]
+    },
+    "workoutHistory": [
+      {
+        "visitDate": "2026-01-23",
+        "startTime": "17:30",
+        "endTime": "18:28",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 58,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2026-01-19",
+        "startTime": "18:30",
+        "endTime": "19:30",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 60,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2026-01-14",
+        "startTime": "19:15",
+        "endTime": "20:37",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 82,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-12-29",
+        "startTime": "14:30",
+        "endTime": "15:26",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 56,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-12-14",
+        "startTime": "07:45",
+        "endTime": "08:35",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 50,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-11-15",
+        "startTime": "13:00",
+        "endTime": "13:51",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 51,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-11-08",
+        "startTime": "18:15",
+        "endTime": "19:38",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 83,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-10-31",
+        "startTime": "07:30",
+        "endTime": "08:49",
+        "sessionType": "Open gym",
+        "completed": false,
+        "durationMinutes": 79,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-10-24",
+        "startTime": "13:30",
+        "endTime": "14:57",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 87,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-10-17",
+        "startTime": "16:00",
+        "endTime": "17:16",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 76,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-10-03",
+        "startTime": "06:30",
+        "endTime": "07:54",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 84,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-08-05",
+        "startTime": "10:45",
+        "endTime": "11:37",
+        "sessionType": "Skill",
+        "completed": false,
+        "durationMinutes": 52,
+        "workedOutWith": "Solo"
+      }
+    ],
+    "metadata": {
+      "lastEdited": "2026-01-27T07:41:17.463168Z",
+      "source": "CrossFitApp.demo"
+    }
+  },
+  {
+    "id": 13,
+    "subscriptionActive": true,
+    "personalDetails": {
+      "firstName": "Emma",
+      "lastName": "Hendriksen",
+      "email": "emma.hendriksen@email.com",
+      "dateOfBirth": "1981-10-04",
+      "city": "Den Haag"
+    },
+    "fitnessProfile": {
+      "level": "Beginner",
+      "experienceYears": 10,
+      "primaryGoal": "Consistency",
+      "secondaryGoal": "Consistency",
+      "targetDate": "2026-07-16",
+      "preferredSessionTime": "Morning",
+      "workoutPlans": [
+        {
+          "planName": "Strength Focus",
+          "type": "Mixed",
+          "sessionsPerWeek": 5,
+          "startDate": "2025-08-20",
+          "endDate": "2025-10-26"
+        },
+        {
+          "planName": "Strength Focus",
+          "type": "Mixed",
+          "sessionsPerWeek": 6,
+          "startDate": "2025-10-27",
+          "endDate": "2026-01-27"
+        }
+      ]
+    },
+    "workoutHistory": [
+      {
+        "visitDate": "2026-01-14",
+        "startTime": "07:00",
+        "endTime": "07:50",
+        "sessionType": "Open workout",
+        "completed": false,
+        "durationMinutes": 50,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2026-01-05",
+        "startTime": "15:15",
+        "endTime": "16:09",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 54,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-12-29",
+        "startTime": "14:00",
+        "endTime": "15:22",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 82,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-11-10",
+        "startTime": "15:15",
+        "endTime": "16:04",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 49,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-11-06",
+        "startTime": "19:45",
+        "endTime": "20:55",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 70,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-11-03",
+        "startTime": "19:30",
+        "endTime": "20:22",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 52,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-11-02",
+        "startTime": "19:45",
+        "endTime": "20:33",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 48,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-10-26",
+        "startTime": "15:30",
+        "endTime": "16:44",
+        "sessionType": "Open workout",
+        "completed": false,
+        "durationMinutes": 74,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-10-21",
+        "startTime": "12:00",
+        "endTime": "13:16",
+        "sessionType": "Open workout",
+        "completed": false,
+        "durationMinutes": 76,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-10-14",
+        "startTime": "11:30",
+        "endTime": "12:38",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 68,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-08-27",
+        "startTime": "06:30",
+        "endTime": "07:44",
+        "sessionType": "WOD",
+        "completed": false,
+        "durationMinutes": 74,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-08-17",
+        "startTime": "16:15",
+        "endTime": "17:27",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 72,
+        "workedOutWith": "Partner"
+      }
+    ],
+    "metadata": {
+      "lastEdited": "2026-01-04T07:41:17.463301Z",
+      "source": "CrossFitApp.demo"
+    }
+  },
+  {
+    "id": 14,
+    "subscriptionActive": true,
+    "personalDetails": {
+      "firstName": "Lisa",
+      "lastName": "van Hoorn",
+      "email": "lisa.vanhoorn@email.com",
+      "dateOfBirth": "1981-11-09",
+      "city": "Almere"
+    },
+    "fitnessProfile": {
+      "level": "Advanced",
+      "experienceYears": 2,
+      "primaryGoal": "Compete",
+      "secondaryGoal": "Consistency",
+      "targetDate": "2026-03-23",
+      "preferredSessionTime": "Evening",
+      "workoutPlans": [
+        {
+          "planName": "Skills Mastery",
+          "type": "Skills",
+          "sessionsPerWeek": 2,
+          "startDate": "2025-10-14",
+          "endDate": "2026-02-09"
+        }
+      ]
+    },
+    "workoutHistory": [
+      {
+        "visitDate": "2026-01-20",
+        "startTime": "09:45",
+        "endTime": "11:08",
+        "sessionType": "WOD",
+        "completed": false,
+        "durationMinutes": 83,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2026-01-08",
+        "startTime": "17:15",
+        "endTime": "18:24",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 69,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-12-22",
+        "startTime": "18:00",
+        "endTime": "19:28",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 88,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-12-08",
+        "startTime": "18:15",
+        "endTime": "19:16",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 61,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-11-04",
+        "startTime": "12:00",
+        "endTime": "13:03",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 63,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-10-29",
+        "startTime": "10:30",
+        "endTime": "11:51",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 81,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-09-29",
+        "startTime": "15:45",
+        "endTime": "16:56",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 71,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-09-26",
+        "startTime": "17:45",
+        "endTime": "18:41",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 56,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-09-09",
+        "startTime": "16:45",
+        "endTime": "17:34",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 49,
+        "workedOutWith": "Solo"
+      }
+    ],
+    "metadata": {
+      "lastEdited": "2026-01-15T07:41:17.463395Z",
+      "source": "CrossFitApp.demo"
+    }
+  },
+  {
+    "id": 15,
+    "subscriptionActive": true,
+    "personalDetails": {
+      "firstName": "Lucas",
+      "lastName": "Peeters",
+      "email": "lucas.peeters@email.com",
+      "dateOfBirth": "1980-03-24",
+      "city": "Maastricht"
+    },
+    "fitnessProfile": {
+      "level": "Beginner",
+      "experienceYears": 5,
+      "primaryGoal": "Lose weight",
+      "secondaryGoal": "Compete",
+      "targetDate": "2027-01-25",
+      "preferredSessionTime": "Evening",
+      "workoutPlans": [
+        {
+          "planName": "Competition Prep",
+          "type": "Mixed",
+          "sessionsPerWeek": 5,
+          "startDate": "2025-10-13",
+          "endDate": "2026-01-17"
+        }
+      ]
+    },
+    "workoutHistory": [
+      {
+        "visitDate": "2026-01-26",
+        "startTime": "11:15",
+        "endTime": "12:39",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 84,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2026-01-22",
+        "startTime": "06:30",
+        "endTime": "07:33",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 63,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2026-01-21",
+        "startTime": "09:45",
+        "endTime": "10:58",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 73,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2026-01-15",
+        "startTime": "11:00",
+        "endTime": "12:20",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 80,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2026-01-12",
+        "startTime": "14:00",
+        "endTime": "15:18",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 78,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2026-01-09",
+        "startTime": "12:00",
+        "endTime": "13:00",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 60,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2026-01-05",
+        "startTime": "18:30",
+        "endTime": "20:00",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 90,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-12-24",
+        "startTime": "13:00",
+        "endTime": "14:15",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 75,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-12-18",
+        "startTime": "15:15",
+        "endTime": "16:41",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 86,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-11-10",
+        "startTime": "15:45",
+        "endTime": "17:02",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 77,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-11-07",
+        "startTime": "07:15",
+        "endTime": "08:22",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 67,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-11-03",
+        "startTime": "17:15",
+        "endTime": "18:15",
+        "sessionType": "WOD",
+        "completed": false,
+        "durationMinutes": 60,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-10-24",
+        "startTime": "12:30",
+        "endTime": "13:58",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 88,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-10-22",
+        "startTime": "19:30",
+        "endTime": "20:36",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 66,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-10-05",
+        "startTime": "18:45",
+        "endTime": "20:13",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 88,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-09-02",
+        "startTime": "06:30",
+        "endTime": "07:47",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 77,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-08-27",
+        "startTime": "15:45",
+        "endTime": "16:59",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 74,
+        "workedOutWith": "Team"
+      }
+    ],
+    "metadata": {
+      "lastEdited": "2026-01-27T07:41:17.463584Z",
+      "source": "CrossFitApp.demo"
+    }
+  },
+  {
+    "id": 16,
+    "subscriptionActive": true,
+    "personalDetails": {
+      "firstName": "Paul",
+      "lastName": "Hendriksen",
+      "email": "paul.hendriksen@email.com",
+      "dateOfBirth": "1989-02-19",
+      "city": "Delft"
+    },
+    "fitnessProfile": {
+      "level": "Advanced",
+      "experienceYears": 4,
+      "primaryGoal": "Compete",
+      "secondaryGoal": "Build strength",
+      "targetDate": "2026-09-09",
+      "preferredSessionTime": "Morning",
+      "workoutPlans": [
+        {
+          "planName": "Competition Prep",
+          "type": "Skills",
+          "sessionsPerWeek": 2,
+          "startDate": "2025-08-20",
+          "endDate": "2025-10-24"
+        }
+      ]
+    },
+    "workoutHistory": [
+      {
+        "visitDate": "2026-01-12",
+        "startTime": "10:00",
+        "endTime": "11:17",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 77,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-12-21",
+        "startTime": "19:15",
+        "endTime": "20:38",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 83,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-12-08",
+        "startTime": "11:45",
+        "endTime": "12:42",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 57,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-11-20",
+        "startTime": "07:15",
+        "endTime": "08:17",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 62,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-10-29",
+        "startTime": "16:45",
+        "endTime": "17:59",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 74,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-10-12",
+        "startTime": "07:15",
+        "endTime": "08:28",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 73,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-10-11",
+        "startTime": "06:45",
+        "endTime": "07:53",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 68,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-10-09",
+        "startTime": "09:15",
+        "endTime": "10:19",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 64,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-09-01",
+        "startTime": "12:15",
+        "endTime": "13:10",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 55,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-08-20",
+        "startTime": "13:30",
+        "endTime": "14:50",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 80,
+        "workedOutWith": "Solo"
+      }
+    ],
+    "metadata": {
+      "lastEdited": "2026-01-30T07:41:17.463689Z",
+      "source": "CrossFitApp.demo"
+    }
+  },
+  {
+    "id": 17,
+    "subscriptionActive": true,
+    "personalDetails": {
+      "firstName": "Lucas",
+      "lastName": "Kool",
+      "email": "lucas.kool@email.com",
+      "dateOfBirth": "1983-11-27",
+      "city": "Den Haag"
+    },
+    "fitnessProfile": {
+      "level": "Intermediate",
+      "experienceYears": 1,
+      "primaryGoal": "Improve endurance",
+      "secondaryGoal": "Lose weight",
+      "targetDate": "2026-10-12",
+      "preferredSessionTime": "Morning",
+      "workoutPlans": [
+        {
+          "planName": "Endurance Builder",
+          "type": "Conditioning",
+          "sessionsPerWeek": 2,
+          "startDate": "2025-10-08",
+          "endDate": "2026-01-26"
+        }
+      ]
+    },
+    "workoutHistory": [
+      {
+        "visitDate": "2026-01-20",
+        "startTime": "16:45",
+        "endTime": "17:53",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 68,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2026-01-14",
+        "startTime": "11:15",
+        "endTime": "12:42",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 87,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2026-01-11",
+        "startTime": "06:30",
+        "endTime": "07:28",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 58,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2026-01-11",
+        "startTime": "12:15",
+        "endTime": "13:34",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 79,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2026-01-03",
+        "startTime": "18:30",
+        "endTime": "19:30",
+        "sessionType": "Open gym",
+        "completed": false,
+        "durationMinutes": 60,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-12-28",
+        "startTime": "06:30",
+        "endTime": "07:49",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 79,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-12-20",
+        "startTime": "17:45",
+        "endTime": "18:52",
+        "sessionType": "Open workout",
+        "completed": false,
+        "durationMinutes": 67,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-11-19",
+        "startTime": "11:00",
+        "endTime": "12:26",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 86,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-11-12",
+        "startTime": "10:45",
+        "endTime": "12:04",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 79,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-11-09",
+        "startTime": "16:30",
+        "endTime": "17:34",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 64,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-10-16",
+        "startTime": "16:45",
+        "endTime": "17:34",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 49,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-10-14",
+        "startTime": "06:30",
+        "endTime": "07:30",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 60,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-10-12",
+        "startTime": "12:45",
+        "endTime": "13:54",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 69,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-10-06",
+        "startTime": "06:30",
+        "endTime": "07:27",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 57,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-09-19",
+        "startTime": "11:00",
+        "endTime": "12:18",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 78,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-09-01",
+        "startTime": "14:00",
+        "endTime": "15:25",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 85,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-08-27",
+        "startTime": "12:30",
+        "endTime": "13:55",
+        "sessionType": "WOD",
+        "completed": false,
+        "durationMinutes": 85,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-08-09",
+        "startTime": "13:45",
+        "endTime": "15:10",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 85,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-08-07",
+        "startTime": "13:30",
+        "endTime": "14:48",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 78,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-08-06",
+        "startTime": "19:15",
+        "endTime": "20:45",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 90,
+        "workedOutWith": "Solo"
+      }
+    ],
+    "metadata": {
+      "lastEdited": "2026-01-20T07:41:17.463871Z",
+      "source": "CrossFitApp.demo"
+    }
+  },
+  {
+    "id": 18,
+    "subscriptionActive": true,
+    "personalDetails": {
+      "firstName": "Bas",
+      "lastName": "de Wit",
+      "email": "bas.dewit@email.com",
+      "dateOfBirth": "1979-09-16",
+      "city": "Utrecht"
+    },
+    "fitnessProfile": {
+      "level": "Advanced",
+      "experienceYears": 12,
+      "primaryGoal": "Master gymnastics",
+      "secondaryGoal": "Consistency",
+      "targetDate": "2026-08-25",
+      "preferredSessionTime": "Evening",
+      "workoutPlans": [
+        {
+          "planName": "Competition Prep",
+          "type": "Strength",
+          "sessionsPerWeek": 6,
+          "startDate": "2025-09-30",
+          "endDate": "2025-12-22"
+        }
+      ]
+    },
+    "workoutHistory": [
+      {
+        "visitDate": "2026-01-09",
+        "startTime": "18:30",
+        "endTime": "19:57",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 87,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-12-31",
+        "startTime": "09:15",
+        "endTime": "10:15",
+        "sessionType": "Open workout",
+        "completed": false,
+        "durationMinutes": 60,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-12-29",
+        "startTime": "12:00",
+        "endTime": "12:52",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 52,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-12-12",
+        "startTime": "16:30",
+        "endTime": "17:23",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 53,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-12-11",
+        "startTime": "07:15",
+        "endTime": "08:04",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 49,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-11-16",
+        "startTime": "19:15",
+        "endTime": "20:45",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 90,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-11-12",
+        "startTime": "16:30",
+        "endTime": "17:30",
+        "sessionType": "WOD",
+        "completed": false,
+        "durationMinutes": 60,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-11-10",
+        "startTime": "17:15",
+        "endTime": "18:22",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 67,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-10-29",
+        "startTime": "11:45",
+        "endTime": "12:34",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 49,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-10-04",
+        "startTime": "18:15",
+        "endTime": "19:39",
+        "sessionType": "WOD",
+        "completed": false,
+        "durationMinutes": 84,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-10-01",
+        "startTime": "14:45",
+        "endTime": "15:56",
+        "sessionType": "WOD",
+        "completed": false,
+        "durationMinutes": 71,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-09-26",
+        "startTime": "14:45",
+        "endTime": "16:05",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 80,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-09-25",
+        "startTime": "16:15",
+        "endTime": "17:37",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 82,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-09-09",
+        "startTime": "06:00",
+        "endTime": "06:50",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 50,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-08-20",
+        "startTime": "07:45",
+        "endTime": "08:59",
+        "sessionType": "Open gym",
+        "completed": false,
+        "durationMinutes": 74,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-08-20",
+        "startTime": "10:45",
+        "endTime": "11:45",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 60,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-08-18",
+        "startTime": "09:45",
+        "endTime": "11:09",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 84,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-08-08",
+        "startTime": "06:15",
+        "endTime": "07:28",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 73,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-08-04",
+        "startTime": "13:15",
+        "endTime": "14:39",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 84,
+        "workedOutWith": "Partner"
+      }
+    ],
+    "metadata": {
+      "lastEdited": "2026-01-21T07:41:17.464042Z",
+      "source": "CrossFitApp.demo"
+    }
+  },
+  {
+    "id": 19,
+    "subscriptionActive": true,
+    "personalDetails": {
+      "firstName": "Bas",
+      "lastName": "Mertens",
+      "email": "bas.mertens@email.com",
+      "dateOfBirth": "1991-10-31",
+      "city": "Delft"
+    },
+    "fitnessProfile": {
+      "level": "Elite",
+      "experienceYears": 12,
+      "primaryGoal": "Lose weight",
+      "secondaryGoal": "Master gymnastics",
+      "targetDate": "2026-10-31",
+      "preferredSessionTime": "Morning",
+      "workoutPlans": [
+        {
+          "planName": "Endurance Builder",
+          "type": "Mixed",
+          "sessionsPerWeek": 2,
+          "startDate": "2025-12-05",
+          "endDate": "2026-02-23"
+        }
+      ]
+    },
+    "workoutHistory": [
+      {
+        "visitDate": "2026-01-20",
+        "startTime": "12:00",
+        "endTime": "13:21",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 81,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2026-01-19",
+        "startTime": "10:45",
+        "endTime": "12:08",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 83,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2026-01-13",
+        "startTime": "12:45",
+        "endTime": "14:05",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 80,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2026-01-04",
+        "startTime": "12:15",
+        "endTime": "13:16",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 61,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-12-30",
+        "startTime": "07:45",
+        "endTime": "08:53",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 68,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-12-26",
+        "startTime": "07:00",
+        "endTime": "08:03",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 63,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-12-26",
+        "startTime": "09:45",
+        "endTime": "11:02",
+        "sessionType": "WOD",
+        "completed": false,
+        "durationMinutes": 77,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-11-29",
+        "startTime": "19:15",
+        "endTime": "20:20",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 65,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-11-09",
+        "startTime": "15:30",
+        "endTime": "16:25",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 55,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-11-07",
+        "startTime": "18:45",
+        "endTime": "20:03",
+        "sessionType": "Open workout",
+        "completed": false,
+        "durationMinutes": 78,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-10-23",
+        "startTime": "14:45",
+        "endTime": "15:45",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 60,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-09-26",
+        "startTime": "14:45",
+        "endTime": "16:01",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 76,
+        "workedOutWith": "Solo"
+      }
+    ],
+    "metadata": {
+      "lastEdited": "2026-01-13T07:41:17.464676Z",
+      "source": "CrossFitApp.demo"
+    }
+  },
+  {
+    "id": 20,
+    "subscriptionActive": true,
+    "personalDetails": {
+      "firstName": "Mila",
+      "lastName": "Kool",
+      "email": "mila.kool@email.com",
+      "dateOfBirth": "2004-08-23",
+      "city": "Arnhem"
+    },
+    "fitnessProfile": {
+      "level": "Intermediate",
+      "experienceYears": 11,
+      "primaryGoal": "Improve endurance",
+      "secondaryGoal": "Build strength",
+      "targetDate": "2026-04-22",
+      "preferredSessionTime": "Evening",
+      "workoutPlans": [
+        {
+          "planName": "Skills Mastery",
+          "type": "Strength",
+          "sessionsPerWeek": 6,
+          "startDate": "2025-09-17",
+          "endDate": "2025-12-23"
+        }
+      ]
+    },
+    "workoutHistory": [
+      {
+        "visitDate": "2026-01-23",
+        "startTime": "15:00",
+        "endTime": "15:57",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 57,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2026-01-18",
+        "startTime": "15:45",
+        "endTime": "16:40",
+        "sessionType": "Open workout",
+        "completed": false,
+        "durationMinutes": 55,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-12-24",
+        "startTime": "12:15",
+        "endTime": "13:26",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 71,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-11-21",
+        "startTime": "14:30",
+        "endTime": "15:29",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 59,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-11-19",
+        "startTime": "07:45",
+        "endTime": "08:55",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 70,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-11-18",
+        "startTime": "06:30",
+        "endTime": "08:00",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 90,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-09-19",
+        "startTime": "12:30",
+        "endTime": "13:26",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 56,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-09-14",
+        "startTime": "11:30",
+        "endTime": "12:54",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 84,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-09-10",
+        "startTime": "17:30",
+        "endTime": "18:23",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 53,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-08-17",
+        "startTime": "10:45",
+        "endTime": "11:43",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 58,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-08-08",
+        "startTime": "17:45",
+        "endTime": "18:50",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 65,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-08-04",
+        "startTime": "08:15",
+        "endTime": "09:35",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 80,
+        "workedOutWith": "Partner"
+      }
+    ],
+    "metadata": {
+      "lastEdited": "2026-01-24T07:41:17.464811Z",
+      "source": "CrossFitApp.demo"
+    }
+  },
+  {
+    "id": 21,
+    "subscriptionActive": true,
+    "personalDetails": {
+      "firstName": "Kees",
+      "lastName": "Raadmakers",
+      "email": "kees.raadmakers@email.com",
+      "dateOfBirth": "1993-02-27",
+      "city": "Utrecht"
+    },
+    "fitnessProfile": {
+      "level": "Elite",
+      "experienceYears": 11,
+      "primaryGoal": "Lose weight",
+      "secondaryGoal": "Consistency",
+      "targetDate": "2026-08-08",
+      "preferredSessionTime": "Afternoon",
+      "workoutPlans": [
+        {
+          "planName": "Endurance Builder",
+          "type": "Mixed",
+          "sessionsPerWeek": 5,
+          "startDate": "2025-11-27",
+          "endDate": "2026-01-26"
+        }
+      ]
+    },
+    "workoutHistory": [
+      {
+        "visitDate": "2025-12-27",
+        "startTime": "13:30",
+        "endTime": "14:30",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 60,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-11-26",
+        "startTime": "16:30",
+        "endTime": "17:59",
+        "sessionType": "Skill",
+        "completed": false,
+        "durationMinutes": 89,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-11-20",
+        "startTime": "13:45",
+        "endTime": "14:38",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 53,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-11-19",
+        "startTime": "11:30",
+        "endTime": "12:56",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 86,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-11-18",
+        "startTime": "06:00",
+        "endTime": "07:04",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 64,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-11-08",
+        "startTime": "08:45",
+        "endTime": "10:11",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 86,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-11-06",
+        "startTime": "18:30",
+        "endTime": "19:51",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 81,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-10-17",
+        "startTime": "19:15",
+        "endTime": "20:02",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 47,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-10-14",
+        "startTime": "14:30",
+        "endTime": "15:20",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 50,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-10-09",
+        "startTime": "18:30",
+        "endTime": "19:36",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 66,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-08-18",
+        "startTime": "15:15",
+        "endTime": "16:34",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 79,
+        "workedOutWith": "Team"
+      }
+    ],
+    "metadata": {
+      "lastEdited": "2026-01-17T07:41:17.464924Z",
+      "source": "CrossFitApp.demo"
+    }
+  },
+  {
+    "id": 22,
+    "subscriptionActive": true,
+    "personalDetails": {
+      "firstName": "Sarah",
+      "lastName": "Brouwer",
+      "email": "sarah.brouwer@email.com",
+      "dateOfBirth": "1984-04-26",
+      "city": "Groningen"
+    },
+    "fitnessProfile": {
+      "level": "Intermediate",
+      "experienceYears": 12,
+      "primaryGoal": "Lose weight",
+      "secondaryGoal": "Master gymnastics",
+      "targetDate": "2026-12-22",
+      "preferredSessionTime": "Afternoon",
+      "workoutPlans": [
+        {
+          "planName": "Endurance Builder",
+          "type": "Mixed",
+          "sessionsPerWeek": 3,
+          "startDate": "2025-11-06",
+          "endDate": "2026-01-19"
+        }
+      ]
+    },
+    "workoutHistory": [
+      {
+        "visitDate": "2026-01-23",
+        "startTime": "18:45",
+        "endTime": "20:09",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 84,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2026-01-17",
+        "startTime": "13:15",
+        "endTime": "14:32",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 77,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2026-01-06",
+        "startTime": "15:00",
+        "endTime": "16:13",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 73,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2026-01-02",
+        "startTime": "16:15",
+        "endTime": "17:45",
+        "sessionType": "Open workout",
+        "completed": false,
+        "durationMinutes": 90,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-12-28",
+        "startTime": "18:45",
+        "endTime": "19:53",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 68,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-12-07",
+        "startTime": "15:00",
+        "endTime": "15:47",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 47,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-10-27",
+        "startTime": "07:15",
+        "endTime": "08:41",
+        "sessionType": "Open gym",
+        "completed": false,
+        "durationMinutes": 86,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-10-21",
+        "startTime": "13:15",
+        "endTime": "14:34",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 79,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-10-17",
+        "startTime": "17:45",
+        "endTime": "19:04",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 79,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-10-06",
+        "startTime": "11:15",
+        "endTime": "12:17",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 62,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-09-19",
+        "startTime": "13:30",
+        "endTime": "14:19",
+        "sessionType": "WOD",
+        "completed": false,
+        "durationMinutes": 49,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-09-18",
+        "startTime": "08:15",
+        "endTime": "09:00",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 45,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-09-15",
+        "startTime": "06:00",
+        "endTime": "07:15",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 75,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-09-10",
+        "startTime": "13:30",
+        "endTime": "14:16",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 46,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-09-07",
+        "startTime": "14:15",
+        "endTime": "15:10",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 55,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-08-12",
+        "startTime": "17:45",
+        "endTime": "19:04",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 79,
+        "workedOutWith": "Team"
+      }
+    ],
+    "metadata": {
+      "lastEdited": "2026-01-27T07:41:17.465073Z",
+      "source": "CrossFitApp.demo"
+    }
+  },
+  {
+    "id": 23,
+    "subscriptionActive": true,
+    "personalDetails": {
+      "firstName": "David",
+      "lastName": "Kool",
+      "email": "david.kool@email.com",
+      "dateOfBirth": "1986-01-02",
+      "city": "Delft"
+    },
+    "fitnessProfile": {
+      "level": "Advanced",
+      "experienceYears": 5,
+      "primaryGoal": "Master gymnastics",
+      "secondaryGoal": "Master gymnastics",
+      "targetDate": "2026-11-19",
+      "preferredSessionTime": "Evening",
+      "workoutPlans": [
+        {
+          "planName": "Endurance Builder",
+          "type": "Mixed",
+          "sessionsPerWeek": 4,
+          "startDate": "2025-11-26",
+          "endDate": "2026-03-08"
+        }
+      ]
+    },
+    "workoutHistory": [
+      {
+        "visitDate": "2026-01-18",
+        "startTime": "10:45",
+        "endTime": "12:13",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 88,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-12-24",
+        "startTime": "10:45",
+        "endTime": "11:41",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 56,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-11-30",
+        "startTime": "17:15",
+        "endTime": "18:25",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 70,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-11-16",
+        "startTime": "19:15",
+        "endTime": "20:29",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 74,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-11-15",
+        "startTime": "06:15",
+        "endTime": "07:12",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 57,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-09-11",
+        "startTime": "14:15",
+        "endTime": "15:24",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 69,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-09-03",
+        "startTime": "17:15",
+        "endTime": "18:30",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 75,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-08-24",
+        "startTime": "16:45",
+        "endTime": "18:05",
+        "sessionType": "Open workout",
+        "completed": false,
+        "durationMinutes": 80,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-08-20",
+        "startTime": "16:45",
+        "endTime": "18:03",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 78,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-08-19",
+        "startTime": "07:45",
+        "endTime": "08:53",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 68,
+        "workedOutWith": "Team"
+      }
+    ],
+    "metadata": {
+      "lastEdited": "2026-01-19T07:41:17.465173Z",
+      "source": "CrossFitApp.demo"
+    }
+  },
+  {
+    "id": 24,
+    "subscriptionActive": true,
+    "personalDetails": {
+      "firstName": "Stefan",
+      "lastName": "Janssen",
+      "email": "stefan.janssen@email.com",
+      "dateOfBirth": "1975-03-14",
+      "city": "Utrecht"
+    },
+    "fitnessProfile": {
+      "level": "Beginner",
+      "experienceYears": 4,
+      "primaryGoal": "Lose weight",
+      "secondaryGoal": "Compete",
+      "targetDate": "2026-09-09",
+      "preferredSessionTime": "Morning",
+      "workoutPlans": [
+        {
+          "planName": "Skills Mastery",
+          "type": "Conditioning",
+          "sessionsPerWeek": 4,
+          "startDate": "2025-09-03",
+          "endDate": "2025-12-20"
+        }
+      ]
+    },
+    "workoutHistory": [
+      {
+        "visitDate": "2025-12-15",
+        "startTime": "14:00",
+        "endTime": "15:18",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 78,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-11-17",
+        "startTime": "08:15",
+        "endTime": "09:21",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 66,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-10-06",
+        "startTime": "08:30",
+        "endTime": "09:25",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 55,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-09-26",
+        "startTime": "14:30",
+        "endTime": "15:31",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 61,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-09-09",
+        "startTime": "19:15",
+        "endTime": "20:09",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 54,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-08-13",
+        "startTime": "06:00",
+        "endTime": "07:11",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 71,
+        "workedOutWith": "Team"
+      }
+    ],
+    "metadata": {
+      "lastEdited": "2026-01-29T07:41:17.465253Z",
+      "source": "CrossFitApp.demo"
+    }
+  },
+  {
+    "id": 25,
+    "subscriptionActive": true,
+    "personalDetails": {
+      "firstName": "Sophia",
+      "lastName": "Vijverberg",
+      "email": "sophia.vijverberg@email.com",
+      "dateOfBirth": "1996-09-08",
+      "city": "Purmerend"
+    },
+    "fitnessProfile": {
+      "level": "Elite",
+      "experienceYears": 7,
+      "primaryGoal": "Improve endurance",
+      "secondaryGoal": "Consistency",
+      "targetDate": "2026-12-26",
+      "preferredSessionTime": "Afternoon",
+      "workoutPlans": [
+        {
+          "planName": "Strength Focus",
+          "type": "Mixed",
+          "sessionsPerWeek": 2,
+          "startDate": "2025-08-30",
+          "endDate": "2025-10-30"
+        }
+      ]
+    },
+    "workoutHistory": [
+      {
+        "visitDate": "2026-01-12",
+        "startTime": "10:15",
+        "endTime": "11:36",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 81,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2026-01-08",
+        "startTime": "12:45",
+        "endTime": "13:54",
+        "sessionType": "Open workout",
+        "completed": false,
+        "durationMinutes": 69,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2026-01-04",
+        "startTime": "07:15",
+        "endTime": "08:15",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 60,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-12-17",
+        "startTime": "19:30",
+        "endTime": "20:16",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 46,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-11-23",
+        "startTime": "06:00",
+        "endTime": "07:28",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 88,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-11-05",
+        "startTime": "15:45",
+        "endTime": "16:50",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 65,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-11-02",
+        "startTime": "10:45",
+        "endTime": "11:35",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 50,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-09-25",
+        "startTime": "17:30",
+        "endTime": "18:18",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 48,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-09-16",
+        "startTime": "10:00",
+        "endTime": "11:17",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 77,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-09-09",
+        "startTime": "09:15",
+        "endTime": "10:19",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 64,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-09-09",
+        "startTime": "19:00",
+        "endTime": "20:18",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 78,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-08-11",
+        "startTime": "14:30",
+        "endTime": "15:39",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 69,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-08-05",
+        "startTime": "08:00",
+        "endTime": "09:16",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 76,
+        "workedOutWith": "Coach"
+      }
+    ],
+    "metadata": {
+      "lastEdited": "2026-01-16T07:41:17.465375Z",
+      "source": "CrossFitApp.demo"
+    }
+  },
+  {
+    "id": 26,
+    "subscriptionActive": true,
+    "personalDetails": {
+      "firstName": "Pieter",
+      "lastName": "de Wit",
+      "email": "pieter.dewit@email.com",
+      "dateOfBirth": "1982-11-02",
+      "city": "Tilburg"
+    },
+    "fitnessProfile": {
+      "level": "Beginner",
+      "experienceYears": 2,
+      "primaryGoal": "Improve endurance",
+      "secondaryGoal": "Consistency",
+      "targetDate": "2026-08-30",
+      "preferredSessionTime": "Morning",
+      "workoutPlans": [
+        {
+          "planName": "Endurance Builder",
+          "type": "Strength",
+          "sessionsPerWeek": 2,
+          "startDate": "2025-10-18",
+          "endDate": "2026-02-06"
+        }
+      ]
+    },
+    "workoutHistory": [
+      {
+        "visitDate": "2026-01-10",
+        "startTime": "17:15",
+        "endTime": "18:36",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 81,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-12-27",
+        "startTime": "10:30",
+        "endTime": "11:32",
+        "sessionType": "Open workout",
+        "completed": false,
+        "durationMinutes": 62,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-11-28",
+        "startTime": "09:45",
+        "endTime": "11:08",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 83,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-11-15",
+        "startTime": "06:45",
+        "endTime": "07:51",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 66,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-11-14",
+        "startTime": "13:30",
+        "endTime": "14:32",
+        "sessionType": "WOD",
+        "completed": false,
+        "durationMinutes": 62,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-10-30",
+        "startTime": "07:15",
+        "endTime": "08:37",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 82,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-10-19",
+        "startTime": "16:45",
+        "endTime": "17:38",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 53,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-10-15",
+        "startTime": "18:45",
+        "endTime": "19:34",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 49,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-10-13",
+        "startTime": "13:45",
+        "endTime": "14:36",
+        "sessionType": "WOD",
+        "completed": false,
+        "durationMinutes": 51,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-10-12",
+        "startTime": "10:45",
+        "endTime": "11:49",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 64,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-10-11",
+        "startTime": "11:45",
+        "endTime": "13:11",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 86,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-10-05",
+        "startTime": "17:15",
+        "endTime": "18:28",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 73,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-10-01",
+        "startTime": "11:15",
+        "endTime": "12:25",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 70,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-09-06",
+        "startTime": "18:15",
+        "endTime": "19:20",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 65,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-09-04",
+        "startTime": "12:45",
+        "endTime": "14:04",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 79,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-09-01",
+        "startTime": "15:30",
+        "endTime": "16:39",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 69,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-08-22",
+        "startTime": "08:45",
+        "endTime": "09:50",
+        "sessionType": "Open gym",
+        "completed": false,
+        "durationMinutes": 65,
+        "workedOutWith": "Solo"
+      }
+    ],
+    "metadata": {
+      "lastEdited": "2026-01-09T07:41:17.465560Z",
+      "source": "CrossFitApp.demo"
+    }
+  },
+  {
+    "id": 27,
+    "subscriptionActive": false,
+    "personalDetails": {
+      "firstName": "Tom",
+      "lastName": "Vijverberg",
+      "email": "tom.vijverberg@email.com",
+      "dateOfBirth": "1974-03-03",
+      "city": "Utrecht"
+    },
+    "fitnessProfile": {
+      "level": "Advanced",
+      "experienceYears": 5,
+      "primaryGoal": "Master gymnastics",
+      "secondaryGoal": "Compete",
+      "targetDate": "2026-06-15",
+      "preferredSessionTime": "Afternoon",
+      "workoutPlans": []
+    },
+    "workoutHistory": [
+      {
+        "visitDate": "2025-11-08",
+        "startTime": "18:45",
+        "endTime": "19:36",
+        "sessionType": "WOD",
+        "completed": false,
+        "durationMinutes": 51,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-11-04",
+        "startTime": "06:45",
+        "endTime": "07:36",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 51,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-09-23",
+        "startTime": "17:15",
+        "endTime": "18:28",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 73,
+        "workedOutWith": "Team"
+      }
+    ],
+    "metadata": {
+      "lastEdited": "2026-01-28T07:41:17.465608Z",
+      "source": "CrossFitApp.demo"
+    }
+  },
+  {
+    "id": 28,
+    "subscriptionActive": true,
+    "personalDetails": {
+      "firstName": "Julia",
+      "lastName": "Mertens",
+      "email": "julia.mertens@email.com",
+      "dateOfBirth": "1979-05-11",
+      "city": "Tilburg"
+    },
+    "fitnessProfile": {
+      "level": "Beginner",
+      "experienceYears": 11,
+      "primaryGoal": "Improve endurance",
+      "secondaryGoal": "Master gymnastics",
+      "targetDate": "2026-05-01",
+      "preferredSessionTime": "Morning",
+      "workoutPlans": [
+        {
+          "planName": "Competition Prep",
+          "type": "Skills",
+          "sessionsPerWeek": 2,
+          "startDate": "2025-09-11",
+          "endDate": "2025-12-26"
+        }
+      ]
+    },
+    "workoutHistory": [
+      {
+        "visitDate": "2026-01-26",
+        "startTime": "19:30",
+        "endTime": "20:56",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 86,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-12-10",
+        "startTime": "10:00",
+        "endTime": "11:21",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 81,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-11-30",
+        "startTime": "14:15",
+        "endTime": "15:35",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 80,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-11-03",
+        "startTime": "11:45",
+        "endTime": "13:09",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 84,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-10-30",
+        "startTime": "11:15",
+        "endTime": "12:29",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 74,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-10-22",
+        "startTime": "06:15",
+        "endTime": "07:28",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 73,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-10-05",
+        "startTime": "09:45",
+        "endTime": "11:10",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 85,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-09-18",
+        "startTime": "16:30",
+        "endTime": "17:53",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 83,
+        "workedOutWith": "Solo"
+      }
+    ],
+    "metadata": {
+      "lastEdited": "2026-01-02T07:41:17.465696Z",
+      "source": "CrossFitApp.demo"
+    }
+  },
+  {
+    "id": 29,
+    "subscriptionActive": true,
+    "personalDetails": {
+      "firstName": "Anna",
+      "lastName": "Janssen",
+      "email": "anna.janssen@email.com",
+      "dateOfBirth": "1985-01-10",
+      "city": "Purmerend"
+    },
+    "fitnessProfile": {
+      "level": "Beginner",
+      "experienceYears": 12,
+      "primaryGoal": "Build strength",
+      "secondaryGoal": "Consistency",
+      "targetDate": "2026-10-22",
+      "preferredSessionTime": "Afternoon",
+      "workoutPlans": [
+        {
+          "planName": "Competition Prep",
+          "type": "Mixed",
+          "sessionsPerWeek": 6,
+          "startDate": "2025-11-26",
+          "endDate": "2026-02-26"
+        }
+      ]
+    },
+    "workoutHistory": [
+      {
+        "visitDate": "2026-01-29",
+        "startTime": "13:15",
+        "endTime": "14:12",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 57,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2026-01-16",
+        "startTime": "15:30",
+        "endTime": "16:49",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 79,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-12-28",
+        "startTime": "18:45",
+        "endTime": "19:33",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 48,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-12-19",
+        "startTime": "18:45",
+        "endTime": "20:06",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 81,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-11-19",
+        "startTime": "08:15",
+        "endTime": "09:20",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 65,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-11-16",
+        "startTime": "19:00",
+        "endTime": "20:13",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 73,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-11-10",
+        "startTime": "17:30",
+        "endTime": "18:33",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 63,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-10-19",
+        "startTime": "16:45",
+        "endTime": "17:56",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 71,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-10-15",
+        "startTime": "08:45",
+        "endTime": "10:10",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 85,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-10-11",
+        "startTime": "14:15",
+        "endTime": "15:27",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 72,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-10-11",
+        "startTime": "19:00",
+        "endTime": "20:00",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 60,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-10-08",
+        "startTime": "07:00",
+        "endTime": "08:10",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 70,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-09-09",
+        "startTime": "06:15",
+        "endTime": "07:18",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 63,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-09-07",
+        "startTime": "07:30",
+        "endTime": "08:49",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 79,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-08-28",
+        "startTime": "16:45",
+        "endTime": "17:40",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 55,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-08-11",
+        "startTime": "12:45",
+        "endTime": "13:39",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 54,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-08-05",
+        "startTime": "19:15",
+        "endTime": "20:15",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 60,
+        "workedOutWith": "Team"
+      }
+    ],
+    "metadata": {
+      "lastEdited": "2026-01-17T07:41:17.465853Z",
+      "source": "CrossFitApp.demo"
+    }
+  },
+  {
+    "id": 30,
+    "subscriptionActive": true,
+    "personalDetails": {
+      "firstName": "Laura",
+      "lastName": "Mertens",
+      "email": "laura.mertens@email.com",
+      "dateOfBirth": "2004-06-21",
+      "city": "Den Haag"
+    },
+    "fitnessProfile": {
+      "level": "Intermediate",
+      "experienceYears": 8,
+      "primaryGoal": "Compete",
+      "secondaryGoal": "Build strength",
+      "targetDate": "2026-07-03",
+      "preferredSessionTime": "Evening",
+      "workoutPlans": [
+        {
+          "planName": "Endurance Builder",
+          "type": "Mixed",
+          "sessionsPerWeek": 3,
+          "startDate": "2025-08-18",
+          "endDate": "2025-11-11"
+        }
+      ]
+    },
+    "workoutHistory": [
+      {
+        "visitDate": "2026-01-20",
+        "startTime": "07:45",
+        "endTime": "08:31",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 46,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2026-01-12",
+        "startTime": "08:15",
+        "endTime": "09:33",
+        "sessionType": "Open workout",
+        "completed": false,
+        "durationMinutes": 78,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2026-01-10",
+        "startTime": "11:15",
+        "endTime": "12:03",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 48,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2026-01-01",
+        "startTime": "19:45",
+        "endTime": "21:14",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 89,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-12-31",
+        "startTime": "15:45",
+        "endTime": "16:52",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 67,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-12-27",
+        "startTime": "12:15",
+        "endTime": "13:41",
+        "sessionType": "Skill",
+        "completed": false,
+        "durationMinutes": 86,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-11-29",
+        "startTime": "10:00",
+        "endTime": "11:00",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 60,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-11-20",
+        "startTime": "11:15",
+        "endTime": "12:36",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 81,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-10-25",
+        "startTime": "07:00",
+        "endTime": "07:51",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 51,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-10-18",
+        "startTime": "15:45",
+        "endTime": "16:43",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 58,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-10-14",
+        "startTime": "16:00",
+        "endTime": "17:30",
+        "sessionType": "WOD",
+        "completed": false,
+        "durationMinutes": 90,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-10-11",
+        "startTime": "13:00",
+        "endTime": "14:12",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 72,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-08-28",
+        "startTime": "16:15",
+        "endTime": "17:28",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 73,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-08-18",
+        "startTime": "10:15",
+        "endTime": "11:17",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 62,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-08-16",
+        "startTime": "10:15",
+        "endTime": "11:33",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 78,
+        "workedOutWith": "Coach"
+      }
+    ],
+    "metadata": {
+      "lastEdited": "2026-01-11T07:41:17.465997Z",
+      "source": "CrossFitApp.demo"
+    }
+  },
+  {
+    "id": 31,
+    "subscriptionActive": false,
+    "personalDetails": {
+      "firstName": "Tom",
+      "lastName": "Vijverberg",
+      "email": "tom.vijverberg@email.com",
+      "dateOfBirth": "1992-09-21",
+      "city": "Utrecht"
+    },
+    "fitnessProfile": {
+      "level": "Elite",
+      "experienceYears": 10,
+      "primaryGoal": "Compete",
+      "secondaryGoal": "Master gymnastics",
+      "targetDate": "2026-12-06",
+      "preferredSessionTime": "Afternoon",
+      "workoutPlans": []
+    },
+    "workoutHistory": [],
+    "metadata": {
+      "lastEdited": "2026-01-20T07:41:17.466014Z",
+      "source": "CrossFitApp.demo"
+    }
+  },
+  {
+    "id": 32,
+    "subscriptionActive": true,
+    "personalDetails": {
+      "firstName": "Lisa",
+      "lastName": "Raadmakers",
+      "email": "lisa.raadmakers@email.com",
+      "dateOfBirth": "1971-11-19",
+      "city": "Almere"
+    },
+    "fitnessProfile": {
+      "level": "Advanced",
+      "experienceYears": 12,
+      "primaryGoal": "Build strength",
+      "secondaryGoal": "Build strength",
+      "targetDate": "2026-08-20",
+      "preferredSessionTime": "Evening",
+      "workoutPlans": [
+        {
+          "planName": "Strength Focus",
+          "type": "Strength",
+          "sessionsPerWeek": 4,
+          "startDate": "2025-12-14",
+          "endDate": "2026-02-13"
+        }
+      ]
+    },
+    "workoutHistory": [
+      {
+        "visitDate": "2026-01-10",
+        "startTime": "16:15",
+        "endTime": "17:17",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 62,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-12-23",
+        "startTime": "14:30",
+        "endTime": "15:40",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 70,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-12-21",
+        "startTime": "13:30",
+        "endTime": "14:48",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 78,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-12-01",
+        "startTime": "06:15",
+        "endTime": "07:05",
+        "sessionType": "Open workout",
+        "completed": false,
+        "durationMinutes": 50,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-11-13",
+        "startTime": "16:15",
+        "endTime": "17:07",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 52,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-10-22",
+        "startTime": "14:30",
+        "endTime": "15:55",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 85,
+        "workedOutWith": "Partner"
+      }
+    ],
+    "metadata": {
+      "lastEdited": "2026-01-08T07:41:17.466088Z",
+      "source": "CrossFitApp.demo"
+    }
+  },
+  {
+    "id": 33,
+    "subscriptionActive": false,
+    "personalDetails": {
+      "firstName": "Rick",
+      "lastName": "Steenks",
+      "email": "rick.steenks@email.com",
+      "dateOfBirth": "1986-07-03",
+      "city": "Delft"
+    },
+    "fitnessProfile": {
+      "level": "Advanced",
+      "experienceYears": 1,
+      "primaryGoal": "Compete",
+      "secondaryGoal": "Lose weight",
+      "targetDate": "2026-05-26",
+      "preferredSessionTime": "Evening",
+      "workoutPlans": []
+    },
+    "workoutHistory": [],
+    "metadata": {
+      "lastEdited": "2026-01-16T07:41:17.466105Z",
+      "source": "CrossFitApp.demo"
+    }
+  },
+  {
+    "id": 34,
+    "subscriptionActive": true,
+    "personalDetails": {
+      "firstName": "Lisa",
+      "lastName": "van Hoorn",
+      "email": "lisa.vanhoorn@email.com",
+      "dateOfBirth": "1981-08-18",
+      "city": "Den Haag"
+    },
+    "fitnessProfile": {
+      "level": "Advanced",
+      "experienceYears": 12,
+      "primaryGoal": "Lose weight",
+      "secondaryGoal": "Improve endurance",
+      "targetDate": "2026-10-25",
+      "preferredSessionTime": "Evening",
+      "workoutPlans": [
+        {
+          "planName": "Strength Focus",
+          "type": "Conditioning",
+          "sessionsPerWeek": 6,
+          "startDate": "2025-08-08",
+          "endDate": "2025-11-19"
+        }
+      ]
+    },
+    "workoutHistory": [
+      {
+        "visitDate": "2026-01-22",
+        "startTime": "14:45",
+        "endTime": "15:44",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 59,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-12-17",
+        "startTime": "09:00",
+        "endTime": "10:10",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 70,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-11-30",
+        "startTime": "06:45",
+        "endTime": "07:53",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 68,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-11-23",
+        "startTime": "19:00",
+        "endTime": "20:21",
+        "sessionType": "Open gym",
+        "completed": false,
+        "durationMinutes": 81,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-11-13",
+        "startTime": "11:00",
+        "endTime": "12:20",
+        "sessionType": "Open workout",
+        "completed": false,
+        "durationMinutes": 80,
+        "workedOutWith": "Team"
+      }
+    ],
+    "metadata": {
+      "lastEdited": "2026-01-22T07:41:17.466169Z",
+      "source": "CrossFitApp.demo"
+    }
+  },
+  {
+    "id": 35,
+    "subscriptionActive": true,
+    "personalDetails": {
+      "firstName": "Jeroen",
+      "lastName": "Raadmakers",
+      "email": "jeroen.raadmakers@email.com",
+      "dateOfBirth": "1992-01-18",
+      "city": "Rotterdam"
+    },
+    "fitnessProfile": {
+      "level": "Beginner",
+      "experienceYears": 8,
+      "primaryGoal": "Build strength",
+      "secondaryGoal": "Improve endurance",
+      "targetDate": "2026-12-20",
+      "preferredSessionTime": "Evening",
+      "workoutPlans": [
+        {
+          "planName": "Endurance Builder",
+          "type": "Conditioning",
+          "sessionsPerWeek": 2,
+          "startDate": "2025-11-12",
+          "endDate": "2026-02-26"
+        },
+        {
+          "planName": "Endurance Builder",
+          "type": "Skills",
+          "sessionsPerWeek": 2,
+          "startDate": "2026-02-27",
+          "endDate": "2026-04-29"
+        }
+      ]
+    },
+    "workoutHistory": [
+      {
+        "visitDate": "2026-01-31",
+        "startTime": "18:45",
+        "endTime": "19:49",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 64,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2026-01-26",
+        "startTime": "07:15",
+        "endTime": "08:41",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 86,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2026-01-24",
+        "startTime": "12:45",
+        "endTime": "14:05",
+        "sessionType": "Skill",
+        "completed": false,
+        "durationMinutes": 80,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2026-01-01",
+        "startTime": "07:15",
+        "endTime": "08:43",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 88,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-12-27",
+        "startTime": "07:00",
+        "endTime": "07:48",
+        "sessionType": "Skill",
+        "completed": false,
+        "durationMinutes": 48,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-12-07",
+        "startTime": "19:30",
+        "endTime": "20:24",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 54,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-12-02",
+        "startTime": "10:30",
+        "endTime": "11:35",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 65,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-11-11",
+        "startTime": "13:30",
+        "endTime": "14:29",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 59,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-10-28",
+        "startTime": "16:00",
+        "endTime": "17:22",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 82,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-10-22",
+        "startTime": "14:00",
+        "endTime": "15:28",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 88,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-10-19",
+        "startTime": "07:30",
+        "endTime": "08:28",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 58,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-10-16",
+        "startTime": "13:00",
+        "endTime": "13:54",
+        "sessionType": "Open gym",
+        "completed": false,
+        "durationMinutes": 54,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-09-20",
+        "startTime": "12:30",
+        "endTime": "13:44",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 74,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-09-04",
+        "startTime": "07:15",
+        "endTime": "08:06",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 51,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-08-21",
+        "startTime": "19:45",
+        "endTime": "20:34",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 49,
+        "workedOutWith": "Team"
+      }
+    ],
+    "metadata": {
+      "lastEdited": "2026-01-03T07:41:17.466324Z",
+      "source": "CrossFitApp.demo"
+    }
+  },
+  {
+    "id": 36,
+    "subscriptionActive": true,
+    "personalDetails": {
+      "firstName": "Paul",
+      "lastName": "Nijhuis",
+      "email": "paul.nijhuis@email.com",
+      "dateOfBirth": "2004-05-26",
+      "city": "Eindhoven"
+    },
+    "fitnessProfile": {
+      "level": "Intermediate",
+      "experienceYears": 1,
+      "primaryGoal": "Lose weight",
+      "secondaryGoal": "Compete",
+      "targetDate": "2026-03-02",
+      "preferredSessionTime": "Evening",
+      "workoutPlans": [
+        {
+          "planName": "Competition Prep",
+          "type": "Conditioning",
+          "sessionsPerWeek": 4,
+          "startDate": "2025-09-26",
+          "endDate": "2026-01-07"
+        }
+      ]
+    },
+    "workoutHistory": [
+      {
+        "visitDate": "2025-12-22",
+        "startTime": "07:15",
+        "endTime": "08:42",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 87,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-12-06",
+        "startTime": "15:45",
+        "endTime": "16:52",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 67,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-11-22",
+        "startTime": "10:45",
+        "endTime": "11:39",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 54,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-11-21",
+        "startTime": "06:45",
+        "endTime": "08:03",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 78,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-10-26",
+        "startTime": "18:30",
+        "endTime": "19:45",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 75,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-10-25",
+        "startTime": "08:45",
+        "endTime": "09:42",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 57,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-10-24",
+        "startTime": "10:15",
+        "endTime": "11:01",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 46,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-09-09",
+        "startTime": "09:45",
+        "endTime": "11:04",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 79,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-08-19",
+        "startTime": "10:45",
+        "endTime": "11:56",
+        "sessionType": "Open workout",
+        "completed": false,
+        "durationMinutes": 71,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-08-06",
+        "startTime": "11:00",
+        "endTime": "12:30",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 90,
+        "workedOutWith": "Team"
+      }
+    ],
+    "metadata": {
+      "lastEdited": "2026-01-29T07:41:17.466459Z",
+      "source": "CrossFitApp.demo"
+    }
+  },
+  {
+    "id": 37,
+    "subscriptionActive": true,
+    "personalDetails": {
+      "firstName": "Vera",
+      "lastName": "Vijverberg",
+      "email": "vera.vijverberg@email.com",
+      "dateOfBirth": "1989-08-10",
+      "city": "Leiden"
+    },
+    "fitnessProfile": {
+      "level": "Elite",
+      "experienceYears": 3,
+      "primaryGoal": "Compete",
+      "secondaryGoal": "Compete",
+      "targetDate": "2026-09-11",
+      "preferredSessionTime": "Evening",
+      "workoutPlans": [
+        {
+          "planName": "Endurance Builder",
+          "type": "Skills",
+          "sessionsPerWeek": 2,
+          "startDate": "2025-11-29",
+          "endDate": "2026-02-18"
+        }
+      ]
+    },
+    "workoutHistory": [
+      {
+        "visitDate": "2026-01-03",
+        "startTime": "19:30",
+        "endTime": "20:19",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 49,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-12-30",
+        "startTime": "08:00",
+        "endTime": "09:29",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 89,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-12-20",
+        "startTime": "16:00",
+        "endTime": "17:30",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 90,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-12-16",
+        "startTime": "15:30",
+        "endTime": "16:54",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 84,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-12-09",
+        "startTime": "09:00",
+        "endTime": "10:07",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 67,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-12-05",
+        "startTime": "16:15",
+        "endTime": "17:24",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 69,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-10-12",
+        "startTime": "18:45",
+        "endTime": "20:11",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 86,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-09-26",
+        "startTime": "08:30",
+        "endTime": "09:19",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 49,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-09-03",
+        "startTime": "07:30",
+        "endTime": "08:34",
+        "sessionType": "Open gym",
+        "completed": false,
+        "durationMinutes": 64,
+        "workedOutWith": "Team"
+      }
+    ],
+    "metadata": {
+      "lastEdited": "2026-01-30T07:41:17.466562Z",
+      "source": "CrossFitApp.demo"
+    }
+  },
+  {
+    "id": 38,
+    "subscriptionActive": true,
+    "personalDetails": {
+      "firstName": "Elena",
+      "lastName": "Nijhuis",
+      "email": "elena.nijhuis@email.com",
+      "dateOfBirth": "1993-09-16",
+      "city": "Almere"
+    },
+    "fitnessProfile": {
+      "level": "Elite",
+      "experienceYears": 4,
+      "primaryGoal": "Build strength",
+      "secondaryGoal": "Build strength",
+      "targetDate": "2026-06-15",
+      "preferredSessionTime": "Morning",
+      "workoutPlans": [
+        {
+          "planName": "Endurance Builder",
+          "type": "Conditioning",
+          "sessionsPerWeek": 5,
+          "startDate": "2025-09-01",
+          "endDate": "2025-12-20"
+        }
+      ]
+    },
+    "workoutHistory": [
+      {
+        "visitDate": "2026-01-19",
+        "startTime": "12:45",
+        "endTime": "13:39",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 54,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-12-22",
+        "startTime": "06:00",
+        "endTime": "07:06",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 66,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-11-17",
+        "startTime": "06:30",
+        "endTime": "07:31",
+        "sessionType": "WOD",
+        "completed": false,
+        "durationMinutes": 61,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-10-27",
+        "startTime": "08:00",
+        "endTime": "09:20",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 80,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-08-06",
+        "startTime": "14:30",
+        "endTime": "15:57",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 87,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-08-04",
+        "startTime": "06:45",
+        "endTime": "08:11",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 86,
+        "workedOutWith": "Partner"
+      }
+    ],
+    "metadata": {
+      "lastEdited": "2026-01-29T07:41:17.466636Z",
+      "source": "CrossFitApp.demo"
+    }
+  },
+  {
+    "id": 39,
+    "subscriptionActive": true,
+    "personalDetails": {
+      "firstName": "Tom",
+      "lastName": "Brouwer",
+      "email": "tom.brouwer@email.com",
+      "dateOfBirth": "1989-03-02",
+      "city": "Breda"
+    },
+    "fitnessProfile": {
+      "level": "Advanced",
+      "experienceYears": 12,
+      "primaryGoal": "Improve endurance",
+      "secondaryGoal": "Build strength",
+      "targetDate": "2026-10-31",
+      "preferredSessionTime": "Evening",
+      "workoutPlans": [
+        {
+          "planName": "Strength Focus",
+          "type": "Skills",
+          "sessionsPerWeek": 5,
+          "startDate": "2025-09-02",
+          "endDate": "2025-12-25"
+        }
+      ]
+    },
+    "workoutHistory": [
+      {
+        "visitDate": "2026-01-22",
+        "startTime": "08:30",
+        "endTime": "09:40",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 70,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2026-01-08",
+        "startTime": "16:45",
+        "endTime": "17:41",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 56,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-12-25",
+        "startTime": "15:00",
+        "endTime": "15:51",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 51,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-12-18",
+        "startTime": "08:15",
+        "endTime": "09:12",
+        "sessionType": "Skill",
+        "completed": false,
+        "durationMinutes": 57,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-12-15",
+        "startTime": "13:00",
+        "endTime": "14:01",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 61,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-11-24",
+        "startTime": "15:00",
+        "endTime": "15:54",
+        "sessionType": "WOD",
+        "completed": false,
+        "durationMinutes": 54,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-11-22",
+        "startTime": "14:45",
+        "endTime": "15:30",
+        "sessionType": "Open workout",
+        "completed": false,
+        "durationMinutes": 45,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-11-11",
+        "startTime": "17:00",
+        "endTime": "17:50",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 50,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-10-22",
+        "startTime": "19:00",
+        "endTime": "20:17",
+        "sessionType": "Skill",
+        "completed": false,
+        "durationMinutes": 77,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-10-18",
+        "startTime": "10:45",
+        "endTime": "12:11",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 86,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-09-16",
+        "startTime": "16:45",
+        "endTime": "18:06",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 81,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-09-15",
+        "startTime": "12:15",
+        "endTime": "13:35",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 80,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-08-10",
+        "startTime": "12:15",
+        "endTime": "13:40",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 85,
+        "workedOutWith": "Coach"
+      }
+    ],
+    "metadata": {
+      "lastEdited": "2026-01-30T07:41:17.466815Z",
+      "source": "CrossFitApp.demo"
+    }
+  },
+  {
+    "id": 40,
+    "subscriptionActive": false,
+    "personalDetails": {
+      "firstName": "Niels",
+      "lastName": "Mertens",
+      "email": "niels.mertens@email.com",
+      "dateOfBirth": "1987-02-08",
+      "city": "Eindhoven"
+    },
+    "fitnessProfile": {
+      "level": "Elite",
+      "experienceYears": 12,
+      "primaryGoal": "Compete",
+      "secondaryGoal": "Lose weight",
+      "targetDate": "2026-09-09",
+      "preferredSessionTime": "Morning",
+      "workoutPlans": []
+    },
+    "workoutHistory": [
+      {
+        "visitDate": "2025-12-28",
+        "startTime": "10:45",
+        "endTime": "11:50",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 65,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-11-13",
+        "startTime": "10:45",
+        "endTime": "12:14",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 89,
+        "workedOutWith": "Team"
+      }
+    ],
+    "metadata": {
+      "lastEdited": "2026-01-25T07:41:17.466847Z",
+      "source": "CrossFitApp.demo"
+    }
+  },
+  {
+    "id": 41,
+    "subscriptionActive": false,
+    "personalDetails": {
+      "firstName": "Maarten",
+      "lastName": "van Dijk",
+      "email": "maarten.vandijk@email.com",
+      "dateOfBirth": "2005-07-20",
+      "city": "Eindhoven"
+    },
+    "fitnessProfile": {
+      "level": "Advanced",
+      "experienceYears": 8,
+      "primaryGoal": "Lose weight",
+      "secondaryGoal": "Compete",
+      "targetDate": "2026-05-31",
+      "preferredSessionTime": "Evening",
+      "workoutPlans": []
+    },
+    "workoutHistory": [
+      {
+        "visitDate": "2026-01-17",
+        "startTime": "09:00",
+        "endTime": "10:14",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 74,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-12-28",
+        "startTime": "18:00",
+        "endTime": "18:56",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 56,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-11-22",
+        "startTime": "11:45",
+        "endTime": "13:02",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 77,
+        "workedOutWith": "Solo"
+      }
+    ],
+    "metadata": {
+      "lastEdited": "2026-01-10T07:41:17.466886Z",
+      "source": "CrossFitApp.demo"
+    }
+  },
+  {
+    "id": 42,
+    "subscriptionActive": true,
+    "personalDetails": {
+      "firstName": "Jeroen",
+      "lastName": "Thijs",
+      "email": "jeroen.thijs@email.com",
+      "dateOfBirth": "1978-03-09",
+      "city": "Purmerend"
+    },
+    "fitnessProfile": {
+      "level": "Advanced",
+      "experienceYears": 5,
+      "primaryGoal": "Consistency",
+      "secondaryGoal": "Consistency",
+      "targetDate": "2027-01-29",
+      "preferredSessionTime": "Evening",
+      "workoutPlans": [
+        {
+          "planName": "Skills Mastery",
+          "type": "Strength",
+          "sessionsPerWeek": 4,
+          "startDate": "2025-11-21",
+          "endDate": "2026-03-14"
+        }
+      ]
+    },
+    "workoutHistory": [
+      {
+        "visitDate": "2025-12-21",
+        "startTime": "19:15",
+        "endTime": "20:14",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 59,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-10-04",
+        "startTime": "10:45",
+        "endTime": "12:07",
+        "sessionType": "WOD",
+        "completed": false,
+        "durationMinutes": 82,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-09-10",
+        "startTime": "16:30",
+        "endTime": "17:34",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 64,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-08-20",
+        "startTime": "10:45",
+        "endTime": "11:54",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 69,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-08-19",
+        "startTime": "08:00",
+        "endTime": "08:59",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 59,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-08-18",
+        "startTime": "12:00",
+        "endTime": "13:28",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 88,
+        "workedOutWith": "Team"
+      }
+    ],
+    "metadata": {
+      "lastEdited": "2026-01-23T07:41:17.466960Z",
+      "source": "CrossFitApp.demo"
+    }
+  },
+  {
+    "id": 43,
+    "subscriptionActive": true,
+    "personalDetails": {
+      "firstName": "Marco",
+      "lastName": "Hendriksen",
+      "email": "marco.hendriksen@email.com",
+      "dateOfBirth": "1976-07-25",
+      "city": "Amsterdam"
+    },
+    "fitnessProfile": {
+      "level": "Intermediate",
+      "experienceYears": 4,
+      "primaryGoal": "Consistency",
+      "secondaryGoal": "Master gymnastics",
+      "targetDate": "2026-08-08",
+      "preferredSessionTime": "Morning",
+      "workoutPlans": [
+        {
+          "planName": "Strength Focus",
+          "type": "Mixed",
+          "sessionsPerWeek": 4,
+          "startDate": "2025-11-01",
+          "endDate": "2026-02-26"
+        },
+        {
+          "planName": "Strength Focus",
+          "type": "Mixed",
+          "sessionsPerWeek": 4,
+          "startDate": "2026-02-27",
+          "endDate": "2026-06-13"
+        }
+      ]
+    },
+    "workoutHistory": [
+      {
+        "visitDate": "2026-01-18",
+        "startTime": "19:15",
+        "endTime": "20:08",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 53,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-12-26",
+        "startTime": "11:15",
+        "endTime": "12:05",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 50,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-11-12",
+        "startTime": "16:00",
+        "endTime": "16:45",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 45,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-11-02",
+        "startTime": "09:30",
+        "endTime": "10:41",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 71,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-10-16",
+        "startTime": "12:45",
+        "endTime": "13:32",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 47,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-10-05",
+        "startTime": "19:00",
+        "endTime": "20:15",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 75,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-10-03",
+        "startTime": "09:00",
+        "endTime": "10:28",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 88,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-09-17",
+        "startTime": "09:30",
+        "endTime": "10:15",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 45,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-09-10",
+        "startTime": "18:15",
+        "endTime": "19:43",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 88,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-09-06",
+        "startTime": "18:15",
+        "endTime": "19:31",
+        "sessionType": "WOD",
+        "completed": false,
+        "durationMinutes": 76,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-08-22",
+        "startTime": "12:45",
+        "endTime": "13:57",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 72,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-08-16",
+        "startTime": "14:15",
+        "endTime": "15:18",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 63,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-08-09",
+        "startTime": "14:45",
+        "endTime": "16:12",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 87,
+        "workedOutWith": "Team"
+      }
+    ],
+    "metadata": {
+      "lastEdited": "2026-01-31T07:41:17.467094Z",
+      "source": "CrossFitApp.demo"
+    }
+  },
+  {
+    "id": 44,
+    "subscriptionActive": true,
+    "personalDetails": {
+      "firstName": "Sarah",
+      "lastName": "Nijhuis",
+      "email": "sarah.nijhuis@email.com",
+      "dateOfBirth": "1986-06-11",
+      "city": "Groningen"
+    },
+    "fitnessProfile": {
+      "level": "Elite",
+      "experienceYears": 12,
+      "primaryGoal": "Compete",
+      "secondaryGoal": "Compete",
+      "targetDate": "2027-01-28",
+      "preferredSessionTime": "Morning",
+      "workoutPlans": [
+        {
+          "planName": "Strength Focus",
+          "type": "Strength",
+          "sessionsPerWeek": 4,
+          "startDate": "2025-10-15",
+          "endDate": "2025-12-24"
+        },
+        {
+          "planName": "Skills Mastery",
+          "type": "Mixed",
+          "sessionsPerWeek": 3,
+          "startDate": "2025-12-25",
+          "endDate": "2026-03-24"
+        }
+      ]
+    },
+    "workoutHistory": [
+      {
+        "visitDate": "2026-01-29",
+        "startTime": "19:15",
+        "endTime": "20:42",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 87,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-12-31",
+        "startTime": "14:30",
+        "endTime": "15:45",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 75,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-12-29",
+        "startTime": "09:00",
+        "endTime": "10:22",
+        "sessionType": "Skill",
+        "completed": false,
+        "durationMinutes": 82,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-12-24",
+        "startTime": "07:00",
+        "endTime": "07:51",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 51,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-11-18",
+        "startTime": "11:30",
+        "endTime": "12:42",
+        "sessionType": "WOD",
+        "completed": false,
+        "durationMinutes": 72,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-11-17",
+        "startTime": "08:00",
+        "endTime": "09:20",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 80,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-11-17",
+        "startTime": "10:45",
+        "endTime": "11:33",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 48,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-11-15",
+        "startTime": "12:00",
+        "endTime": "13:27",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 87,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-11-08",
+        "startTime": "09:00",
+        "endTime": "09:45",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 45,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-10-27",
+        "startTime": "16:30",
+        "endTime": "17:49",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 79,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-10-16",
+        "startTime": "19:00",
+        "endTime": "20:17",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 77,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-09-28",
+        "startTime": "11:15",
+        "endTime": "12:10",
+        "sessionType": "Open workout",
+        "completed": false,
+        "durationMinutes": 55,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-09-26",
+        "startTime": "09:15",
+        "endTime": "10:16",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 61,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-08-25",
+        "startTime": "10:00",
+        "endTime": "11:08",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 68,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-08-15",
+        "startTime": "07:00",
+        "endTime": "07:48",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 48,
+        "workedOutWith": "Partner"
+      }
+    ],
+    "metadata": {
+      "lastEdited": "2026-01-19T07:41:17.467244Z",
+      "source": "CrossFitApp.demo"
+    }
+  },
+  {
+    "id": 45,
+    "subscriptionActive": true,
+    "personalDetails": {
+      "firstName": "Sarah",
+      "lastName": "Hendriksen",
+      "email": "sarah.hendriksen@email.com",
+      "dateOfBirth": "1977-05-20",
+      "city": "Tilburg"
+    },
+    "fitnessProfile": {
+      "level": "Intermediate",
+      "experienceYears": 8,
+      "primaryGoal": "Build strength",
+      "secondaryGoal": "Lose weight",
+      "targetDate": "2026-03-26",
+      "preferredSessionTime": "Afternoon",
+      "workoutPlans": [
+        {
+          "planName": "Endurance Builder",
+          "type": "Strength",
+          "sessionsPerWeek": 5,
+          "startDate": "2025-12-17",
+          "endDate": "2026-04-16"
+        },
+        {
+          "planName": "Competition Prep",
+          "type": "Conditioning",
+          "sessionsPerWeek": 6,
+          "startDate": "2026-04-17",
+          "endDate": "2026-07-16"
+        }
+      ]
+    },
+    "workoutHistory": [
+      {
+        "visitDate": "2026-01-28",
+        "startTime": "17:15",
+        "endTime": "18:42",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 87,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2026-01-22",
+        "startTime": "14:00",
+        "endTime": "14:50",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 50,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2026-01-11",
+        "startTime": "13:45",
+        "endTime": "15:06",
+        "sessionType": "Open workout",
+        "completed": false,
+        "durationMinutes": 81,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2026-01-07",
+        "startTime": "18:15",
+        "endTime": "19:00",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 45,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2026-01-03",
+        "startTime": "12:45",
+        "endTime": "13:32",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 47,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2026-01-01",
+        "startTime": "19:45",
+        "endTime": "20:43",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 58,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-12-24",
+        "startTime": "19:00",
+        "endTime": "19:45",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 45,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-11-21",
+        "startTime": "06:15",
+        "endTime": "07:35",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 80,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-11-06",
+        "startTime": "07:45",
+        "endTime": "08:32",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 47,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-11-01",
+        "startTime": "15:00",
+        "endTime": "16:28",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 88,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-10-13",
+        "startTime": "16:15",
+        "endTime": "17:30",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 75,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-10-09",
+        "startTime": "11:00",
+        "endTime": "12:16",
+        "sessionType": "WOD",
+        "completed": false,
+        "durationMinutes": 76,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-10-07",
+        "startTime": "11:45",
+        "endTime": "13:15",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 90,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-09-27",
+        "startTime": "19:15",
+        "endTime": "20:04",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 49,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-09-27",
+        "startTime": "08:45",
+        "endTime": "09:36",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 51,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-09-13",
+        "startTime": "14:30",
+        "endTime": "15:59",
+        "sessionType": "WOD",
+        "completed": false,
+        "durationMinutes": 89,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-08-17",
+        "startTime": "16:45",
+        "endTime": "17:51",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 66,
+        "workedOutWith": "Team"
+      }
+    ],
+    "metadata": {
+      "lastEdited": "2026-01-17T07:41:17.467409Z",
+      "source": "CrossFitApp.demo"
+    }
+  },
+  {
+    "id": 46,
+    "subscriptionActive": true,
+    "personalDetails": {
+      "firstName": "Vera",
+      "lastName": "Oudshoorn",
+      "email": "vera.oudshoorn@email.com",
+      "dateOfBirth": "2000-01-10",
+      "city": "Breda"
+    },
+    "fitnessProfile": {
+      "level": "Advanced",
+      "experienceYears": 10,
+      "primaryGoal": "Build strength",
+      "secondaryGoal": "Consistency",
+      "targetDate": "2027-01-11",
+      "preferredSessionTime": "Afternoon",
+      "workoutPlans": [
+        {
+          "planName": "Endurance Builder",
+          "type": "Conditioning",
+          "sessionsPerWeek": 3,
+          "startDate": "2025-08-31",
+          "endDate": "2025-12-28"
+        }
+      ]
+    },
+    "workoutHistory": [
+      {
+        "visitDate": "2026-01-28",
+        "startTime": "17:30",
+        "endTime": "18:27",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 57,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2026-01-02",
+        "startTime": "18:30",
+        "endTime": "19:50",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 80,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-12-29",
+        "startTime": "08:30",
+        "endTime": "09:15",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 45,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-12-15",
+        "startTime": "08:00",
+        "endTime": "09:09",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 69,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-12-10",
+        "startTime": "18:00",
+        "endTime": "19:07",
+        "sessionType": "Open workout",
+        "completed": false,
+        "durationMinutes": 67,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-11-19",
+        "startTime": "16:30",
+        "endTime": "17:24",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 54,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-11-17",
+        "startTime": "13:15",
+        "endTime": "14:08",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 53,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-10-26",
+        "startTime": "08:00",
+        "endTime": "09:27",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 87,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-10-26",
+        "startTime": "12:45",
+        "endTime": "14:13",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 88,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-09-24",
+        "startTime": "12:45",
+        "endTime": "14:08",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 83,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-09-03",
+        "startTime": "14:15",
+        "endTime": "15:12",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 57,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-08-19",
+        "startTime": "14:45",
+        "endTime": "15:45",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 60,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-08-12",
+        "startTime": "17:30",
+        "endTime": "18:42",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 72,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-08-09",
+        "startTime": "11:15",
+        "endTime": "12:45",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 90,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-08-05",
+        "startTime": "14:30",
+        "endTime": "16:00",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 90,
+        "workedOutWith": "Coach"
+      }
+    ],
+    "metadata": {
+      "lastEdited": "2026-01-30T07:41:17.467576Z",
+      "source": "CrossFitApp.demo"
+    }
+  },
+  {
+    "id": 47,
+    "subscriptionActive": true,
+    "personalDetails": {
+      "firstName": "Anna",
+      "lastName": "Raadmakers",
+      "email": "anna.raadmakers@email.com",
+      "dateOfBirth": "1995-04-27",
+      "city": "Haarlem"
+    },
+    "fitnessProfile": {
+      "level": "Elite",
+      "experienceYears": 8,
+      "primaryGoal": "Consistency",
+      "secondaryGoal": "Compete",
+      "targetDate": "2026-10-09",
+      "preferredSessionTime": "Evening",
+      "workoutPlans": [
+        {
+          "planName": "Strength Focus",
+          "type": "Skills",
+          "sessionsPerWeek": 6,
+          "startDate": "2025-08-14",
+          "endDate": "2025-11-04"
+        }
+      ]
+    },
+    "workoutHistory": [
+      {
+        "visitDate": "2026-01-25",
+        "startTime": "14:30",
+        "endTime": "15:47",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 77,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2026-01-21",
+        "startTime": "16:30",
+        "endTime": "17:39",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 69,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2026-01-18",
+        "startTime": "08:30",
+        "endTime": "09:50",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 80,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-12-08",
+        "startTime": "16:30",
+        "endTime": "17:36",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 66,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-09-20",
+        "startTime": "07:15",
+        "endTime": "08:26",
+        "sessionType": "Open workout",
+        "completed": false,
+        "durationMinutes": 71,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-09-16",
+        "startTime": "14:00",
+        "endTime": "15:25",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 85,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-09-10",
+        "startTime": "19:00",
+        "endTime": "19:52",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 52,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-08-18",
+        "startTime": "09:30",
+        "endTime": "10:47",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 77,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-08-09",
+        "startTime": "12:00",
+        "endTime": "12:58",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 58,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-08-09",
+        "startTime": "08:00",
+        "endTime": "09:14",
+        "sessionType": "Open gym",
+        "completed": false,
+        "durationMinutes": 74,
+        "workedOutWith": "Solo"
+      }
+    ],
+    "metadata": {
+      "lastEdited": "2026-01-02T07:41:17.467678Z",
+      "source": "CrossFitApp.demo"
+    }
+  },
+  {
+    "id": 48,
+    "subscriptionActive": true,
+    "personalDetails": {
+      "firstName": "Lucas",
+      "lastName": "Nijhuis",
+      "email": "lucas.nijhuis@email.com",
+      "dateOfBirth": "1980-11-16",
+      "city": "Leiden"
+    },
+    "fitnessProfile": {
+      "level": "Advanced",
+      "experienceYears": 6,
+      "primaryGoal": "Improve endurance",
+      "secondaryGoal": "Consistency",
+      "targetDate": "2027-01-31",
+      "preferredSessionTime": "Morning",
+      "workoutPlans": [
+        {
+          "planName": "Strength Focus",
+          "type": "Strength",
+          "sessionsPerWeek": 2,
+          "startDate": "2025-08-18",
+          "endDate": "2025-10-17"
+        }
+      ]
+    },
+    "workoutHistory": [
+      {
+        "visitDate": "2026-01-29",
+        "startTime": "14:15",
+        "endTime": "15:07",
+        "sessionType": "WOD",
+        "completed": false,
+        "durationMinutes": 52,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-12-13",
+        "startTime": "07:15",
+        "endTime": "08:42",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 87,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-12-08",
+        "startTime": "12:15",
+        "endTime": "13:10",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 55,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-11-18",
+        "startTime": "18:30",
+        "endTime": "19:53",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 83,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-10-26",
+        "startTime": "12:00",
+        "endTime": "13:15",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 75,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-10-23",
+        "startTime": "18:30",
+        "endTime": "19:55",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 85,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-09-16",
+        "startTime": "14:00",
+        "endTime": "15:04",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 64,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-08-19",
+        "startTime": "14:00",
+        "endTime": "15:03",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 63,
+        "workedOutWith": "Team"
+      }
+    ],
+    "metadata": {
+      "lastEdited": "2026-01-08T07:41:17.467765Z",
+      "source": "CrossFitApp.demo"
+    }
+  },
+  {
+    "id": 49,
+    "subscriptionActive": true,
+    "personalDetails": {
+      "firstName": "Sarah",
+      "lastName": "Brouwer",
+      "email": "sarah.brouwer@email.com",
+      "dateOfBirth": "1997-06-20",
+      "city": "Tilburg"
+    },
+    "fitnessProfile": {
+      "level": "Intermediate",
+      "experienceYears": 11,
+      "primaryGoal": "Compete",
+      "secondaryGoal": "Build strength",
+      "targetDate": "2026-07-04",
+      "preferredSessionTime": "Morning",
+      "workoutPlans": [
+        {
+          "planName": "Competition Prep",
+          "type": "Mixed",
+          "sessionsPerWeek": 4,
+          "startDate": "2025-11-13",
+          "endDate": "2026-02-01"
+        },
+        {
+          "planName": "Endurance Builder",
+          "type": "Skills",
+          "sessionsPerWeek": 4,
+          "startDate": "2026-02-02",
+          "endDate": "2026-04-22"
+        }
+      ]
+    },
+    "workoutHistory": [
+      {
+        "visitDate": "2026-01-22",
+        "startTime": "14:30",
+        "endTime": "15:49",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 79,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2026-01-12",
+        "startTime": "06:00",
+        "endTime": "07:22",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 82,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2026-01-05",
+        "startTime": "17:30",
+        "endTime": "18:31",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 61,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-12-19",
+        "startTime": "06:30",
+        "endTime": "07:30",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 60,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-12-08",
+        "startTime": "08:15",
+        "endTime": "09:10",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 55,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-11-22",
+        "startTime": "19:30",
+        "endTime": "20:23",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 53,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-11-21",
+        "startTime": "19:15",
+        "endTime": "20:34",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 79,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-10-30",
+        "startTime": "12:15",
+        "endTime": "13:37",
+        "sessionType": "Open gym",
+        "completed": false,
+        "durationMinutes": 82,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-10-30",
+        "startTime": "15:00",
+        "endTime": "16:18",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 78,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-10-29",
+        "startTime": "09:00",
+        "endTime": "10:27",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 87,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-10-24",
+        "startTime": "13:45",
+        "endTime": "14:32",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 47,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-10-22",
+        "startTime": "11:00",
+        "endTime": "12:27",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 87,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-10-09",
+        "startTime": "11:30",
+        "endTime": "12:46",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 76,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-09-30",
+        "startTime": "11:00",
+        "endTime": "11:59",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 59,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-09-25",
+        "startTime": "08:45",
+        "endTime": "09:40",
+        "sessionType": "Skill",
+        "completed": false,
+        "durationMinutes": 55,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-09-22",
+        "startTime": "08:45",
+        "endTime": "09:40",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 55,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-09-21",
+        "startTime": "12:30",
+        "endTime": "13:37",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 67,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-08-15",
+        "startTime": "09:45",
+        "endTime": "10:51",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 66,
+        "workedOutWith": "Partner"
+      }
+    ],
+    "metadata": {
+      "lastEdited": "2026-01-16T07:41:17.467936Z",
+      "source": "CrossFitApp.demo"
+    }
+  },
+  {
+    "id": 50,
+    "subscriptionActive": true,
+    "personalDetails": {
+      "firstName": "Bas",
+      "lastName": "Uitterhoeven",
+      "email": "bas.uitterhoeven@email.com",
+      "dateOfBirth": "1983-06-25",
+      "city": "Rotterdam"
+    },
+    "fitnessProfile": {
+      "level": "Beginner",
+      "experienceYears": 7,
+      "primaryGoal": "Consistency",
+      "secondaryGoal": "Improve endurance",
+      "targetDate": "2026-08-10",
+      "preferredSessionTime": "Evening",
+      "workoutPlans": [
+        {
+          "planName": "Strength Focus",
+          "type": "Conditioning",
+          "sessionsPerWeek": 2,
+          "startDate": "2025-11-28",
+          "endDate": "2026-03-08"
+        }
+      ]
+    },
+    "workoutHistory": [
+      {
+        "visitDate": "2026-01-27",
+        "startTime": "09:45",
+        "endTime": "10:39",
+        "sessionType": "WOD",
+        "completed": true,
+        "durationMinutes": 54,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2026-01-10",
+        "startTime": "10:45",
+        "endTime": "11:46",
+        "sessionType": "Skill",
+        "completed": false,
+        "durationMinutes": 61,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-11-03",
+        "startTime": "15:00",
+        "endTime": "16:12",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 72,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-10-09",
+        "startTime": "15:45",
+        "endTime": "17:00",
+        "sessionType": "Skill",
+        "completed": true,
+        "durationMinutes": 75,
+        "workedOutWith": "Partner"
+      },
+      {
+        "visitDate": "2025-10-07",
+        "startTime": "15:00",
+        "endTime": "15:59",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 59,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-09-21",
+        "startTime": "12:00",
+        "endTime": "13:27",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 87,
+        "workedOutWith": "Team"
+      },
+      {
+        "visitDate": "2025-09-17",
+        "startTime": "14:00",
+        "endTime": "14:50",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 50,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-08-31",
+        "startTime": "08:15",
+        "endTime": "09:39",
+        "sessionType": "Open gym",
+        "completed": true,
+        "durationMinutes": 84,
+        "workedOutWith": "Coach"
+      },
+      {
+        "visitDate": "2025-08-11",
+        "startTime": "16:45",
+        "endTime": "18:03",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 78,
+        "workedOutWith": "Solo"
+      },
+      {
+        "visitDate": "2025-08-06",
+        "startTime": "14:45",
+        "endTime": "15:44",
+        "sessionType": "Open workout",
+        "completed": true,
+        "durationMinutes": 59,
+        "workedOutWith": "Partner"
+      }
+    ],
+    "metadata": {
+      "lastEdited": "2026-01-13T07:41:17.468039Z",
+      "source": "CrossFitApp.demo"
+    }
+  }
+]

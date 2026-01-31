@@ -58,11 +58,18 @@ export const unflattenObject = (obj: TableRow): Record<string, any> => {
 
 export const inferColumns = (data: TableRow[]): string[] => {
     if (data.length === 0) return [];
-    const keys = new Set<string>();
+    
+    // Use the first row to establish initial order
+    const firstRowKeys = data[0] ? Object.keys(data[0]) : [];
+    const allKeys = new Set<string>(firstRowKeys);
+    
+    // Add any additional keys from other rows (append at the end)
     data.forEach(row => {
-        Object.keys(row).forEach(k => keys.add(k));
+        Object.keys(row).forEach(k => allKeys.add(k));
     });
-    return Array.from(keys).sort(); // Sort alphabetically for consistency
+    
+    // Return with original order preserved from first row
+    return Array.from(allKeys);
 };
 
 export const inferSchema = (data: TableRow[]): ColumnSchema => {
