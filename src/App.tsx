@@ -531,9 +531,6 @@ function App() {
                         </kbd>
                       </SecondaryButton>
                     </div>
-                    <Button variant="ghost" onClick={handleStartScratch} className="w-full text-muted-foreground hover:text-white hover:bg-white/5">
-                      Start from scratch with an empty table
-                    </Button>
                   </div>
                 </CardContent>
               </Card>
