@@ -124,10 +124,39 @@ export const getCellType = (val: unknown): 'string' | 'number' | 'boolean' | 'ar
 export const safeParseJSON = (str: string): TableRow[] | null => {
     try {
         const parsed = JSON.parse(str);
+
+        // Case 1: Array - return as is
         if (Array.isArray(parsed)) {
             // Return as-is, nested objects/arrays will be shown as clickable chips
             return parsed;
         }
+
+        // Case 2: Object - Try to find a wrapper or treat as single row
+        if (parsed && typeof parsed === 'object') {
+            // Common wrapper keys in API responses
+            const wrapperKeys = ['result', 'data', 'items', 'rows', 'results', 'response'];
+
+            for (const key of wrapperKeys) {
+                if (key in parsed) {
+                    const content = parsed[key];
+
+                    // If wrapper contains an array, that's our data
+                    if (Array.isArray(content)) {
+                        return content;
+                    }
+
+                    // If wrapper contains a single object, wrap it (unwrap the wrapper)
+                    // e.g. { result: { foo: "bar" } } -> [{ foo: "bar" }]
+                    if (content && typeof content === 'object') {
+                        return [content];
+                    }
+                }
+            }
+
+            // Fallback: Treat the object itself as a single row
+            return [parsed];
+        }
+
         return null;
     } catch {
         return null;
