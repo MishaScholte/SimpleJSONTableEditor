@@ -8,8 +8,10 @@ interface DebugPanelProps {
 
 export const DebugPanel: React.FC<DebugPanelProps> = ({ onLoad }) => {
     return (
-        <div className="flex flex-col items-center gap-2 mt-8 opacity-50 hover:opacity-100 transition-opacity">
-            <div className="text-[10px] uppercase tracking-widest text-muted-foreground font-mono">Debug / Test Data</div>
+        <div className="flex flex-col items-center gap-2 mt-8">
+            <div className="text-[10px] uppercase tracking-widest text-muted-foreground font-mono text-center">
+                Try out some samples
+            </div>
             <div className="flex gap-2 justify-center flex-wrap">
                 {DEBUG_DATASETS.map((ds) => (
                     <Button

@@ -9,7 +9,7 @@ import { ReorderColumnsDialog } from "@/components/Editor/ReorderColumnsDialog";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { useKeyboardShortcuts } from "@/hooks/use-keyboard-shortcuts";
 import { useUndoRedo } from "@/hooks/use-undo-redo";
-import { DebugPanel } from "@/components/Debug/DebugPanel"; // Debug
+import { DebugPanel } from "@/components/Debug/DebugPanel";
 import { DesignSystemPreview } from "@/components/Debug/DesignSystemPreview";
 import { ToolbarButton } from "@/components/ui/toolbar-button";
 
@@ -396,7 +396,7 @@ function App() {
     setColumns(inferColumns(debugData));
     setSchema(inferSchema(debugData)); // Infer schema
     setSortConfig(null);
-    toast.success(`Loaded debug dataset: ${debugData.length} rows.`);
+    toast.success(`Sample loaded (${debugData.length} rows).`);
   };
 
   return (
@@ -543,12 +543,7 @@ function App() {
               </div>
             </div>
 
-            {/* Debug Panel (Dev Only) */}
-            {import.meta.env.DEV && (
-              <>
-                <DebugPanel onLoad={handleLoadDebugData} />
-              </>
-            )}
+            <DebugPanel onLoad={handleLoadDebugData} />
 
           </div>
         ) : (
