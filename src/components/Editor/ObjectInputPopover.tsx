@@ -12,10 +12,11 @@ interface ObjectInputPopoverProps {
     columnName: string;
     children: React.ReactNode;
     onOpenChange?: (open: boolean) => void;
-    onSubmit?: () => void;
+    /** Close popover and move focus to the next quick-add column (or add button if last column). Do not submit the row. */
+    onAdvanceAfterObject?: () => void;
 }
 
-export const ObjectInputPopover: React.FC<ObjectInputPopoverProps> = ({ inferredKeys, value, onChange, children, columnName, onOpenChange, onSubmit }) => {
+export const ObjectInputPopover: React.FC<ObjectInputPopoverProps> = ({ inferredKeys, value, onChange, children, columnName, onOpenChange, onAdvanceAfterObject }) => {
     const [open, setOpen] = useState(false);
 
     useEffect(() => {
@@ -40,34 +41,42 @@ export const ObjectInputPopover: React.FC<ObjectInputPopoverProps> = ({ inferred
         // Live update feels better for "Quick Add".
     };
 
-
-
     const [focusedKey, setFocusedKey] = useState<string | null>(null);
-
-    const handleKeyDown = (e: React.KeyboardEvent) => {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            e.stopPropagation();
-            setOpen(false); // Close on submit
-            onSubmit?.();
-        } else if (e.key === 'Tab' && !e.shiftKey) {
-            // If tabbing from the last field, submit and move to next cell
-            const lastKey = displayKeys[displayKeys.length - 1];
-            if (focusedKey === lastKey) {
-                e.preventDefault();
-                e.stopPropagation();
-                setOpen(false);
-                // Defer submit to allow popover to close
-                setTimeout(() => onSubmit?.(), 0);
-            }
-        }
-    };
 
     // Merge inferred keys with keys actually in the local value
     const displayKeys = Array.from(new Set([
         ...inferredKeys,
         ...Object.keys(value || {})
     ]));
+
+    const focusObjectField = (key: string) => {
+        const el = document.querySelector(`[data-object-field="${CSS.escape(key)}"]`);
+        if (el instanceof HTMLElement) el.focus();
+    };
+
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+        const lastKey = displayKeys[displayKeys.length - 1];
+        const activeKey = focusedKey ?? displayKeys[0];
+        const keyIndex = displayKeys.indexOf(activeKey);
+
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            e.stopPropagation();
+            if (keyIndex >= 0 && keyIndex < displayKeys.length - 1) {
+                focusObjectField(displayKeys[keyIndex + 1]);
+            } else {
+                setOpen(false);
+                setTimeout(() => onAdvanceAfterObject?.(), 0);
+            }
+        } else if (e.key === 'Tab' && !e.shiftKey) {
+            if (focusedKey === lastKey) {
+                e.preventDefault();
+                e.stopPropagation();
+                setOpen(false);
+                setTimeout(() => onAdvanceAfterObject?.(), 0);
+            }
+        }
+    };
 
     // We use PopoverAnchor to keep the trigger (input) where it is, 
     // but we can also just wrap the trigger. 
@@ -133,8 +142,8 @@ export const ObjectInputPopover: React.FC<ObjectInputPopoverProps> = ({ inferred
                 className="w-80 p-4 glass border border-white/10 rounded-[8px]"
                 align="start"
                 onCloseAutoFocus={(e) => {
-                    // Prevent Radix from restoring focus to the trigger, 
-                    // so we can manually move focus to the next input in onSubmit
+                    // Prevent Radix from restoring focus to the trigger,
+                    // so onAdvanceAfterObject can focus the next footer column.
                     e.preventDefault();
                 }}
             >
@@ -150,6 +159,7 @@ export const ObjectInputPopover: React.FC<ObjectInputPopoverProps> = ({ inferred
                             <div key={key} className="flex items-center gap-2 group">
                                 <label className="text-[10px] uppercase tracking-wide text-neutral-400 font-mono w-1/3 truncate text-right shrink-0" title={key}>{key}</label>
                                 <GradientInput
+                                    data-object-field={key}
                                     data-object-input-first={displayKeys.indexOf(key) === 0 ? "true" : undefined}
                                     value={localValue[key] || ""}
                                     onChange={(e) => handleKeyChange(key, e.target.value)}
@@ -171,7 +181,7 @@ export const ObjectInputPopover: React.FC<ObjectInputPopoverProps> = ({ inferred
                             onClick={(e) => {
                                 e.preventDefault();
                                 setOpen(false);
-                                setTimeout(() => onSubmit?.(), 0);
+                                setTimeout(() => onAdvanceAfterObject?.(), 0);
                             }}
                         >
                             {focusedKey === displayKeys[displayKeys.length - 1] ? (

@@ -242,6 +242,7 @@ const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstIn
     const [types, setTypes] = useState<Record<string, 'auto' | 'text' | 'number' | 'boolean'>>({});
     const [errors, setErrors] = useState<Record<string, boolean>>({});
     const inputRefs = useRef<Record<string, HTMLInputElement | null>>({});
+    const quickAddSubmitRef = useRef<HTMLButtonElement | null>(null);
 
     // Slash Menu State
     const [menuState, setMenuState] = useState<{ col: string; query: string; anchorEl: HTMLElement | null } | null>(null);
@@ -302,6 +303,8 @@ const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstIn
                 // For boolean, value is stored as boolean in state or string 'true'/'false'
                 if (typeof rawVal === 'boolean') newRow[col] = rawVal;
                 else newRow[col] = valStr.toLowerCase() === 'true';
+            } else if ((finalType as string) === "list" || (finalType as string) === "array") {
+                newRow[col] = valStr.trim() === "" ? [] : parseArrayInput(valStr);
             } else {
                 // Auto (Default)
                 if (valStr.includes(',')) {
@@ -562,7 +565,17 @@ const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstIn
                                     value={value || {}}
                                     onChange={(newObj) => setValues(prev => ({ ...prev, [col]: newObj }))}
                                     onOpenChange={(open) => setActivePopover(open ? col : null)}
-                                    onSubmit={() => handleAdd()}
+                                    onAdvanceAfterObject={() => {
+                                        const idx = columns.indexOf(col);
+                                        setTimeout(() => {
+                                            if (idx < columns.length - 1) {
+                                                const nextCol = columns[idx + 1];
+                                                inputRefs.current[nextCol]?.focus();
+                                            } else {
+                                                quickAddSubmitRef.current?.focus();
+                                            }
+                                        }, 0);
+                                    }}
                                 >
                                     {inputComponent}
                                 </ObjectInputPopover>
@@ -579,6 +592,7 @@ const QuickAddFooter: React.FC<QuickAddFooterProps> = ({ columns, onAdd, firstIn
                         // console.log("Footer Render: values=", values, "hasData=", hasData);
                         return hasData && !hasErrors && (
                             <SecondaryButton
+                                ref={quickAddSubmitRef}
                                 variant="success"
                                 className="h-9 w-9 px-0"
                                 onClick={handleAdd}
@@ -607,7 +621,8 @@ export const DataTable: React.FC<DataTableProps> = ({
     onEditingChange,
     onAddColumn,
     isAddColumnOpen,
-    onAddColumnOpenChange
+    onAddColumnOpenChange,
+    schema,
 }) => {
     const [editingCell, setEditingCell] = useState<{ row: number; col: string } | null>(null);
     const [focusedCell, setFocusedCell] = useState<{ row: number; col: number } | null>(null);
@@ -666,9 +681,12 @@ export const DataTable: React.FC<DataTableProps> = ({
             } else {
                 types[col] = "string";
             }
+            const st = schema?.[col];
+            if (st === "list") types[col] = "array";
+            else if (st === "object") types[col] = "object";
         });
         return types;
-    }, [data, columns]);
+    }, [data, columns, schema]);
 
     // Use callbacks to maintain referential identity for Memoized rows
     const handleStartEdit = useCallback((rowIdx: number, col: string) => {
